@@ -15,3 +15,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
 )
+
+urlpatterns += patterns('task_viewer',
+	url(r'^checks/$', 'views.view_checks'), #вызов таблицы шаблонов обходов
+	)

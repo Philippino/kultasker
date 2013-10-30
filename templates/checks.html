@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %} Обходы {% endblock %}
+
+{% block content %}
+<body>
+<h3>Обходы</h3>
+<hr>
+<!-- форма вывода таблицы шаблонов обходов -->
+<div id='checks_table'> 
+<form name = 'Form1' method = 'GET' target ='_top'>{% csrf_token %} 
+	<!-- кнопка добавления нового шаблона обхода -->
+	<p><button onclick = "location.href='/checks/new/'" class="btn btn-primary"><strong>+</strong></button></p>
+	<!--таблица шаблонов обходов-->
+	<table class = 'table table-hover'>
+		<tr>
+			<td>№</td>
+			<td>Обход</td>
+			<td></td>
+		</tr>
+		<!-- Вывод элементов таблицы check-->
+		{% for check in checks %}
+		<tr>
+			<td>{{ check.id }}</td> <!-- id шаблона обхода -->
+			<td>{{ check.name }}</td> <!-- название шаблона обхода-->
+			<td>
+			<!-- кнопка действий -->
+			<div class="btn-group">
+				<!-- основное действие-->
+  				<button type="button" class="btn btn-default">Провести</button>
+  				<!-- меню дополнительных действий-->
+  				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+    			<span class="caret"></span>
+  				</button>
+  				<ul class="dropdown-menu" role="menu">
+  					<!-- провести шаблон обхода -->
+    				<li><a href="#">Провести</a></li>
+    				<!-- редактировать шаблон обхода -->
+    				<li><a href="#">Редактировать</a></li>
+    				<li class="divider"></li>
+    				<!-- удалить шаблон обхода -->
+    				<li><a href="#">Удалить</a></li>
+  					</ul>
+			</div>
+			</td>
+		</tr>		
+		{% endfor %}
+	</table>
+	<!-- кнопка удаления шаблона обхода -->	
+	<input type = 'button' onclick = "Action_del();" value = 'Удалить' class="btn btn-default"> 
+</form>
+</div>
+<script language= 'javascript'>
+	<!-- скрипт отправки данных на указанную страницу -->
+	function Action_del()
+	{
+		document.Form1.action = '/checks/del/';
+		document.Form1.submit();
+		return true;
+	}
+</script>
+</body>
+
+{% endblock %}
