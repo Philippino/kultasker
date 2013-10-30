@@ -9,16 +9,27 @@
 		<title>{% block title %}{% endblock %}</title>
 	</head>
 	<body>
+		<div class="navbar navbar-default">
+        	<div class="navbar-header">
+          <a class="navbar-brand" href="#">Tasker</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          	<!-- панель навигации -->
+            {% block chapter%}{% endblock %}
+          </ul>
+        </div>
+      </div>
 		<div class='container'>
-			<h1 class='text-muted'>Tasker</h1>
-		<hr>
-		<!-- Основное тело страницы-->
-		{% block content %}{% endblock %}
-		<!-- Подложка страницы-->
-		{% block footer %}
-		<hr>
-		<p>ГТРК "Санкт-Петербург" 2013</p>
-		{% endblock %}
+			<!-- Основное тело страницы-->
+			{% block content %}{% endblock %}
+		</div>
+		<div class='container'>
+			<!-- Подложка страницы-->
+			{% block footer %}
+			<hr>
+			<p>ГТРК "Санкт-Петербург" 2013</p>
+			{% endblock %}
 		</div>
 		<!-- Подключение к Bootstrap Javascript -->
 		<script type="text/javascript" src="http://getbootstrap.com/assets/js/jquery.js"></script>

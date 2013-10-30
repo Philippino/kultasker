@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 
 {% block title %} Обходы {% endblock %}
+{% block chapter %}
+	<li class="active"><a onclick="location.href='/checks/'" class='btn btn-link'>Обходы</a></li>
+{% endblock %}
 
 {% block content %}
 <body>
 <!-- форма вывода таблицы шаблонов обходов -->
-<div> 
 <form name = 'Form1' method = 'GET' target ='_top'>{% csrf_token %} 
 	<!-- кнопка добавления нового шаблона обхода -->
-	<p><button onclick = "location.href='/checks/new/'" class="btn btn-primary"><strong>+</strong></button></p>
+	<p><a onclick="location.href='/checks/new/'" class="btn btn-primary"><strong>+</strong></a></p>
 	<!--таблица шаблонов обходов-->
-	<table class = 'table table-hover'>
+	<table class = 'table'>
 		<tr>
 			<td>№</td>
 			<td>Обход</td>
@@ -45,7 +47,7 @@
 		{% endfor %}
 	</table>
 </form>
-</div>
+
 <script language= 'javascript'>
 	<!-- скрипт отправки данных на указанную страницу -->
 	function Action_del()
