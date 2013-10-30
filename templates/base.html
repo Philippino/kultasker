@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<!-- Подключение к CSS Bootstrap-->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+		<!-- Заглавие страницы-->
+		<title>{% block title %}{% endblock %}</title>
+	</head>
+	<body>
+		<!-- Подключение к Bootstrap JavaScript-->
+		
+		<h1 align='center'>Tasker</h1>
+		<hr>
+		<!-- Основное тело страницы-->
+		{% block content %}{% endblock %}
+		<!-- Подложка страницы-->
+		{% block footer %}
+		<hr>
+		<p>ГТРК "Санкт-Петербург" 2013</p>
+		{% endblock %}
+		<!-- Подключение к Bootstrap Javascript -->
+		<script type="text/javascript" src="http://localhost/fanstatic/jquery/jquery.js"></script>
+		<script type="text/javascript" src="http://localhost/fanstatic/bootstrap/js/bootstrap.js"></script>
+	</body>
+</html>
