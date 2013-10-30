@@ -3,14 +3,14 @@
 <html>
 	<head>
 		<!-- Подключение к CSS Bootstrap-->
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.css">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 		<!-- Заглавие страницы-->
 		<title>{% block title %}{% endblock %}</title>
 	</head>
 	<body>
-		<!-- Подключение к Bootstrap JavaScript-->
-		
-		<h1 align='center'>Tasker</h1>
+		<div class='container'>
+			<h1 class='text-muted'>Tasker</h1>
 		<hr>
 		<!-- Основное тело страницы-->
 		{% block content %}{% endblock %}
@@ -19,8 +19,9 @@
 		<hr>
 		<p>ГТРК "Санкт-Петербург" 2013</p>
 		{% endblock %}
+		</div>
 		<!-- Подключение к Bootstrap Javascript -->
-		<script type="text/javascript" src="http://localhost/fanstatic/jquery/jquery.js"></script>
-		<script type="text/javascript" src="http://localhost/fanstatic/bootstrap/js/bootstrap.js"></script>
+		<script type="text/javascript" src="http://getbootstrap.com/assets/js/jquery.js"></script>
+		<script type="text/javascript" src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 	</body>
 </html>

@@ -4,10 +4,8 @@
 
 {% block content %}
 <body>
-<h3>Обходы</h3>
-<hr>
 <!-- форма вывода таблицы шаблонов обходов -->
-<div id='checks_table'> 
+<div> 
 <form name = 'Form1' method = 'GET' target ='_top'>{% csrf_token %} 
 	<!-- кнопка добавления нового шаблона обхода -->
 	<p><button onclick = "location.href='/checks/new/'" class="btn btn-primary"><strong>+</strong></button></p>
@@ -32,7 +30,7 @@
   				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     			<span class="caret"></span>
   				</button>
-  				<ul class="dropdown-menu" role="menu">
+  				<ul class="dropdown-menu">
   					<!-- провести шаблон обхода -->
     				<li><a href="#">Провести</a></li>
     				<!-- редактировать шаблон обхода -->
@@ -46,8 +44,6 @@
 		</tr>		
 		{% endfor %}
 	</table>
-	<!-- кнопка удаления шаблона обхода -->	
-	<input type = 'button' onclick = "Action_del();" value = 'Удалить' class="btn btn-default"> 
 </form>
 </div>
 <script language= 'javascript'>
