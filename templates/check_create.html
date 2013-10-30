@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} Новый обход {% endblock %}
+{% block chapter %}
+	<li><a onclick="location.href='/checks/'" class='btn btn-link'>Обходы</a></li>
+	<li class="active"><a onclick="location.href='/checks/new/'" class='btn btn-link'>Новый</a></li>
+{% endblock%}
+
+{% block content %}
+<body>
+	<form action = '' method='POST' role='form' class='form-horizontal'>{% csrf_token %}	
+		<div class='form-group jumbotron'>
+			<!-- поля заполнения обхода -->
+			<label for='check_name' class="control-label">Название шаблона обхода</label>
+			<input type = 'text' class='form-control' id ='check_name'>
+			<!-- подсоединённые задания -->
+			<table class='table'>
+				<tr>
+					<td class='col-md-6'>
+						<label for='task_name' class='control-label'>Задание обхода</label>
+						<input type = 'text' class='form-control' id='task_name' placeholder='Задание'>
+					</td>
+					<td class='col-md-6'></td>
+				</tr>		
+			</table>
+			<button type = 'button' class="btn btn-primary"><strong>+</strong></button>
+	 	</div>
+		<button class = 'btn btn-primary' type = 'button'>Сохранить</button>
+		<a class = 'btn btn-default' onclick="location.href='/checks/'">Вернуться</a>
+	</form>
+</script>
+</body>
+{% endblock %}
