@@ -6,4 +6,10 @@ class Check(models.Model):
 	def __unicode__(self):
 		return self.name
 
+class Date(models.Model):
+	date = models.DateTimeField()
+	check = models.ForeignKey(Check)
+
+	def __unicode__(self):
+		return self.date
 # Create your models here.
