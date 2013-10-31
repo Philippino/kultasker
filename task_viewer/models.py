@@ -12,4 +12,12 @@ class Date(models.Model):
 
 	def __unicode__(self):
 		return self.date
+
+class Task(models.Model):
+	task = models.CharField(max_length = 100)
+	check = models.ForeignKey(Check)
+
+	def __unicode__(self):
+		return self.date
+		
 # Create your models here.
