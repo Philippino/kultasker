@@ -19,4 +19,5 @@ urlpatterns = patterns('',
 urlpatterns += patterns('task_viewer',
 	url(r'^checks/$', 'views.view_checks'), #вызов таблицы шаблонов обходов
 	url(r'^checks/new/$', 'views.create_check'), #создание нового шаблона обходов
+    url(r'^checks/(\d{1,9})/dates/', 'views.view_dates'), #показ дат, связанных с шаблоном
 	)
