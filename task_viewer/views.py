@@ -9,6 +9,11 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 	checks = Check.objects.all() #Загрузка всех шаблонов обходов 
 	return render_to_response('checks.html', {'checks': checks,})
 
+def view_dates(request, check):
+	dates = Date.objects.filter(check_id = check)
+	check_name = Check.objects.get(id = check)
+	return render_to_response('dates.html', {'dates': dates, 'check_name': check_name})	
+	
 
 def create_check(request): 							#Создание нового шаблона обхода
 	if request.method == 'POST': 						#Проверка, если запрос формата POST
