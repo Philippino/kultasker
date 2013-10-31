@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %} Обходы {% endblock %}
+
 {% block chapter %}
 	<li class="active"><a onclick="location.href='/checks/'" class='btn btn-link'>Обходы</a></li>
 {% endblock %}
@@ -8,39 +9,38 @@
 {% block content %}
 <body>
 <!-- форма вывода таблицы шаблонов обходов -->
-<form name = 'Form1' method = 'GET' target ='_top'>{% csrf_token %} 
+<form name = 'form_checks' method = 'GET' target ='_top'>{% csrf_token %} 
 	<!-- кнопка добавления нового шаблона обхода -->
 	<p><a onclick="location.href='/checks/new/'" class="btn btn-primary"><strong>Новый обход</strong></a></p>
 	<!--таблица шаблонов обходов-->
-	<table class = 'table'>
+	<table class = 'table table-hover'>
 		<tr>
-			<td>№</td>
 			<td>Обход</td>
 			<td></td>
 		</tr>
 		<!-- Вывод элементов таблицы check-->
 		{% for check in checks %}
 		<tr>
-			<td>{{ check.id }}</td> <!-- id шаблона обхода -->
-			<td>{{ check.name }}</td> <!-- название шаблона обхода-->
+			<td>
+				<!-- название шаблона обхода--><!-- ссылка на даты, ссылающиеся на обход-->
+				<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ check.id }}/dates'">{{ check.name }}</button>
+			</td> 
 			<td>
 			<!-- кнопка действий -->
 			<div class="btn-group">
-				<!-- основное действие-->
-  				<button type="button" class="btn btn-default">Провести</button>
-  				<!-- меню дополнительных действий-->
+				<!-- основное действие -->
+  				<button type="button" class="btn btn-default">Обойти</button> 
+  				<!-- меню дополнительных действий -->
   				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
     			<span class="caret"></span>
   				</button>
   				<ul class="dropdown-menu">
-  					<!-- провести шаблон обхода -->
-    				<li><a href="#">Провести</a></li>
-    				<!-- редактировать шаблон обхода -->
+    				<li><a href='/checks/{{ check.id }}/tasks/'>Задания</a></li>
+    				<li><a href='/checks/{{ check.id }}/dates/'>Показать историю</a></li>
     				<li><a href="#">Редактировать</a></li>
     				<li class="divider"></li>
-    				<!-- удалить шаблон обхода -->
     				<li><a href="#">Удалить</a></li>
-  					</ul>
+  				</ul>
 			</div>
 			</td>
 		</tr>		
@@ -48,15 +48,14 @@
 	</table>
 </form>
 
-<script language= 'javascript'>
-	<!-- скрипт отправки данных на указанную страницу -->
-	function Action_del()
-	{
-		document.Form1.action = '/checks/del/';
-		document.Form1.submit();
+<script language= 'text/javascript'>
+	<!-- скрипт обращения к датам обхода -->
+	function view_dates()
+	{	
+		document.form_checks.action = '/checks/{{ check.id }}/dates';
+		document.form_checks.submit();
 		return true;
 	}
 </script>
 </body>
-
 {% endblock %}
