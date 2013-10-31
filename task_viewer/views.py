@@ -10,7 +10,7 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 	return render_to_response('checks.html', {'checks': checks,})
 
 def view_dates(request, check):
-	dates = Date.objects.filter(check_id = check)
+	dates = Date.objects.filter(check_id = check).order_by('-date')
 	check_name = Check.objects.get(id = check)
 	return render_to_response('dates.html', {'dates': dates, 'check_name': check_name})	
 	
