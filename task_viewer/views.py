@@ -13,6 +13,11 @@ def view_dates(request, check):
 	dates = Date.objects.filter(check_id = check).order_by('-date')
 	check_name = Check.objects.get(id = check)
 	return render_to_response('dates.html', {'dates': dates, 'check_name': check_name})	
+
+def view_tasks(request, check):
+	tasks = Task.objects.filter(check_id = check)
+	check_name = Check.objects.get(id = check)
+	return render_to_response('tasks.html', {'tasks': tasks, 'check_name': check_name})
 	
 
 def create_check(request): 							#Создание нового шаблона обхода
