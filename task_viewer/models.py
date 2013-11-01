@@ -18,6 +18,14 @@ class Task(models.Model):
 	check = models.ForeignKey(Check)
 
 	def __unicode__(self):
-		return self.date
+		return self.task
+
+class Result(models.Model):
+	date = models.ForeignKey(Date)
+	task = models.ForeignKey(Task)
+	status = models.BooleanField(default = False)
+
+	def __unicode__(self):
+		return  self.status
 		
 # Create your models here.
