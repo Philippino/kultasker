@@ -3,13 +3,14 @@
 {% block title %} Даты обходов {% endblock %}
 
 {% block chapter %}
-	<li><a onclick="location.href='/checks/'" class='btn btn-link'>Обходы</a></li>
-	<!-- Выбранный шаблон -->
-	<li class="active"><a onclick="location.href='/checks/date/'" class='btn btn-link'>{{ check_name }}</a></li>
 {% endblock%}
 
 {% block content %}
 <body>
+<ol class="breadcrumb">
+  	<li><a href='/checks/'>Обходы</a></li>
+  	<li class='active'>{{ check }}</li>
+</ol>
 	<!-- кнопка нового обхода по выбранному шаблону --><!-- onclick="location.href='/checks/'" --> 
 <p><a class="btn btn-primary"><strong>Обойти</strong></a></p>
 <form name = 'Form1' method = 'GET' target ='_top'>
@@ -22,8 +23,14 @@
 		<!-- даты обходов -->
 		{% for date in dates %}
 			<tr>
-				<td>{{ date.date }}</td>
-				<td><span class="glyphicon glyphicon-ok"></span></td>
+				<td>
+					<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ check.id }}/{{ date.id }}/results/'">
+						{{ date.date }}
+					</button>
+					</td>
+				<td>
+					<span class="glyphicon glyphicon-ok"></span>
+				</td>
 			</tr>		
 		{% endfor %}
 	</table>
