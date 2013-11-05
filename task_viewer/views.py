@@ -7,18 +7,24 @@ from django.http import HttpResponseRedirect
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	checks = Check.objects.all() #Загрузка всех шаблонов обходов 
-	dates = []
+	last_dates = []
 	for check in checks:
-		qs = Date.objects.filter(check_id = check.id).order_by('-date')	
-		r = qs[:1]
-		if r:
-  			dates += qs[:1]
-	return render_to_response('checks.html', {'checks': checks,'dates': dates})
+		last_date = Date.objects.filter(check_id = check.id).order_by('-date')[:1]
+		if last_date:
+  			last_dates += last_date
+	return render_to_response('checks.html', {'checks': checks,'last_dates': last_dates})
 
 def view_dates(request, check):
 	dates = Date.objects.filter(check_id = check).order_by('-date')
 	check = Check.objects.get(id = check)
-	return render_to_response('dates.html', {'dates': dates, 'check': check})	
+	statuses = []
+	for date in dates:
+		status = True
+		results = Result.objects.filter(date_id = date.id)
+		for result in results:
+			status *= result.status
+		statuses += [{'status': status,'date': date.id}]
+	return render_to_response('dates.html', {'dates': dates, 'check': check, 'results': statuses})	
 
 def view_tasks(request, check):
 	tasks = Task.objects.filter(check_id = check)

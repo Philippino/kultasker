@@ -29,7 +29,16 @@
 					</button>
 					</td>
 				<td>
-					<span class="glyphicon glyphicon-ok"></span>
+					{% for result in results %}
+					    {% if result.date == date.id %}
+								{% if result.status == True %}
+									<span class="glyphicon glyphicon-ok"></span>
+								{% else %}
+									<span class="glyphicon glyphicon-remove"></span>
+								{% endif %}
+						{% else %}
+						{% endif %}
+					{% endfor %}
 				</td>
 			</tr>		
 		{% endfor %}

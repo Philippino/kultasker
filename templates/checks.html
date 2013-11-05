@@ -29,7 +29,7 @@
 			</td> 
 			<!-- кнопка действий -->
 			<td>
-			{% for date in dates %}
+			{% for date in last_dates %}
 			{% if date.check_id == check.id %}
 			<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ check.id }}/{{ date.id }}/results/'">
 			{{ date.date }}
