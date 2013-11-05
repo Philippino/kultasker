@@ -5,17 +5,21 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 
-def view_checks(request): #Вызов таблицы шаблонов обходов
-	checks = Check.objects.all() #Загрузка всех шаблонов обходов 
+def find_last_dates(checks): #
 	last_dates = []
 	for check in checks:
 		last_date = Date.objects.filter(check_id = check.id).order_by('-date')[:1]
 		if last_date:
-  			last_dates += last_date
-	return render_to_response('checks.html', {'checks': checks,'last_dates': last_dates})
+			last_dates += last_date
+	return last_dates
 
+def view_checks(request): #Вызов таблицы шаблонов обходов
+	checks = Check.objects.all() #Загрузка всех шаблонов обходов 
+	last_dates = find_last_dates(checks)
+	statuses = check_statuses(last_dates)
+	return render_to_response('checks.html', {'checks': checks,'last_dates': last_dates, 'statuses': statuses})
 
-def check_statuses(dates):
+def check_statuses(dates): #проверка результатов обхода
 	statuses = [] #инициализация списка статусов дат
 	for date in dates: #начинается обход дат
 		status = True #изначальный статус даты
@@ -29,7 +33,7 @@ def view_dates(request, check):
 	dates = Date.objects.filter(check_id = check).order_by('-date') #фильтрование дат по шаблону обхода и вывод в порядке поздние - вперед
 	check = Check.objects.get(id = check) #извлечение нужного шаблона обхода из адресной строки
 	statuses = check_statuses(dates) #вызов функции проверки статусов
-	return render_to_response('dates.html', {'dates': dates, 'check': check, 'results': statuses})	
+	return render_to_response('dates.html', {'dates': dates, 'check': check, 'statuses': statuses})	
 
 def view_tasks(request, check):
 	tasks = Task.objects.filter(check_id = check)
