@@ -25,17 +25,26 @@
 		<tr>
 			<td>
 				<!-- название шаблона обхода--><!-- ссылка на даты, ссылающиеся на обход-->
-				<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ check.id }}/dates'">{{ check.name }}</button>
+				<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates'>{{ check.name }}</a>
 			</td> 
 			<!-- кнопка действий -->
 			<td>
 			{% for date in last_dates %}
-			{% if date.check_id == check.id %}
-			<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ check.id }}/{{ date.id }}/results/'">
-			{{ date.date }}
-			</button>
-			{% endif %}
-			{% endfor %}
+				{% if date.check_id == check.id %}
+					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ date.id }}/results/'>
+						{{ date.date }}
+					</a>
+					{%for status in statuses %}
+					{% if status.date == date.id %}
+						{% if status.status == True %}
+							<span class="glyphicon glyphicon-ok"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove"></span>
+						{% endif %}
+					{% endif %}
+					{% endfor %}
+				{% endif %}
+			{% endfor %}	
 			</td>
 		</tr>		
 		{% endfor %}
