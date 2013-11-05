@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Даты обходов {% endblock %}
+
+{% block chapter %}
+{% endblock%}
+
+{% block content %}
+<body>
+<ol class="breadcrumb">
+  	<li><a href='/checks/'>Обходы</a></li>
+  	<li><a href='/checks/{{ check.id }}/dates/'>{{ check }}</a></li>
+  	<li class = 'active'>{{ date }}</li>
+  
+</ol>
+	<!-- кнопка нового обхода по выбранному шаблону --><!-- onclick="location.href='/checks/'" --> 
+<form name = 'Form1' method = 'GET' target ='_top'>
+	{% csrf_token %}
+	<table class = 'table table-hover'>
+		<tr>
+			<td>Задание</td>
+			<td>Статус</td>
+		</tr>
+		<!-- результат обходов -->
+		{% for result in results %}
+			<tr>
+				<td>{{ result.task }}</td>
+				<td>{% if result.status == True %}
+					<span class="glyphicon glyphicon-ok"></span>
+					{% else %}
+					<span class="glyphicon glyphicon-remove"></span>
+					{% endif %}
+				</td>
+			</tr>		
+		{% endfor %}
+	</table>
+	
+</form>
+</body>
+{% endblock %}
