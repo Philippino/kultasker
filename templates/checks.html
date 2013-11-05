@@ -3,11 +3,13 @@
 {% block title %} Обходы {% endblock %}
 
 {% block chapter %}
-	<li class="active"><a onclick="location.href='/checks/'" class='btn btn-link'>Обходы</a></li>
 {% endblock %}
 
 {% block content %}
 <body>
+<ol class="breadcrumb">
+  <li class='active'>Обходы</li>
+</ol>
 <!-- форма вывода таблицы шаблонов обходов -->
 <form name = 'form_checks' method = 'GET' target ='_top'>{% csrf_token %} 
 	<!-- кнопка добавления нового шаблона обхода -->
@@ -17,6 +19,7 @@
 		<tr>
 			<td>Обход</td>
 			<td></td>
+			<td>Последний обход</td>
 		</tr>
 		<!-- Вывод элементов таблицы check-->
 		{% for check in checks %}
@@ -27,22 +30,12 @@
 			</td> 
 			<td>
 			<!-- кнопка действий -->
-			<div class="btn-group">
-				<!-- основное действие -->
-  				<button type="button" class="btn btn-default">Обойти</button> 
-  				<!-- меню дополнительных действий -->
-  				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    			<span class="caret"></span>
-  				</button>
-  				<ul class="dropdown-menu">
-    				<li><a href='/checks/{{ check.id }}/tasks/'>Задания</a></li>
-    				<li><a href='/checks/{{ check.id }}/dates/'>Показать историю</a></li>
-    				<li><a href="#">Редактировать</a></li>
-    				<li class="divider"></li>
-    				<li><a href="#">Удалить</a></li>
-  				</ul>
-			</div>
+			{% for date in dates %}
+			<td>
+				{{ date.date }}
 			</td>
+			{% endfor %}
+		</td>
 		</tr>		
 		{% endfor %}
 	</table>
