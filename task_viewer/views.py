@@ -7,18 +7,29 @@ from django.http import HttpResponseRedirect
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	checks = Check.objects.all() #Загрузка всех шаблонов обходов 
-	return render_to_response('checks.html', {'checks': checks,})
+	dates = []
+	for check in checks:
+		qs = Date.objects.filter(check_id = check.id).order_by('-date')	
+		r = qs[:1]
+		if r:
+  			dates += qs[:1]
+	return render_to_response('checks.html', {'checks': checks,'dates': dates})
 
 def view_dates(request, check):
 	dates = Date.objects.filter(check_id = check).order_by('-date')
-	check_name = Check.objects.get(id = check)
-	return render_to_response('dates.html', {'dates': dates, 'check_name': check_name})	
+	check = Check.objects.get(id = check)
+	return render_to_response('dates.html', {'dates': dates, 'check': check})	
 
 def view_tasks(request, check):
 	tasks = Task.objects.filter(check_id = check)
-	check_name = Check.objects.get(id = check)
-	return render_to_response('tasks.html', {'tasks': tasks, 'check_name': check_name})
-	
+	check = Check.objects.get(id = check)
+	return render_to_response('tasks.html', {'tasks': tasks, 'check': check})
+
+def view_results(request, check, date):
+	check = Check.objects.get(id = check)
+	date = Date.objects.get(id = date)
+	results = Result.objects.filter(date_id = date)
+	return render_to_response('results.html', {'results': results, 'date': date, 'check': check})	
 
 def create_check(request): 							#Создание нового шаблона обхода
 	if request.method == 'POST': 						#Проверка, если запрос формата POST
