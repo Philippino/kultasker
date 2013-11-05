@@ -15,15 +15,15 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 	return render_to_response('checks.html', {'checks': checks,'last_dates': last_dates})
 
 def view_dates(request, check):
-	dates = Date.objects.filter(check_id = check).order_by('-date')
-	check = Check.objects.get(id = check)
-	statuses = []
-	for date in dates:
-		status = True
-		results = Result.objects.filter(date_id = date.id)
-		for result in results:
-			status *= result.status
-		statuses += [{'status': status,'date': date.id}]
+	dates = Date.objects.filter(check_id = check).order_by('-date') #фильтрование дат по шаблону обхода и вывод в порядке поздние - вперед
+	check = Check.objects.get(id = check) #извлечение нужного шаблона обхода из адресной строки
+	statuses = [] #инициализация списка статусов дат
+	for date in dates: #начинается обход дат
+		status = True #изначальный статус даты
+		results = Result.objects.filter(date_id = date.id) #извлечение списка результатов даты
+		for result in results: #начинается обход результатов
+				status *= result.status # операция AND для результатов (если все результаты имеют статус TRUE, общий статус будет TRUE)
+		statuses += [{'status': status,'date': date.id}] #запись статуса даты в список
 	return render_to_response('dates.html', {'dates': dates, 'check': check, 'results': statuses})	
 
 def view_tasks(request, check):
