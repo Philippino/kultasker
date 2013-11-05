@@ -15,10 +15,9 @@
 	<!-- кнопка добавления нового шаблона обхода -->
 	<p><a onclick="location.href='/checks/new/'" class="btn btn-primary"><strong>Новый обход</strong></a></p>
 	<!--таблица шаблонов обходов-->
-	<table class = 'table table-hover'>
+	<table class = 'table table-bordered'>
 		<tr>
 			<td>Обход</td>
-			<td></td>
 			<td>Последний обход</td>
 		</tr>
 		<!-- Вывод элементов таблицы check-->
@@ -28,14 +27,16 @@
 				<!-- название шаблона обхода--><!-- ссылка на даты, ссылающиеся на обход-->
 				<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ check.id }}/dates'">{{ check.name }}</button>
 			</td> 
-			<td>
 			<!-- кнопка действий -->
-			{% for date in dates %}
 			<td>
-				{{ date.date }}
-			</td>
+			{% for date in dates %}
+			{% if date.check_id == check.id %}
+			<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ check.id }}/{{ date.id }}/results/'">
+			{{ date.date }}
+			</button>
+			{% endif %}
 			{% endfor %}
-		</td>
+			</td>
 		</tr>		
 		{% endfor %}
 	</table>
