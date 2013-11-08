@@ -15,7 +15,7 @@ def find_last_dates(checks):
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	checks = Check.objects.all() #Загрузка всех шаблонов обходов 
-	last_dates = find_last_dates(checks)
+	last_dates = find_last_dates(checks) 
 	statuses = Result.objects.order_by('-date')
 	for date in last_dates:
 		status = statuses.filter(date_id = date.id).values_list('status', flat = True)
@@ -26,9 +26,9 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 	return render_to_response('checks.html', {'checks': checks,'last_dates': last_dates})
 
 def view_dates(request, check):
-	check = Check.objects.get(id = check) #извлечение нужного шаблона обхода из адресной строки
-	statuses = Result.objects.filter(date_id__check = check.id).order_by('-date')
-	dates = Date.objects.filter(check_id = check).order_by('-date').select_related()
+	check = Check.objects.get(id = check)
+	statuses = Result.objects.filter(date_id__check = check).order_by('-date')
+	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check')
 	for date in dates:
 		status = statuses.filter(date_id = date.id).values_list('status', flat = True)
 		if False in status:
@@ -43,10 +43,9 @@ def view_tasks(request, check):
 	return render_to_response('tasks.html', {'tasks': tasks, 'check': check})
 
 def view_results(request, check, date):
-	check = Check.objects.get(id = check)
 	date = Date.objects.get(id = date)
 	results = Result.objects.filter(date_id = date)
-	return render_to_response('results.html', {'results': results, 'date': date, 'check': check})	
+	return render_to_response('results.html', {'results': results, 'date': date})	
 
 def create_check(request): 							#Создание нового шаблона обхода
 	if request.method == 'POST': 						#Проверка, если запрос формата POST

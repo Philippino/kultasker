@@ -24,7 +24,7 @@
 		{% for date in dates %}
 			<tr>
 				<td>
-					<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ check.id }}/{{ date.id }}/results/'">
+					<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ date.check_id }}/{{ date.id }}/results/'">
 						{{ date.date }}
 					</button>
 					</td>
