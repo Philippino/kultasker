@@ -10,7 +10,7 @@
 <ol class="breadcrumb">
   	<li><a href='/checks/'>Обходы</a></li>
   	<li><a href='/checks/{{ date.check_id }}/dates/'>{{ date.check }}</a></li>
-  	<li class = 'active'>{{ date }}</li>
+  	<li class = 'active'>{{ date.date|date:" d-M-Y" }}</li>
   
 </ol>
 	<!-- кнопка нового обхода по выбранному шаблону --><!-- onclick="location.href='/checks/'" --> 
