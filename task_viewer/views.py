@@ -4,37 +4,15 @@ from task_viewer.forms import *
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-
-def find_last_dates(checks):
-	last_dates = []
-	for check in checks:
-		last_date = Date.objects.filter(check_id = check.id).order_by('-date')[:1]
-		if last_date:
-			last_dates += last_date
-	return last_dates
+from django.db.models import Max, Min
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
-	checks = Check.objects.all() #Загрузка всех шаблонов обходов 
-	last_dates = find_last_dates(checks) 
-	statuses = Result.objects.order_by('-date')
-	for date in last_dates:
-		status = statuses.filter(date_id = date.id).values_list('status', flat = True)
-		if False in status:
-			date.status = False
-		elif status:
-			date.status = True
-	return render_to_response('checks.html', {'checks': checks,'last_dates': last_dates})
+	checks = Check.objects.all().annotate(last_date = Max('date'), status = Min('date__result__status')).order_by('id').select_related('date') #Загрузка всех шаблонов обходов 
+	return render_to_response('checks.html', {'checks': checks,})
 
 def view_dates(request, check):
 	check = Check.objects.get(id = check)
-	statuses = Result.objects.filter(date_id__check = check).order_by('-date')
-	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check')
-	for date in dates:
-		status = statuses.filter(date_id = date.id).values_list('status', flat = True)
-		if False in status:
-			date.status = False
-		elif status:
-			date.status = True
+	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
 	return render_to_response('dates.html', {'dates': dates, 'check': check,})	
 
 def view_tasks(request, check):

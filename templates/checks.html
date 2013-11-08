@@ -29,18 +29,17 @@
 			</td> 
 			<!-- кнопка действий -->
 			<td>
-			{% for date in last_dates %}
-				{% if date.check_id == check.id %}
-					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ date.id }}/results/'>
-						{{ date.date }}
+					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.last_date }}/results/'>
+						{{ check.last_date }}
 					</a>
-						{% if date.status == True %}
+					{{ check.status }}
+					<!--
+						{% if check.status == True %}
 							<span class="glyphicon glyphicon-ok"></span>
 						{% else %}
 							<span class="glyphicon glyphicon-remove"></span>
-						{% endif %}
-				{% endif %}
-			{% endfor %}	
+						{% endif %}	
+					-->
 			</td>
 		</tr>		
 		{% endfor %}

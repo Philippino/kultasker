@@ -23,7 +23,7 @@ class Task(models.Model):
 class Result(models.Model):
 	date = models.ForeignKey(Date)
 	task = models.ForeignKey(Task)
-	status = models.BooleanField(default = False)
+	status = models.IntegerField(default = 0)
 
 	def __unicode__(self):
 		return  self.status
