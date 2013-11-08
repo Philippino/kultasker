@@ -34,15 +34,11 @@
 					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ date.id }}/results/'>
 						{{ date.date }}
 					</a>
-					{%for status in statuses %}
-					{% if status.date == date.id %}
-						{% if status.status == True %}
+						{% if date.status == True %}
 							<span class="glyphicon glyphicon-ok"></span>
 						{% else %}
 							<span class="glyphicon glyphicon-remove"></span>
 						{% endif %}
-					{% endif %}
-					{% endfor %}
 				{% endif %}
 			{% endfor %}	
 			</td>

@@ -29,15 +29,11 @@
 					</button>
 					</td>
 				<td>
-					{% for status in statuses %}
-					    {% if status.date == date.id %}
-								{% if status.status == True %}
-									<span class="glyphicon glyphicon-ok"></span>
-								{% else %}
-									<span class="glyphicon glyphicon-remove"></span>
-								{% endif %}
-						{% endif %}
-					{% endfor %}
+					{% if date.status == True %}
+							<span class="glyphicon glyphicon-ok"></span>
+						{% else %}
+							<span class="glyphicon glyphicon-remove"></span>
+					{% endif %}
 				</td>
 			</tr>		
 		{% endfor %}

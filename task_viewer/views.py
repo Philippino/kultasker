@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 
-def find_last_dates(checks): #
+def find_last_dates(checks):
 	last_dates = []
 	for check in checks:
 		last_date = Date.objects.filter(check_id = check.id).order_by('-date')[:1]
@@ -16,24 +16,26 @@ def find_last_dates(checks): #
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	checks = Check.objects.all() #Загрузка всех шаблонов обходов 
 	last_dates = find_last_dates(checks)
-	statuses = check_statuses(last_dates)
-	return render_to_response('checks.html', {'checks': checks,'last_dates': last_dates, 'statuses': statuses})
-
-def check_statuses(dates): #проверка результатов обхода
-	statuses = [] #инициализация списка статусов дат
-	for date in dates: #начинается обход дат
-		status = True #изначальный статус даты
-		results = Result.objects.filter(date_id = date.id) #извлечение списка результатов даты
-		for result in results: #начинается обход результатов
-			status *= result.status # операция AND для результатов (если все результаты имеют статус TRUE, общий статус будет TRUE)
-		statuses += [{'status': status,'date': date.id}] #запись статуса даты в список
-	return statuses
+	statuses = Result.objects.order_by('-date')
+	for date in last_dates:
+		status = statuses.filter(date_id = date.id).values_list('status', flat = True)
+		if False in status:
+			date.status = False
+		elif status:
+			date.status = True
+	return render_to_response('checks.html', {'checks': checks,'last_dates': last_dates})
 
 def view_dates(request, check):
-	dates = Date.objects.filter(check_id = check).order_by('-date') #фильтрование дат по шаблону обхода и вывод в порядке поздние - вперед
 	check = Check.objects.get(id = check) #извлечение нужного шаблона обхода из адресной строки
-	statuses = check_statuses(dates) #вызов функции проверки статусов
-	return render_to_response('dates.html', {'dates': dates, 'check': check, 'statuses': statuses})	
+	statuses = Result.objects.filter(date_id__check = check.id).order_by('-date')
+	dates = Date.objects.filter(check_id = check).order_by('-date').select_related()
+	for date in dates:
+		status = statuses.filter(date_id = date.id).values_list('status', flat = True)
+		if False in status:
+			date.status = False
+		elif status:
+			date.status = True
+	return render_to_response('dates.html', {'dates': dates, 'check': check,})	
 
 def view_tasks(request, check):
 	tasks = Task.objects.filter(check_id = check)
