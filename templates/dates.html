@@ -25,18 +25,15 @@
 			<tr>
 				<td>
 					<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ date.check_id }}/{{ date.id }}/results/'">
-						{{ date.date }}
+						{{ date.date|date:" d-M-Y" }}
 					</button>
 					</td>
 				<td>
-					{{ date.status }}
-					<!--
 					{% if date.status == True %}
 							<span class="glyphicon glyphicon-ok"></span>
 						{% else %}
 							<span class="glyphicon glyphicon-remove"></span>
 					{% endif %}
-				-->
 				</td>
 			</tr>		
 		{% endfor %}
