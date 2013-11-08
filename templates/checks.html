@@ -28,32 +28,19 @@
 				<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates'>{{ check.name }}</a>
 			</td> 
 			<!-- кнопка действий -->
-			<td>
-					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.last_date }}/results/'>
-						{{ check.last_date }}
-					</a>
-					{{ check.status }}
-					<!--
-						{% if check.status == True %}
+			<td>{% if check.last_date %}
+					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.last_date }}/results/'>{{ check.last_date|date:" d-M-Y" }}</a>
+						{% if check.status == 1 %}
 							<span class="glyphicon glyphicon-ok"></span>
 						{% else %}
 							<span class="glyphicon glyphicon-remove"></span>
 						{% endif %}	
-					-->
+				{% else %}
+				{% endif %}
 			</td>
 		</tr>		
 		{% endfor %}
 	</table>
 </form>
-
-<script language= 'text/javascript'>
-	<!-- скрипт обращения к датам обхода -->
-	function view_dates()
-	{	
-		document.form_checks.action = '/checks/{{ check.id }}/dates';
-		document.form_checks.submit();
-		return true;
-	}
-</script>
 </body>
 {% endblock %}
