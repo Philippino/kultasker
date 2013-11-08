@@ -2,8 +2,6 @@
 
 {% block title %} Новый обход {% endblock %}
 {% block chapter %}
-	<li><a onclick="location.href='/checks/'" class='btn btn-link'>Обходы</a></li>
-	<li class="active"><a onclick="location.href='/checks/new/'" class='btn btn-link'>Новый</a></li>
 {% endblock%}
 
 {% block content %}
@@ -11,23 +9,54 @@
 	<form action = '' method='POST' role='form' class='form-horizontal'>{% csrf_token %}	
 		<div class='form-group jumbotron'>
 			<!-- поля заполнения обхода -->
-			<label for='check_name' class="control-label">Название шаблона обхода</label>
-			<input type = 'text' class='form-control' id ='check_name'>
+			<form action='' method="post" role='form' name='Form'>
+    		{{ chk_form.as_p }}
+    		<button class = 'btn btn-primary' type = 'submit' onclick = 'Submit_check();'>Сохранить</button>
+			<a class = 'btn btn-default' onclick = "location.href='/checks/'">Вернуться</a>
+			</form>
 			<!-- подсоединённые задания -->
-			<table class='table'>
-				<tr>
-					<td class='col-md-6'>
-						<label for='task_name' class='control-label'>Задание обхода</label>
-						<input type = 'text' class='form-control' id='task_name' placeholder='Задание'>
-					</td>
-					<td class='col-md-6'></td>
-				</tr>		
-			</table>
-			<button type = 'button' class="btn btn-primary"><strong>Добавить задание</strong></button>
 	 	</div>
-		<button class = 'btn btn-primary' type = 'button'>Сохранить</button>
-		<a class = 'btn btn-default' onclick="location.href='/checks/'">Вернуться</a>
+	<!-- Кнопка добавить задание-->
+	<p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><strong>Добавить задание</strong></button></p>
+	<!-- Новое задание -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        			<h4 class="modal-title" id="myModalLabel">Новое задание</h4>
+      			</div>
+      			<div class="modal-body">
+      				{{ task_form.as_p }}
+      			</div>
+      			<div class="modal-footer">
+      				<button type="button" class="btn btn-primary">Save changes</button>
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      			</div>
+    		</div>
+  		</div>
+	</div>
+	<!--
+	<table class = 'table table-hover'>
+		<tr>
+			<td>Задание</td>
+		</tr>
+			{% for task in tasks %}
+			<tr>
+				<td>{{ task }}</td>
+			</tr>		
+			{% endfor %}
+	</table>
+	-->
 	</form>
-</script>
 </body>
+
+<script language='text/javascipt'>
+function Submit_check()
+{
+	document.Form.action = '/checks/new/';
+	document.Form.submit();
+	return True;
+}
+</script>
 {% endblock %}
