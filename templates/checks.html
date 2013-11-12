@@ -7,13 +7,12 @@
 
 {% block content %}
 <body>
+<!-- хлебные крошки -->
 <ol class="breadcrumb">
   <li class='active'>Обходы</li>
 </ol>
-<!-- форма вывода таблицы шаблонов обходов -->
-<form name = 'form_checks' method = 'GET' target ='_top'>{% csrf_token %} 
-	<!-- кнопка добавления нового шаблона обхода -->
-	<p><a onclick="location.href='/checks/new/'" class="btn btn-primary"><strong>Новый обход</strong></a></p>
+	<!-- кнопка добавить обход-->
+	<p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><strong>Добавить обход</strong></button></p>
 	<!--таблица шаблонов обходов-->
 	<table class = 'table table-bordered'>
 		<tr>
@@ -29,18 +28,47 @@
 			</td> 
 			<!-- кнопка действий -->
 			<td>{% if check.last_date %}
-					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.last_date }}/results/'>{{ check.last_date|date:" d-M-Y" }}</a>
+					<!-- вывод даты последнего обхода -->
+					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.date_id__id }}/results/'>{{ check.last_date|date:" d-M-Y" }}</a>
+					<!--
+						{{ check.status }}
 						{% if check.status == 1 %}
 							<span class="glyphicon glyphicon-ok"></span>
 						{% else %}
 							<span class="glyphicon glyphicon-remove"></span>
 						{% endif %}	
+					-->
 				{% else %}
 				{% endif %}
 			</td>
 		</tr>		
 		{% endfor %}
 	</table>
-</form>
+	<!-- Новый шаблон обхода -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        			<h4 class="modal-title" id="myModalLabel">Новый обход</h4>
+      			</div>
+      			<div class="modal-body">
+      				<form id="Check_form" action="" method="post">{% csrf_token %}
+						{{ check_form }}
+      			</div>
+      			<div class="modal-footer">
+      				<input type="button" class="btn btn-primary" value='Сохранить' onclick='Submit_check();'>
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        			</form>
+      			</div>
+    		</div>
+  		</div>
+	</div>
 </body>
+<script language='text/javascript'>
+function Submit_check(){
+	document.getElementById("Check_form").submit();
+	return True;
+}
+</script>
 {% endblock %}
