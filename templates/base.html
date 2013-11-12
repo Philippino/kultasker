@@ -8,17 +8,15 @@
 		<!-- Заглавие страницы-->
 		<title>{% block title %}{% endblock %}</title>
 	</head>
-	<body>
+	<body onload="startTime()">
 		<div class="navbar navbar-default">
         	<div class="navbar-header">
           <a class="navbar-brand" href="#">kulTasker</a>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-          	<!-- панель навигации -->
-            {% block chapter%}{% endblock %}
-          </ul>
-        </div>
+        	<ul class="nav navbar-nav navbar-right">
+            	<li><a><div id="timenow"></div></a></li>
+          	</ul>
+      	</div>
       </div>
 		<div class='container'>
 			<!-- Основное тело страницы-->
@@ -34,5 +32,33 @@
 		<!-- Подключение к Bootstrap Javascript -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript" src='//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.js'></script>
+		<script>
+			function startTime(){
+				var today=new Date();
+				var d=today.getDate();
+				var mn = setMonth(today.getMonth());
+				//var mn = today.getMonth();
+				var y=today.getFullYear();
+				var h=today.getHours();
+				var m=today.getMinutes();
+				var s=today.getSeconds();
+				// add a zero in front of numbers<10
+				m=checkTime(m);
+				s=checkTime(s);
+				document.getElementById('timenow').innerHTML=d+' '+mn+' '+y+' '+h+":"+m+":"+s;
+				t=setTimeout(function(){startTime()},500);
+			}
+
+			function setMonth(i){
+				var monthes = new Array('Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря');
+				return monthes[i];
+			}
+			function checkTime(i){
+				if (i<10){
+				i="0" + i;
+				}
+			return i;
+			}
+</script>
 	</body>
 </html>
