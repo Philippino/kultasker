@@ -4,7 +4,8 @@ from task_viewer.forms import *
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.db.models import Max, Min
+from django.db.models import Max, Min, Count
+import datetime
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	if request.method == 'POST': 						#Проверка, если запрос формата POST
@@ -22,7 +23,7 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 def view_dates(request, check):
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
 	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
-	return render_to_response('dates.html', {'dates': dates, 'check': check,})	
+	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))	
 
 def view_tasks(request, check):
 	#Если запрос POST, создается новое задание
@@ -45,5 +46,21 @@ def view_results(request, check, date):
 	return render_to_response('results.html', {'results': results, 'date': date})
 
 def make_results(request, check):
-	tasks = Task.objects.filter(check_id = check)
-	results_form = ResultForm()
+	if request.method == 'POST':
+		date_form = DateForm(request.POST)		
+		if date_form.is_valid:
+  			new_date = Date()
+  			new_date.date = datetime.datetime.now()
+  			new_date.check_id = check
+  			new_date.save()
+  			linked_tasks = Task.objects.filter(check_id = check)
+  			for task in linked_tasks:
+  				new_result = Result()
+  				new_result.task = task
+  				new_result.date = new_date
+  				new_result.status = True
+  				new_result.save()
+  			return HttpResponseRedirect("/checks/%s/%s/results/" % (check,new_date.id))
+	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
+	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
+	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))	
