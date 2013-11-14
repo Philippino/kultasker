@@ -29,7 +29,7 @@
 			<!-- кнопка действий -->
 			<td>{% if check.last_date %}
 					<!-- вывод даты последнего обхода -->
-					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.date_id__id }}/results/'>{{ check.last_date|date:"H:i d-M-Y" }}</a>
+					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.date_id }}/results/'>{{ check.last_date|date:"H:i d-M-Y" }}</a>
 					<!--
 						{{ check.status }}
 						{% if check.status == 1 %}

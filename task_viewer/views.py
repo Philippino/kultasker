@@ -18,6 +18,9 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 			new_chk.save()							#Экземпляр сохраняется в базе данных
 			return HttpResponseRedirect('/checks/%s/tasks' % new_chk.id)
 	checks = Check.objects.all().select_related('date').annotate(last_date = Max('date__date')).order_by('id') #Загрузка всех шаблонов обходов
+	for check in checks:
+		date = Date.objects.get(date = check.last_date)
+		check.date_id = date.id
 	chk_form = CheckForm() 
 	return render_to_response('checks.html',  RequestContext(request,{'checks': checks,'check_form': chk_form}))
 
