@@ -12,7 +12,8 @@
   	<li class='active'>{{ check }}</li>
 </ol>
 <!-- кнопка нового обхода по выбранному шаблону -->
-<p><button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" onclick='show_date();'><strong>Обойти</strong></button></p>
+<p><button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" onclick='show_date();'><strong>Обойти</strong></button>
+<a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a></p>
 <form name = 'Form1' method = 'GET' target ='_top'>
 	{% csrf_token %}
 	<table class = 'table table-hover'>
@@ -38,7 +39,7 @@
 			</tr>		
 		{% endfor %}
 	</table>
-	<p><a class="btn btn-primary" href = '/checks/{{ check.id }}/tasks/'><strong>Задания</strong></a></p>
+	
 </form>
 <!-- Новый дата обхода -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
