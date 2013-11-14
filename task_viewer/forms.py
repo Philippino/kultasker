@@ -1,3 +1,4 @@
+# coding: utf-8
 from django import forms
 from task_viewer.models import Check
 import datetime

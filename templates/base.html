@@ -1,12 +1,13 @@
+{% load dajaxice_templatetags %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 	<head>
 		<!-- Подключение к CSS Bootstrap-->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.css">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
 		<!-- Заглавие страницы-->
 		<title>{% block title %}{% endblock %}</title>
+		{% dajaxice_js_import %}
 	</head>
 	<body onload="startTime()">
 		<div class="navbar navbar-default">
@@ -15,6 +16,7 @@
         </div>
         	<ul class="nav navbar-nav navbar-right">
             	<li><a><div id="timenow"></div></a></li>
+            	<li><a><div id="datenow"></div></a></li>
           	</ul>
       	</div>
       </div>
@@ -32,33 +34,31 @@
 		<!-- Подключение к Bootstrap Javascript -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript" src='//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.js'></script>
-		<script>
+		<script language='javascript'>
 			function startTime(){
-				var today=new Date();
-				var d=today.getDate();
+				var today = new Date();
+				var d = today.getDate();
 				var mn = setMonth(today.getMonth());
-				//var mn = today.getMonth();
-				var y=today.getFullYear();
-				var h=today.getHours();
-				var m=today.getMinutes();
-				var s=today.getSeconds();
-				// add a zero in front of numbers<10
+				var y = today.getFullYear();
+				var h = today.getHours();
+				var m = today.getMinutes();
+				var s = today.getSeconds();
 				m=checkTime(m);
 				s=checkTime(s);
-				document.getElementById('timenow').innerHTML=d+' '+mn+' '+y+' '+h+":"+m+":"+s;
-				t=setTimeout(function(){startTime()},500);
+				document.getElementById('timenow').innerHTML = h+":"+m+":"+s;
+				document.getElementById('datenow').innerHTML = d+' '+mn+' '+y;
+				t = setTimeout(function(){startTime()},1000);
 			}
 
 			function setMonth(i){
 				var monthes = new Array('Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря');
 				return monthes[i];
 			}
+
 			function checkTime(i){
-				if (i<10){
-				i="0" + i;
-				}
-			return i;
+				if (i<10){i="0" + i;}
+				return i;
 			}
-</script>
+		</script>
 	</body>
 </html>

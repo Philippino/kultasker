@@ -1,4 +1,4 @@
-# Create your views here.
+# coding: utf-8
 from task_viewer.models import *
 from task_viewer.forms import *
 from django.shortcuts import render_to_response

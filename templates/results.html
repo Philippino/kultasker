@@ -2,15 +2,12 @@
 
 {% block title %} Даты обходов {% endblock %}
 
-{% block chapter %}
-{% endblock%}
-
 {% block content %}
 <body>
 <ol class="breadcrumb">
   	<li><a href='/checks/'>Обходы</a></li>
   	<li><a href='/checks/{{ date.check_id }}/dates/'>{{ date.check }}</a></li>
-  	<li class = 'active'>{{ date.date|date:" d-M-Y" }}</li>
+  	<li class = 'active'>{{ date.date|date:"H:i d-M-Y" }}</li>
   
 </ol>
 	<!-- кнопка нового обхода по выбранному шаблону --><!-- onclick="location.href='/checks/'" --> 
@@ -25,16 +22,22 @@
 		{% for result in results %}
 			<tr>
 				<td>{{ result.task }}</td>
-				<td>{% if result.status == True %}
-					<span class="glyphicon glyphicon-ok"></span>
+				<td>
+					<a onclick = 'Dajaxice.task_viewer.change_status(change_status);'>
+					{% if result.status == True %}
+					<span class="glyphicon glyphicon-ok" ></span>
 					{% else %}
-					<span class="glyphicon glyphicon-remove"></span>
+					<span class="glyphicon glyphicon-remove" ></span>
 					{% endif %}
+					</a>
 				</td>
 			</tr>		
 		{% endfor %}
-	</table>
-	
+	</table>	
+<script language='javascript'>
+	function change_status(data){
+	alert(data.message);}
+</script>
 </form>
 </body>
 {% endblock %}
