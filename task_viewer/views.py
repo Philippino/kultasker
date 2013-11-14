@@ -48,12 +48,14 @@ def view_results(request, check, date):
 	date = Date.objects.get(id = date) #нахождение нужной даты обхода
 	results = Result.objects.filter(date_id = date)
 	now = timezone.now()
+	block_date = date.date + timedelta(days = 1)
 	freezed = 0
-	if date.date + timedelta(days = 1) > now:
+	if block_date > now:
 		freezed = True
 	else:
 		freezed = False
-	return render_to_response('results.html', {'results': results, 'date': date, 'freezed': freezed})
+	#block_date = now - block_date
+	return render_to_response('results.html', {'results': results, 'date': date, 'freezed': freezed, 'block_date': block_date})
 
 def make_results(request, check):
 	if request.method == 'POST':

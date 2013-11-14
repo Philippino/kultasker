@@ -13,6 +13,7 @@
 	{% if freezed == False %}
 	<p><span class="label label-warning">Результаты заморожены, cо времени обхода прошло более 24 часов </span></p>
 	{% else %}
+	<p><span class="label label-warning">Результаты будут заморожены {{ block_date }} </span></p>
 	{% endif %}
 <form name = 'Form1' method = 'GET' target ='_top'>
 	{% csrf_token %}
