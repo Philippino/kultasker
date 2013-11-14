@@ -5,7 +5,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.db.models import Max, Min, Count
-import datetime
+from django.utils import timezone
+from datetime import timedelta
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	if request.method == 'POST': 						#Проверка, если запрос формата POST
@@ -43,14 +44,20 @@ def view_tasks(request, check):
 def view_results(request, check, date):
 	date = Date.objects.get(id = date) #нахождение нужной даты обхода
 	results = Result.objects.filter(date_id = date)
-	return render_to_response('results.html', {'results': results, 'date': date})
+	now = timezone.now()
+	freezed = 0
+	if date.date + timedelta(days = 1) > now:
+		freezed = True
+	else:
+		freezed = False
+	return render_to_response('results.html', {'results': results, 'date': date, 'freezed': freezed})
 
 def make_results(request, check):
 	if request.method == 'POST':
 		date_form = DateForm(request.POST)		
 		if date_form.is_valid:
   			new_date = Date()
-  			new_date.date = datetime.datetime.now()
+  			new_date.date = timezone.now()
   			new_date.check_id = check
   			new_date.save()
   			linked_tasks = Task.objects.filter(check_id = check)
@@ -58,7 +65,7 @@ def make_results(request, check):
   				new_result = Result()
   				new_result.task = task
   				new_result.date = new_date
-  				new_result.status = True
+  				new_result.status = False
   				new_result.save()
   			return HttpResponseRedirect("/checks/%s/%s/results/" % (check,new_date.id))
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода

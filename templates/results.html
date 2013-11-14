@@ -10,7 +10,10 @@
   	<li class = 'active'>{{ date.date|date:"H:i d-M-Y" }}</li>
   
 </ol>
-	<!-- кнопка нового обхода по выбранному шаблону --><!-- onclick="location.href='/checks/'" --> 
+	{% if freezed == False %}
+	<p><span class="label label-warning">Результаты заморожены, cо времени обхода прошло более 24 часов </span></p>
+	{% else %}
+	{% endif %}
 <form name = 'Form1' method = 'GET' target ='_top'>
 	{% csrf_token %}
 	<table class = 'table table-hover'>
@@ -23,7 +26,9 @@
 			<tr>
 				<td>{{ result.task }}</td>
 				<td>
-					<a onclick = 'Dajaxice.task_viewer.change_status(change_status);' href='/checks/{{ date.check_id }}/{{ date.id }}/results/{{result.id}}/change/'>
+					{% if freezed %}
+					<a href='/checks/{{ date.check_id }}/{{ date.id }}/results/{{result.id}}/change/'>
+					{% endif %}
 					{% if result.status == True %}
 					<span class="glyphicon glyphicon-ok" ></span>
 					{% else %}
@@ -34,10 +39,6 @@
 			</tr>		
 		{% endfor %}
 	</table>	
-<script language='javascript'>
-	function change_status(data){
-	alert(data.message);}
-</script>
 </form>
 </body>
 {% endblock %}
