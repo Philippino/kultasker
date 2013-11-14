@@ -63,4 +63,13 @@ def make_results(request, check):
   			return HttpResponseRedirect("/checks/%s/%s/results/" % (check,new_date.id))
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
 	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
-	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))	
+	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))
+
+def change_result(request,check, date, result):
+	result = Result.objects.get(id = result)
+	if result.status == True:
+		result.status = False
+	else:
+		result.status = True
+	result.save()
+	return HttpResponseRedirect("/checks/%s/%s/results/" % (check,date))

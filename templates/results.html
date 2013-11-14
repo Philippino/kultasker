@@ -23,7 +23,7 @@
 			<tr>
 				<td>{{ result.task }}</td>
 				<td>
-					<a onclick = 'Dajaxice.task_viewer.change_status(change_status);'>
+					<a onclick = 'Dajaxice.task_viewer.change_status(change_status);' href='/checks/{{ date.check_id }}/{{ date.id }}/results/{{result.id}}/change/'>
 					{% if result.status == True %}
 					<span class="glyphicon glyphicon-ok" ></span>
 					{% else %}
