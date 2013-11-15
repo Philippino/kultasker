@@ -12,7 +12,7 @@
   	<li class='active'>{{ check }}</li>
 </ol>
 <!-- кнопка нового обхода по выбранному шаблону -->
-<p><button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" onclick='show_date();'><strong>Обойти</strong></button>
+<p><button class="btn btn-primary"  data-toggle="modal" data-target="#myModal" onclick='load_time();'><strong>Обойти</strong></button>
 <a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a></p>
 <form name = 'Form1' method = 'GET' target ='_top'>
 	{% csrf_token %}
@@ -42,7 +42,7 @@
 	
 </form>
 <!-- Новый дата обхода -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
  		<div class="modal-dialog">
     		<div class="modal-content">
     			<form id='new_check_form' action='' method='POST'>{% csrf_token %}
@@ -51,17 +51,20 @@
         			<h4 class="modal-title" id="myModalLabel">Новый обход</h4>
       			</div>
       			<div class="modal-body">
-      				Вы хотите создать новый обход c датой
-      				<script>     				
+      				Вы хотите создать новый обход c датой<a id='date'></a>.
+      				<script>
+      				function load_time(){   				
       				var date = new Date();
       				var h = date.getHours();
 					var m = date.getMinutes();
       				var d = date.getDate();
 					var mn = date.getMonth();
 					var y = date.getFullYear();
-      				document.write('<a>'+h+':'+m+' '+d+'-'+mn+'-'+y+'</a>')
+					if (m<10) m = '0' + m;
+      				document.getElementById('date').innerHTML = h+':'+m+' '+d+'-'+mn+'-'+y;
+      				}
       				</script>
-					Продолжить? 
+					Продолжить?
       			</div>
       			<div class="modal-footer">
       				<input type= 'submit' class='btn btn-primary' value = 'Создать'>
