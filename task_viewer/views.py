@@ -89,3 +89,8 @@ def change_result(request,check, date, result):
 	new_date.save()
 	result.save()
 	return HttpResponseRedirect("/checks/%s/%s/results/" % (check,date))
+
+def new_date(request, check):
+	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
+ 	tasks = Task.objects.filter(check_id = check)
+	return render_to_response('new_date.html', RequestContext(request,{'results': tasks, 'check': check,}))
