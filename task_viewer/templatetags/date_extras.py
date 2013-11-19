@@ -11,12 +11,12 @@ def get_month(given_index):
 
 @register.filter(expects_localtime=True)
 def format(given_date):
-	
-	delta = timezone.now() - given_date
-	if delta.days == 0:
-		return "Сегодня " + str(delta.seconds//3600)+':'+ str((delta.seconds//60)%60)
+	today = timezone.now()
+	delta = today - given_date
+	if today.day == given_date.day:
+		return "Сегодня в " + str(given_date.hour) + ':' + str(given_date.minute)
 	elif delta.days == 1:
-		return "Вчера " + str(delta.seconds//3600)+':'+ str((delta.seconds//60)%60)	
+		return "Вчера"
 	elif delta.days > 1 and delta.days < 5:
 		return "%s дня назад" % delta.days
 	elif delta.days == 7:
