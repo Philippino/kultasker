@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load date_extras %}
 
 {% block title %} Обходы {% endblock %}
 
@@ -29,7 +30,7 @@
 			<!-- кнопка действий -->
 			<td>{% if check.last_date %}
 					<!-- вывод даты последнего обхода -->
-					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.date_id }}/results/'>{{ check.last_date|date:"H:i d-M-Y" }}</a>
+					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.date_id }}/results/'><!--{{ check.last_date|date:"H:i d-M-Y" }}-->{{ check.last_date|format }}</a>
 					{% if check.status == 1 %}
 						<span class="glyphicon glyphicon-ok"></span>
 					{% else %}

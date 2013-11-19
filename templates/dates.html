@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load date_extras %}
 
 {% block title %} Даты обходов {% endblock %}
 
@@ -26,7 +27,7 @@
 			<tr>
 				<td>
 					<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ date.check_id }}/{{ date.id }}/results/'">
-						{{ date.date|date:" H:i d-M-Y" }}
+						{{ date.date|format }}
 					</button>
 					</td>
 				<td>
