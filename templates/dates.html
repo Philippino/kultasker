@@ -13,7 +13,7 @@
   	<li class='active'>{{ check }}</li>
 </ol>
 <!-- кнопка нового обхода по выбранному шаблону -->
-<form id='new_check_form' action='' method='POST'>{% csrf_token %}
+<form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
 <p><strong><input class="btn btn-primary" type = 'submit' value='Обойти'></strong>
 <a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a></p>
 </form>
