@@ -7,7 +7,7 @@
 <body>
 <ol class="breadcrumb">
   	<li><a href='/checks/'>Обходы</a></li>
-  	<li><a href='/checks/{{ date.check_id }}/dates/'>{{ check }}</a></li>
+  	<li><a href='/checks/{{ check.id }}/dates/'>{{ check }}</a></li>
   	<li class = 'active'>Новый обход</li>
   
 </ol>
@@ -24,7 +24,7 @@
 			<tr>
 				<td>{{ result.task }}</td>
 				<td>
-					<a href='/checks/{{ date.check_id }}/{{ date.id }}/results/{{result.id}}/change/'>
+					<a href='/checks/{{ check.id }}/dates/new/{{ result.date_id }}/results/{{result.id}}/change/'>
 					{% if result.status == True %}
 					<span class="glyphicon glyphicon-ok" ></span>
 					{% else %}

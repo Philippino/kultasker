@@ -91,6 +91,26 @@ def change_result(request,check, date, result):
 	return HttpResponseRedirect("/checks/%s/%s/results/" % (check,date))
 
 def new_date(request, check):
+	if request.method == 'POST':
+		date_form = DateForm(request.POST)
+		if date_form.is_valid:
+			new_date = Date()
+			new_date.date = timezone.now()
+			new_date.check_id = check
+			new_date.save()
+			linked_tasks =Task.objects.filter(check_id = check)
+			for task in linked_tasks:
+				new_result = Result()
+				new_result.task = task
+				new_result.date = new_date
+				new_result.status = False
+				new_result.save()
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
- 	tasks = Task.objects.filter(check_id = check)
-	return render_to_response('new_date.html', RequestContext(request,{'results': tasks, 'check': check,}))
+ 	results = Result.objects.filter(date = new_date.id)
+ 	default_date_id = new_date.id
+	return render_to_response('new_date.html', RequestContext(request,{'results': results, 'check': check,'date_id': default_date_id}))
+
+def del_date(request,check, date):
+	del_date = Date.objects.filter(id = date).select_related()
+	del_date.delete()
+	return HttpResponseRedirect("/checks/%s/dates/" % check)
