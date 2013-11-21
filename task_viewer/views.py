@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Max, Min, Count
 from django.utils import timezone
 from datetime import timedelta
+import random
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	if request.method == 'POST': 						#Проверка, если запрос формата POST
@@ -144,3 +145,25 @@ def cancel_date(request, check):
 	cancel_date = Date.objects.filter(check = check).order_by('-id').select_related()[0]
 	cancel_date.delete()
 	return HttpResponseRedirect("/checks/%s/dates/" % check)
+
+def generate(request, check):
+	linked_tasks = Task.objects.filter(check_id = check)
+	for i in range(50):
+		new_date = Date()
+		new_date.date = randomDate()
+		new_date.check_id = check
+		new_date.save()
+		for task in linked_tasks:
+			new_result = Result()
+			new_result.task = task
+			new_result.date = new_date
+			new_result.status = random.choice(range(0,2))
+			new_result.save()
+	return HttpResponseRedirect("/checks/%s/dates/" % check)
+
+def randomDate():
+	year = random.choice(range(1970, 2013))
+	month = random.choice(range(1, 12))
+	day = random.choice(range(1, 28))
+	date = datetime.datetime(year, month, day)
+	return date
