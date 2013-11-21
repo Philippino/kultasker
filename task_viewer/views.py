@@ -4,7 +4,7 @@ from task_viewer.forms import *
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.db.models import Max, Min, Count
+from django.db.models import Max, Min
 from django.utils import timezone
 from datetime import timedelta
 import random
@@ -28,7 +28,7 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 
 def view_dates(request, check):
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
-	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
+	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))[:10]
 	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))	
 
 def view_tasks(request, check):

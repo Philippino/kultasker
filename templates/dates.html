@@ -14,11 +14,20 @@
 </ol>
 <!-- кнопка нового обхода по выбранному шаблону -->
 <form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
-<p><strong><input class="btn btn-primary" type = 'submit' value='Обойти'></strong>
-<a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a></p>
+<strong><input class="btn btn-primary" type = 'submit' value='Обойти'></strong>
+<a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a>
 </form>
 <form name = 'Form1' method = 'GET' target ='_top'>
 	{% csrf_token %}
+<ul class="pagination">
+  <li><a href="#">&laquo;</a></li>
+  <li class='active'><a href="#">1-10</a></li>
+  <li><a href="#">11-20</a></li>
+  <li><a href="#">21-30</a></li>
+  <li><a href="#">31-40</a></li>
+  <li><a href="#">41-50</a></li>
+  <li><a href="#">&raquo;</a></li>
+</ul>
 	<table class = 'table table-hover'>
 		<tr>
 			<td>Дата</td>
@@ -44,7 +53,6 @@
 			</tr>		
 		{% endfor %}
 	</table>
-	
 </form>
 <!-- Новый дата обхода -->
 <!--

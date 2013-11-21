@@ -23,7 +23,7 @@ urlpatterns = patterns('',
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += patterns('task_viewer',
 	url(r'^checks/$', 'views.view_checks'), #вызов таблицы шаблонов обходов
-    url(r'^checks/(?P<check>\d+)/dates/$', 'views.make_results'), #показ дат обходов или создание нового обхода
+    url(r'^checks/(?P<check>\d+)/dates/$', 'views.view_dates'), #показ дат обходов или создание нового обхода
     url(r'^checks/(?P<check>\d+)/dates/new/$', 'views.new_date'), #создание новой даты
     url(r'^checks/(?P<check>\d+)/tasks/$', 'views.view_tasks'), #показ заданий, связанных с шаблоном
     url(r'^checks/(?P<check>\d+)/(?P<date>\d+)/results/$', 'views.view_results'),  #показ результатов обхода
