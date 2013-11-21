@@ -90,38 +90,57 @@ def change_result(request,check, date, result):
 	result.save()
 	return HttpResponseRedirect("/checks/%s/%s/results/" % (check,date))
 
-def new_date(request, check):
-	new_date = Date()
-  	new_date.date = timezone.now()
-  	new_date.check_id = check
-	linked_tasks = Task.objects.filter(check_id = check)
-	for task in linked_tasks:
-		new_result = Result()
-		new_result.task = task
-		new_result.date = new_date
-		new_result.status = False
-			#new_result.save()
-	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
-	return render_to_response('new_date.html', RequestContext(request,{'results': linked_tasks, 'check': check}))
+def change_new_result(request,check, result):
+	result = Result.objects.get(id = result)
+	if result.status == True:
+		result.status = False
+	else:
+		result.status = True
+	#date = result.date
+	#new_date.date = timezone.now()
+	#new_date.save()
+	result.save()
+	return HttpResponseRedirect("/checks/%s/dates/new/" % check)
 
-def save_date(request, check):
+def new_date(request, check):
 	if request.method == 'POST':
-  		new_date = Date()
+		new_date = Date()
   		new_date.date = timezone.now()
   		new_date.check_id = check
   		new_date.save()
+		linked_tasks = Task.objects.filter(check_id = check)
+		results = []
+		for task in linked_tasks:
+			new_result = Result()
+			new_result.task = task
+			new_result.date = new_date
+			new_result.status = False
+			results.append(new_result)
+			new_result.save()
+	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
+	new_date = Date.objects.filter(check = check).order_by('-id')[0]
+	results = Result.objects.filter(date = new_date)
+	return render_to_response('new_date.html', RequestContext(request,{'results': results, 'check': check}))
+
+def save_date(request, check):
+	if request.method == 'POST':
+  		new_date = Date.objects.filter(check = check).order_by('-id')[0]
+  		new_date.date = timezone.now()
+  		new_date.save()
   		linked_tasks = Task.objects.filter(check_id = check)
-  		for task in linked_tasks:
-  			new_result = Result()
-  			new_result.task = task
-  			new_result.date = new_date
-  			new_result.status = False
-  			new_result.save()
-  			return HttpResponseRedirect("/checks/%s/dates/" % (check))
+  		results = Result.objects.filter(date = new_date)
+  		for result in results:
+			result.save()
+  		return HttpResponseRedirect("/checks/%s/dates/" % (check))
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
 	return render_to_response('new_date.html', RequestContext(request,{'results': linked_tasks, 'check': check}))
 
 def del_date(request,check, date):
 	del_date = Date.objects.filter(id = date).select_related()
 	del_date.delete()
+	return HttpResponseRedirect("/checks/%s/dates/" % check)
+
+def cancel_date(request, check):
+	cancel_date = Date.objects.filter(check = check).order_by('-id').select_related()[0]
+	cancel_date.delete()
 	return HttpResponseRedirect("/checks/%s/dates/" % check)

@@ -28,7 +28,8 @@ urlpatterns += patterns('task_viewer',
     url(r'^checks/(?P<check>\d+)/tasks/$', 'views.view_tasks'), #показ заданий, связанных с шаблоном
     url(r'^checks/(?P<check>\d+)/(?P<date>\d+)/results/$', 'views.view_results'),  #показ результатов обхода
     url(r'^checks/(?P<check>\d+)/(?P<date>\d+)/results/(?P<result>\d+)/change/$', 'views.change_result'), #изменение статуса результата
-    url(r'^checks/(?P<check>\d+)/dates/new/(?P<result>\d+)/change/$', 'views.change_result'), #изменение статуса результата нового обохода
+    url(r'^checks/(?P<check>\d+)/dates/new/(?P<result>\d+)/change/$', 'views.change_new_result'), #изменение статуса результата нового обохода
     url(r'^checks/(?P<check>\d+)/(?P<date>\d+)/delete/$', 'views.del_date'), #удаление даты обхода
     url(r'^checks/(?P<check>\d+)/dates/new/save/$', 'views.save_date'), #сохранение даты обхода
+    url(r'^checks/(?P<check>\d+)/dates/cancel/$', 'views.cancel_date'), #удаление даты обхода
 	)
