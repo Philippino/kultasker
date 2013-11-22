@@ -20,13 +20,21 @@
 <form name = 'Form1' method = 'GET' target ='_top'>
 	{% csrf_token %}
 <ul class="pagination">
-  <li><a href="#">&laquo;</a></li>
-  <li class='active'><a href="#">1-10</a></li>
-  <li><a href="#">11-20</a></li>
-  <li><a href="#">21-30</a></li>
-  <li><a href="#">31-40</a></li>
-  <li><a href="#">41-50</a></li>
-  <li><a href="#">&raquo;</a></li>
+  {% if dates.has_previous %}
+    <li><a href="?page={{ dates.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+   	<li class ='disabled'><a>&laquo;</a></li>
+  {% endif %}
+  <li>
+  <span class="current">
+  {{ dates.number }} из {{ dates.paginator.num_pages }}
+  </span>
+  <li>
+  {% if dates.has_next %}
+  <li><a href="?page={{ dates.next_page_number }}">&raquo;</a></li>
+  {% else %}
+   	<li class ='disabled'><a>&raquo;</a></li>
+  {% endif %}
 </ul>
 	<table class = 'table table-hover'>
 		<tr>

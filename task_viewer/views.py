@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Max, Min
 from django.utils import timezone
 from datetime import timedelta
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import random
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
@@ -28,7 +29,15 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 
 def view_dates(request, check):
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
-	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))[:10]
+	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
+	paginator = Paginator(dates, 10)
+	page = request.GET.get('page')
+	try:
+		dates = paginator.page(page)
+	except PageNotAnInteger:
+		dates = paginator.page(1)
+	except EmptyPage:
+		dates = paginator.page(paginator.num_pages)
 	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))	
 
 def view_tasks(request, check):
