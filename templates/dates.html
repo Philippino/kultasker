@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load date_extras %}
 
 {% block title %} Даты обходов {% endblock %}
 
@@ -11,7 +10,7 @@
 <ol class="breadcrumb">
   	<li><a href='/checks/'>Обходы</a></li>
   	<li class='active'>{{ check }}</li>
-</ol>
+</ol><!--
 <div class="alert alert-danger fade in">
   <a class="close" data-dismiss='alert' aria-hidden='true'>×</a>
   <p><strong>Внимание!</strong> Вы действительно хотите удалить обход?</p>
@@ -19,53 +18,14 @@
     <a class="btn btn-danger" href="#">Да</a> <a class="btn btn-default" href="#">Нет</a>
   </div>
 </div>
+-->
 <!-- кнопка нового обхода по выбранному шаблону -->
 <form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
 <strong><input class="btn btn-primary" type = 'submit' value='Обойти'></strong>
 <a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a>
 </form>
-<form name = 'Form1' method = 'GET' target ='_top'>
-	{% csrf_token %}
-<ul class="pagination">
-  {% if dates.has_previous %}
-    <li><a href="?page={{ dates.previous_page_number }}">&laquo;</a></li>
-  {% endif %}
-  <li>
-  <span class="current">
-  {{ dates.start_index }}-{{ dates.end_index }}
-  </span>
-  <li>
-  {% if dates.has_next %}
-  <li><a href="?page={{ dates.next_page_number }}">&raquo;</a></li>
-  {% endif %}
-</ul>
-	<table class = 'table table-hover'>
-		<tr>
-			<td>Дата</td>
-			<td>Статус</td>
-			<td></td>
-		</tr>
-		<!-- даты обходов -->
-		{% for date in dates %}
-			<tr>
-				<td>
-					<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ date.check_id }}/{{ date.id }}/results/'">
-						{{ date.date|format }}
-					</button>
-					</td>
-				<td>
-					{% if date.status == True %}
-							<span class="glyphicon glyphicon-ok"></span>
-						{% else %}
-							<span class="glyphicon glyphicon-remove"></span>
-					{% endif %}
-				</td>
-				<td><a href='/checks/{{ date.check_id }}/{{ date.id }}/delete/'><span class="glyphicon glyphicon-trash"></span></a>
-				</td>
-			</tr>		
-		{% endfor %}
-	</table>
-</form>
+<br>
+{% include page_template %}	
 </body>
 
 {% endblock %}

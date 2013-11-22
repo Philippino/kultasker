@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Max, Min
 from django.utils import timezone
 from datetime import timedelta
+from endless_pagination.decorators import page_template
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import random
 
@@ -27,18 +28,19 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 	chk_form = CheckForm() 
 	return render_to_response('checks.html',  RequestContext(request,{'checks': checks,'check_form': chk_form}))
 
-def view_dates(request, check):
+@page_template('dates_table.html')
+def view_dates(request, check, template = 'dates.html',page_template = 'dates_table.html', extra_context = None):
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
 	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
-	paginator = Paginator(dates, 10)
-	page = request.GET.get('page')
-	try:
-		dates = paginator.page(page)
-	except PageNotAnInteger:
-		dates = paginator.page(1)
-	except EmptyPage:
-		dates = paginator.page(paginator.num_pages)
-	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))	
+	context = {
+	'dates': dates,
+	'check': check,
+	'page_template': page_template}
+	if extra_context is not None:
+		context.update(extra_context)
+	if request.is_ajax():
+		template = page_template 
+	return render_to_response(template, context, context_instance=RequestContext(request))	
 
 def view_tasks(request, check):
 	#Если запрос POST, создается новое задание
