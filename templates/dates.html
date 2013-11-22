@@ -22,18 +22,14 @@
 <ul class="pagination">
   {% if dates.has_previous %}
     <li><a href="?page={{ dates.previous_page_number }}">&laquo;</a></li>
-  {% else %}
-   	<li class ='disabled'><a>&laquo;</a></li>
   {% endif %}
   <li>
   <span class="current">
-  {{ dates.number }} из {{ dates.paginator.num_pages }}
+  {{ dates.start_index }}-{{ dates.end_index }}
   </span>
   <li>
   {% if dates.has_next %}
   <li><a href="?page={{ dates.next_page_number }}">&raquo;</a></li>
-  {% else %}
-   	<li class ='disabled'><a>&raquo;</a></li>
   {% endif %}
 </ul>
 	<table class = 'table table-hover'>
@@ -57,46 +53,12 @@
 							<span class="glyphicon glyphicon-remove"></span>
 					{% endif %}
 				</td>
-				<td><a href='/checks/{{ date.check_id }}/{{ date.id }}/delete/'><span class="glyphicon glyphicon-trash"></span></a></td>
+				<td><a href='/checks/{{ date.check_id }}/{{ date.id }}/delete/'><span class="glyphicon glyphicon-trash"></span></a>
+				</td>
 			</tr>		
 		{% endfor %}
 	</table>
 </form>
-<!-- Новый дата обхода -->
-<!--
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
- 		<div class="modal-dialog">
-    		<div class="modal-content">
-    			<form id='new_check_form' action='' method='POST'>{% csrf_token %}
-      			<div class="modal-header">
-        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        			<h4 class="modal-title" id="myModalLabel">Новый обход</h4>
-      			</div>
-      			<div class="modal-body">
-      				Вы хотите создать новый обход c датой<a id='date'></a>.
-      				<script>
-      				function load_time(){   				
-      				var date = new Date();
-      				var h = date.getHours();
-					var m = date.getMinutes();
-      				var d = date.getDate();
-					var mn = date.getMonth();
-					var y = date.getFullYear();
-					if (m<10) m = '0' + m;
-      				document.getElementById('date').innerHTML = h+':'+m+' '+d+'-'+mn+'-'+y;
-      				}
-      				</script>
-					Продолжить?
-      			</div>
-      			<div class="modal-footer">
-      				<input type= 'submit' class='btn btn-primary' value = 'Создать'>
-        			<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-      			</div>		
-    			</form>
-    		</div>
-  		</div>
-	</div>
--->
 </body>
 
 {% endblock %}
