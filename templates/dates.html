@@ -12,6 +12,13 @@
   	<li><a href='/checks/'>Обходы</a></li>
   	<li class='active'>{{ check }}</li>
 </ol>
+<div class="alert alert-danger fade in">
+  <a class="close" data-dismiss='alert' aria-hidden='true'>×</a>
+  <p><strong>Внимание!</strong> Вы действительно хотите удалить обход?</p>
+  <div class="alert-actions">
+    <a class="btn btn-danger" href="#">Да</a> <a class="btn btn-default" href="#">Нет</a>
+  </div>
+</div>
 <!-- кнопка нового обхода по выбранному шаблону -->
 <form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
 <strong><input class="btn btn-primary" type = 'submit' value='Обойти'></strong>
