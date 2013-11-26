@@ -12,11 +12,11 @@
   	<li><a href='/checks/'>Обходы</a></li>
   	<li class='active'>{{ check }}</li>
 </ol>
-<div class="alert alert-danger fade in">
-  <a class="close" data-dismiss='alert' aria-hidden='true'>×</a>
+<div class="alert alert-danger" style="display: none" id='alert'>
+  <a class="close" onclick="$('.alert').hide();">×</a>
   <p><strong>Внимание!</strong> Вы действительно хотите удалить обход?</p>
   <div class="alert-actions">
-    <a class="btn btn-danger" href="#">Да</a> <a class="btn btn-default" href="#">Нет</a>
+    <a class="btn btn-danger" href="">Да</a> <a class="btn btn-default" onclick="$('.alert').hide();">Нет</a>
   </div>
 </div>
 <!-- кнопка нового обхода по выбранному шаблону -->
@@ -60,7 +60,8 @@
 							<span class="glyphicon glyphicon-remove"></span>
 					{% endif %}
 				</td>
-				<td><a href='/checks/{{ date.check_id }}/{{ date.id }}/delete/'><span class="glyphicon glyphicon-trash"></span></a>
+				<td>
+          <a href='#' onclick="$('.alert').show();"><span class="glyphicon glyphicon-trash"></span></a>
 				</td>
 			</tr>		
 		{% endfor %}
