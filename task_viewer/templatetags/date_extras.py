@@ -15,7 +15,7 @@ def format(given_date):
 	delta = today - given_date
 	if today.day == given_date.day and today.year == given_date.year and given_date.month == today.month:
 		return "Сегодня" #str(given_date.hour) + ':' + str(given_date.minute)
-	elif delta.days == 1 and today.year == given_date.year and given_date.month == today.month:
+	elif today.day - 1== given_date.day and today.year == given_date.year and given_date.month == today.month:
 		return "Вчера"
 	elif today.year != given_date.year:
 		return str(given_date.day) +' '+ get_month(given_date.month-1) +' '+ str(given_date.year)
