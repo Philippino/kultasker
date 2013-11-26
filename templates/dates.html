@@ -12,11 +12,11 @@
   	<li><a href='/checks/'>Обходы</a></li>
   	<li class='active'>{{ check }}</li>
 </ol>
-<div class="alert" style="display: none" id='alert'>
+<div class="alert alert-warning" style="display: none" id='alert'>
   <a class="close" onclick="$('.alert').hide();">×</a>
   <p><strong>Внимание!</strong> Вы действительно хотите удалить обход?</p>
   <div class="alert-actions">
-    <a class="btn btn-danger" id='proceed_delete'>Да</a> <a class="btn btn-default" onclick="$('.alert').hide();">Нет</a>
+    <a class="btn btn-warning" id='proceed_delete'>Да</a> <a class="btn btn-default" onclick="$('.alert').hide();">Нет</a>
   </div>
 </div>
 <!-- кнопка нового обхода по выбранному шаблону -->
