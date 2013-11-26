@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %} Култаскер {% endblock %}
+{% block content %}
+
+{% if form.errors %}
+<p class='error'>Неверное имя или пароль</p>
+{% endif %}
+
+<form action='' method='POST'>{% csrf_token %}
+<div class="form-group">
+	<div class='row'>
+    	<label for="username" class='col-md-4'>Имя пользователя:</label>
+    	<input type='text' class="form-control col-md-8" id="username">
+	</div>
+	<div class='row'>
+	<label for='password' class='col-md-4'>Пароль:</label>
+	<input type='password' class="form-control col-md-8" name='password' id='password'>
+	</div>
+</div>
+<div class= 'row'>
+<button type='submit' class= 'btn btn-primary'>Войти</button>
+<input type='hidden' name='next' value='{{ next|escape }}'/>
+</div>
+</form>
+{% endblock %}
