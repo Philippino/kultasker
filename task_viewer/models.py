@@ -11,7 +11,7 @@ class Date(models.Model):
 	check = models.ForeignKey(Check)
 
 	def __unicode__(self):
-		return self.date
+		return str(self.date)
 
 class Task(models.Model):
 	task = models.CharField(max_length = 100)
@@ -25,7 +25,7 @@ class Result(models.Model):
 	task = models.ForeignKey(Task)
 	status = models.IntegerField(default = 0)
 
-	def __unicode__(self):
-		return  self.status
+	#def __unicode__(self):
+	#	return  str(self.status)
 		
 # Create your models here.
