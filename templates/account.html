@@ -1,0 +1,43 @@
+{% extends 'base.html '%}
+{% block title %} Детали пользователя {% endblock %}
+
+{% block content %}
+<div>
+	<h2>Детали пользователя</h2>
+	<table class="table table-bordered">
+	<tr>
+		<td>
+			<div class='col-md-2'>
+				<label for="username">Имя пользователя:</label>
+			</div>
+			<div class='col-md-4'>
+    			<input type='text' class="form-control" name='username' id="username" value ='{{ user.username }}'>
+    		</div>
+    	</td>
+	</tr>
+</table>
+<table class = 'table table-bordered'>
+	<tr>
+		<td>
+		<div class='col-md-2'>
+			<label for="firsname">Имя:</label>
+		</div>
+		<div class='col-md-4'>
+    		<input type='text' class="form-control" name='firstname' id="firstname" value ='{{ user.first_name }}'>
+		</div>
+	</td>
+	</tr>
+	<tr>
+		<td>
+		<div class='col-md-2'>
+			<label for='surname'>Фамилия:</label>
+		</div>
+		<div class='col-md-4'>
+			<input type='text' class="form-control" name='surname' id='surname' value ='{{ user.last_name }}'>
+		</div>
+		</td>
+	</tr>
+</table>
+<button type='submit' class= 'btn btn-primary'>Сохранить</button>
+</div>
+{% endblock %}

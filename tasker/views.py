@@ -1,3 +1,4 @@
+# coding: utf-8
 from django.contrib import auth
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -18,4 +19,10 @@ def login(request):
 
 def logout(request):
 	auth.logout(request)
+	return HttpResponseRedirect('/accounts/login/')
+
+def account_details(request):
+	current_user = request.user
+	if current_user.is_authenticated():
+		return render_to_response('account.html', RequestContext(request,{'user':current_user}))
 	return HttpResponseRedirect('/accounts/login/')
