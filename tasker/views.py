@@ -26,3 +26,10 @@ def account_details(request):
 	if current_user.is_authenticated():
 		return render_to_response('account.html', RequestContext(request,{'user':current_user}))
 	return HttpResponseRedirect('/accounts/login/')
+
+def index(request):
+	current_user = request.user
+	if current_user.is_authenticated():
+		return HttpResponseRedirect('/checks/')
+	else:
+		return HttpResponseRedirect('/accounts/login')
