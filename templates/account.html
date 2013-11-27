@@ -2,7 +2,11 @@
 {% block title %} Детали пользователя {% endblock %}
 
 {% block content %}
+{% if message %}
+<span class="label label-warning">{{ message }}</span>
+{% endif %}
 <div>
+<form actiom='' method='POST' role='form'>{% csrf_token %}
 	<h2>Детали пользователя</h2>
 	<table class="table table-bordered">
 	<tr>
@@ -30,10 +34,10 @@
 	<tr>
 		<td>
 		<div class='col-md-2'>
-			<label for='surname'>Фамилия:</label>
+			<label for='lastname'>Фамилия:</label>
 		</div>
 		<div class='col-md-4'>
-			<input type='text' class="form-control" name='surname' id='surname' value ='{{ user.last_name }}'>
+			<input type='text' class="form-control" name='lastname' id='lastname' value ='{{ user.last_name }}'>
 		</div>
 		</td>
 	</tr>
@@ -49,5 +53,6 @@
 	</tr>
 </table>
 <button type='submit' class= 'btn btn-primary'>Сохранить</button>
+</form>
 </div>
 {% endblock %}

@@ -24,7 +24,15 @@ def logout(request):
 def account_details(request):
 	current_user = request.user
 	if current_user.is_authenticated():
-		return render_to_response('account.html', RequestContext(request,{'user':current_user}))
+		if request.POST:
+			current_user.username = request.POST['username']
+			current_user.first_name = request.POST['firstname']
+			current_user.last_name = request.POST['lastname']
+			current_user.email = request.POST['email']
+			message = 'Данные успешно изменены'
+			return render_to_response('account.html', RequestContext(request,{'user':current_user,'message': message}))
+		else:
+			return render_to_response('account.html', RequestContext(request,{'user':current_user}))
 	return HttpResponseRedirect('/accounts/login/')
 
 def index(request):
