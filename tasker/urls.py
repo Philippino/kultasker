@@ -2,7 +2,7 @@
 from django.conf.urls import patterns, include, url
 from dajaxice.core import dajaxice_autodiscover, dajaxice_config
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.contrib.auth.views import login, logout
+from views import login, logout
 dajaxice_autodiscover()
 
 # Uncomment the next two lines to enable the admin:
@@ -12,7 +12,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
 
-    url(r'^accounts/login/$', login,{'template_name': 'login.html'}),
+    url(r'^accounts/login/$', login),
     url(r'^accounts/logout/$', logout),
     # Examples:
     # url(r'^$', 'tasker.views.home', name='home'),
