@@ -10,26 +10,36 @@ from datetime import timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import random
 
+def create_check(request): 
+	chk = request.POST									#Извлечение запроса POST
+	chk_form = CheckForm(chk)							#Подставление данных запроса в форму
+	if chk_form.is_valid():         					#Если формат данных в форме правильный
+		new_chk = Check()									#Создается экземпляр класса Check
+		new_chk.name = chk['name']  						#В экземпляр записывается аргумент name
+		new_chk.save()							#Экземпляр сохраняется в базе данных
+		return HttpResponseRedirect('/checks/%s/tasks' % new_chk.id)
+
+
 def view_checks(request): #Вызов таблицы шаблонов обходов
-	if request.method == 'POST': 						#Проверка, если запрос формата POST
-		chk = request.POST									#Извлечение запроса POST
-		chk_form = CheckForm(chk)							#Подставление данных запроса в форму
-		if chk_form.is_valid():         					#Если формат данных в форме правильный
-			new_chk = Check()									#Создается экземпляр класса Check
-			new_chk.name = chk['name']  						#В экземпляр записывается аргумент name
-			new_chk.save()							#Экземпляр сохраняется в базе данных
-			return HttpResponseRedirect('/checks/%s/tasks' % new_chk.id)
+	error = ''
+	if request.POST:
+		if request.user.is_authenticated() and request.user.has_perm('checks.can_add'):	
+			create_check(request)
+		else:
+			error = 'Вы не можете добавлять новые шаблоны обхода'
 	checks = Check.objects.all().select_related('date').annotate(last_date = Max('date__date')).order_by('id') #Загрузка всех шаблонов обходов
 	for check in checks:
 		try:
 			date = Date.objects.filter(date = check.last_date).annotate(status = Min('result__status'))[0]
 			check.date_id = date.id 
 			check.status = date.status
-			break
-		except ValueError:
+		except:
 			pass
-	chk_form = CheckForm() 
-	return render_to_response('checks.html',  RequestContext(request,{'checks': checks,'check_form': chk_form}))
+	chk_form = CheckForm()
+	context = {'checks': checks,'check_form': chk_form,}
+	if error:
+		context['error'] = error
+	return render_to_response('checks.html',  RequestContext(request,context))
 
 def view_dates(request, check):
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
