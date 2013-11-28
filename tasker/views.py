@@ -29,6 +29,7 @@ def account_details(request):
 			current_user.first_name = request.POST['firstname']
 			current_user.last_name = request.POST['lastname']
 			current_user.email = request.POST['email']
+			current_user.save()
 			message = 'Данные успешно изменены'
 			return render_to_response('account.html', RequestContext(request,{'user':current_user,'message': message}))
 		else:
