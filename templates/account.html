@@ -52,6 +52,16 @@
 		</td>
 	</tr>
 </table>
+{% if user.is_staff %}
+	<div class='well'>
+		Пользователь является членом персонала
+	</div>
+{% endif %}
+{% if user.is_superuser %}
+	<div class='well'>
+		Пользователь является суперпользователем
+	</div>
+{% endif %}
 <button type='submit' class= 'btn btn-primary'>Сохранить</button>
 </form>
 </div>
