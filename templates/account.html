@@ -3,7 +3,10 @@
 
 {% block content %}
 {% if message %}
-<span class="label label-warning">{{ message }}</span>
+<div class="alert alert-success">
+    {{ message }}
+    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+</div>
 {% endif %}
 <div>
 <form actiom='' method='POST' role='form'>{% csrf_token %}
