@@ -5,17 +5,20 @@ from django.template import RequestContext
 from django.http import HttpResponseRedirect
 
 def login(request):
+	error=''
 	if request.POST:
 		username = request.POST['username']
 		password = request.POST['password']
 		user = auth.authenticate(username = username, password = password)
-		if user is not None and user.is_active:
-			auth.login(request, user)
-			return HttpResponseRedirect('/checks/')
+		if user is not None:
+			if user.is_active:
+				auth.login(request, user)
+				return HttpResponseRedirect('/checks/')
+			else:
+				error='Ваш аккаунт неактивен'
 		else:
-			return HttpResponseRedirect('/accounts/login')
-	else:
-		return render_to_response('login.html', RequestContext(request,{}))	
+			error='Пользователя с такими данными не существует'
+	return render_to_response('login.html', RequestContext(request,{'error': error}))	
 
 def logout(request):
 	auth.logout(request)
