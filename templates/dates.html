@@ -26,19 +26,23 @@
 </form>
 <form name = 'Form1' method = 'GET' target ='_top'>
 	{% csrf_token %}
+{% if dates.has_other_pages %}
 <ul class="pagination">
-  {% if dates.has_previous %}
-    <li><a href="?page={{ dates.previous_page_number }}">&laquo;</a></li>
-  {% endif %}
-  <li>
-  <span class="current">
-  {{ dates.start_index }}-{{ dates.end_index }}
-  </span>
-  <li>
-  {% if dates.has_next %}
-  <li><a href="?page={{ dates.next_page_number }}">&raquo;</a></li>
-  {% endif %}
+  	{% if dates.has_previous %}
+    	<li><a href="?page={{ dates.previous_page_number }}">&laquo;</a></li>
+  	{% endif %}
+  		<li>
+  		<span class="current">
+  		{{ dates.start_index }}-{{ dates.end_index }}
+  		</span>
+  		</li>
+  	{% if dates.has_next %}
+  		<li><a href="?page={{ dates.next_page_number }}">&raquo;</a></li>
+  	{% endif %}
 </ul>
+{% else %}
+	<br>
+{% endif %}
 	<table class = 'table table-hover'>
 		<tr>
 			<th>Дата</th>
