@@ -42,6 +42,11 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 	return render_to_response('checks.html',  RequestContext(request,context))
 
 def view_dates(request, check):
+	error = ''
+	if request.user.is_authenticated() and request.user.has_perm('dates.can_add','results.can_add'):
+		pass
+	else:
+		error='Вы не можете добавлять обходы'
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
 	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
 	paginator = Paginator(dates, 10)
@@ -52,7 +57,10 @@ def view_dates(request, check):
 		dates = paginator.page(1)
 	except EmptyPage:
 		dates = paginator.page(paginator.num_pages)
-	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))	
+	context = {'dates': dates, 'check': check,}
+	if error:
+		context['error'] = error
+	return render_to_response('dates.html', RequestContext(request,context))	
 
 def view_tasks(request, check):
 	#Если запрос POST, создается новое задание
@@ -127,24 +135,27 @@ def change_new_result(request,check, result):
 	return HttpResponseRedirect("/checks/%s/dates/new/" % check)
 
 def new_date(request, check):
-	if request.method == 'POST':
-		new_date = Date()
-  		new_date.date = timezone.now()
-  		new_date.check_id = check
-  		new_date.save()
-		linked_tasks = Task.objects.filter(check_id = check)
-		results = []
-		for task in linked_tasks:
-			new_result = Result()
-			new_result.task = task
-			new_result.date = new_date
-			new_result.status = False
-			results.append(new_result)
-			new_result.save()
-	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
-	new_date = Date.objects.filter(check = check).order_by('-id')[0]
-	results = Result.objects.filter(date = new_date)
-	return render_to_response('new_date.html', RequestContext(request,{'results': results, 'check': check}))
+	error=''
+	if request.POST:
+		if request.user.is_authenticated() and request.user.has_perm('dates.can_add','results.can_add'):
+			new_date = Date()
+  			new_date.date = timezone.now()
+  			new_date.check_id = check
+  			new_date.save()
+			linked_tasks = Task.objects.filter(check_id = check)
+			results = []
+			for task in linked_tasks:
+				new_result = Result()
+				new_result.task = task
+				new_result.date = new_date
+				new_result.status = False
+				results.append(new_result)
+				new_result.save()
+			check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
+			new_date = Date.objects.filter(check = check).order_by('-id')[0]
+			results = Result.objects.filter(date = new_date)
+			return render_to_response('new_date.html', RequestContext(request,{'results': results, 'check': check}))
+	return HttpResponseRedirect('/checks/%s/dates/' % check)
 
 def save_date(request, check):
 	if request.method == 'POST':
