@@ -135,9 +135,8 @@ def change_new_result(request,check, result):
 	return HttpResponseRedirect("/checks/%s/dates/new/" % check)
 
 def new_date(request, check):
-	error=''
-	if request.POST:
-		if request.user.is_authenticated() and request.user.has_perm('dates.can_add','results.can_add'):
+	if request.user.is_authenticated() and request.user.has_perm('dates.can_add','results.can_add'):
+		if request.POST:
 			new_date = Date()
   			new_date.date = timezone.now()
   			new_date.check_id = check
@@ -151,10 +150,10 @@ def new_date(request, check):
 				new_result.status = False
 				results.append(new_result)
 				new_result.save()
-			check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
-			new_date = Date.objects.filter(check = check).order_by('-id')[0]
-			results = Result.objects.filter(date = new_date)
-			return render_to_response('new_date.html', RequestContext(request,{'results': results, 'check': check}))
+		check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
+		new_date = Date.objects.filter(check = check).order_by('-id')[0]
+		results = Result.objects.filter(date = new_date)
+		return render_to_response('new_date.html', RequestContext(request,{'results': results, 'check': check}))	
 	return HttpResponseRedirect('/checks/%s/dates/' % check)
 
 def save_date(request, check):
