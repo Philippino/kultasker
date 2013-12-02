@@ -128,15 +128,17 @@ def view_results(request, check, date):
 	return render_to_response('results.html', context)
 
 def change_result(request,check, date, result):
-	result = Result.objects.get(id = result)
-	if result.status == True:
-		result.status = False
-	else:
-		result.status = True
-	new_date = Date.objects.get(id = date)
-	new_date.date = timezone.now()
-	new_date.save()
-	result.save()
+	current_user = request.user
+	if current_user.has_perm('results.can_change'):
+		result = Result.objects.get(id = result)
+		if result.status == True:
+			result.status = False
+		else:
+			result.status = True
+		new_date = Date.objects.get(id = date)
+		new_date.date = timezone.now()
+		new_date.save()
+		result.save()
 	return HttpResponseRedirect("/checks/%s/%s/results/" % (check,date))
 
 def change_new_result(request,check, result):
