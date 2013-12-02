@@ -47,12 +47,7 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 		context['error'] = error
 	return render_to_response('checks.html',  RequestContext(request,context))
 
-def view_dates(request, check):
-	error = ''
-	if request.user.is_authenticated() and request.user.has_perm('dates.can_add','results.can_add'):
-		pass
-	else:
-		error='Вы не можете добавлять обходы'
+def dates_context(request,check):
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
 	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
 	paginator = Paginator(dates, 10)
@@ -64,24 +59,50 @@ def view_dates(request, check):
 	except EmptyPage:
 		dates = paginator.page(paginator.num_pages)
 	context = {'dates': dates, 'check': check,}
+	return context
+
+def view_dates(request, check):
+	error = ''
+	current_user = request.user
+	if current_user.has_perm('dates.can_add','results.can_add'):
+		pass
+	else:
+		error='Вы не можете добавлять обходы'
+	if current_user.is_active == False:
+		return HttpResponseRedirect('/accounts/login/')
+	else:
+		context = dates_context(request,check)
 	if error:
 		context['error'] = error
-	return render_to_response('dates.html', RequestContext(request,context))	
+	return render_to_response('dates.html', RequestContext(request,context))
 
-def view_tasks(request, check):
-	#Если запрос POST, создается новое задание
-	if request.method == 'POST':
-		task_form = TaskForm(request.POST)		
-		if task_form.is_valid:
-  			new_task = Task()
-  			new_task.task = request.POST['task']
-  			new_task.check_id = check
-  			new_task.save()
-  			return HttpResponseRedirect("/checks/%s/tasks/" % check)
+def tasks_context(request,check): 	
 	tasks = Task.objects.filter(check_id = check)
 	check = Check.objects.get(id = check)
-	task_form = TaskForm()		
-	return render_to_response('tasks.html', RequestContext(request,{'tasks': tasks, 'check': check,'task_form': task_form}))
+	context = {'check': check, 'tasks': tasks}
+	return context
+
+def new_task(request, check):
+	task_form = TaskForm(request.POST)		
+	if task_form.is_valid:
+  		new_task = Task()
+  		new_task.task = request.POST['task']
+  		new_task.check_id = check
+  		new_task.save()
+  		return HttpResponseRedirect("/checks/%s/tasks/" % check)
+
+def view_tasks(request, check):
+	current_user = request.user
+	if current_user.is_active == False:
+		return HttpResponseRedirect('/accounts/login/')
+	else:
+		pass
+	if request.method == 'POST':
+		new_task(request, check)
+	else:
+		context = tasks_context(request, check)
+	context['task_form'] = TaskForm()
+	return render_to_response('tasks.html', RequestContext(request,context))
 
 def view_results(request, check, date):
 	date = Date.objects.get(id = date) #нахождение нужной даты обхода
@@ -93,7 +114,6 @@ def view_results(request, check, date):
 		freezed = True
 	else:
 		freezed = False
-	#block_date = now - block_date
 	return render_to_response('results.html', {'results': results, 'date': date, 'freezed': freezed, 'block_date': block_date})
 
 def make_results(request, check):
