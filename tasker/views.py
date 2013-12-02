@@ -18,9 +18,9 @@ def login(request):
 				messages.success(request, 'Добро пожаловать')
 				return HttpResponseRedirect('/checks/')
 			else:
-				messages.error(request, 'Пользователь неактивен')
+				messages.warning(request, 'Пользователь неактивен')
 		else:
-			messages.error(request, 'Пользователя с такими данными не существует')
+			messages.warning(request, 'Пользователя с такими данными не существует')
 	return render_to_response('login.html', RequestContext(request))	
 
 def logout(request):
