@@ -104,17 +104,28 @@ def view_tasks(request, check):
 	context['task_form'] = TaskForm()
 	return render_to_response('tasks.html', RequestContext(request,context))
 
-def view_results(request, check, date):
-	date = Date.objects.get(id = date) #нахождение нужной даты обхода
+def results_context(request, date):
+	date = Date.objects.get(id = date)
 	results = Result.objects.filter(date_id = date)
 	now = timezone.now()
 	block_date = date.date + timedelta(days = 1)
-	freezed = 0
+	freezed = False
 	if block_date > now:
 		freezed = True
 	else:
 		freezed = False
-	return render_to_response('results.html', {'results': results, 'date': date, 'freezed': freezed, 'block_date': block_date})
+	context ={'date': date, 'results': results, 'freezed': freezed, 'block_date': block_date}
+	return context
+
+
+def view_results(request, check, date):
+	current_user = request.user
+	if current_user.is_active == False:
+		return HttpResponseRedirect('/accounts/login/')	
+	else:
+		context = results_context(request, date)
+	context['check'] = check
+	return render_to_response('results.html', context)
 
 def make_results(request, check):
 	if request.method == 'POST':
