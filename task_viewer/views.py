@@ -19,14 +19,7 @@ def create_check(request):
 		new_chk.save()							#Экземпляр сохраняется в базе данных
 		return HttpResponseRedirect('/checks/%s/tasks' % new_chk.id)
 
-
-def view_checks(request): #Вызов таблицы шаблонов обходов
-	error = ''
-	if request.POST:
-		if request.user.is_authenticated() and request.user.has_perm('checks.can_add'):	
-			create_check(request)
-		else:
-			error = 'Вы не можете добавлять новые шаблоны обхода'
+def checks_context():
 	checks = Check.objects.all().select_related('date').annotate(last_date = Max('date__date')).order_by('id') #Загрузка всех шаблонов обходов
 	for check in checks:
 		try:
@@ -37,6 +30,19 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 			pass
 	chk_form = CheckForm()
 	context = {'checks': checks,'check_form': chk_form,}
+	return context
+
+def view_checks(request): #Вызов таблицы шаблонов обходов
+	error = ''
+	if request.POST:
+		if request.user.is_authenticated() and request.user.has_perm('checks.can_add'):	
+			create_check(request)
+		else:
+			error = 'Вы не можете добавлять новые шаблоны обхода'
+	if request.user.is_authenticated and request.user.is_active == False:
+		return HttpResponseRedirect('/accounts/login/')
+	else:
+		context = checks_context()
 	if error:
 		context['error'] = error
 	return render_to_response('checks.html',  RequestContext(request,context))
