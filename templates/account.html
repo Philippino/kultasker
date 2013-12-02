@@ -2,12 +2,6 @@
 {% block title %} Детали пользователя {% endblock %}
 
 {% block content %}
-{% if message %}
-<div class="alert alert-success">
-    {{ message }}
-    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-</div>
-{% endif %}
 <div>
 <form actiom='' method='POST' role='form'>{% csrf_token %}
 	<h2>Детали пользователя</h2>

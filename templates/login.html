@@ -1,13 +1,6 @@
 {% extends 'base.html' %}
 {% block title %} Войти {% endblock %}
 {% block content %}
-
-{% if error %}
-<div class="alert alert-warning">
-    {{ error }}
-    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-</div>
-{% endif %}
 <form action='' method='POST'>{% csrf_token %}
 <div class="form-horizontal" role='form'>
 	<div class= 'form-group'>

@@ -36,7 +36,15 @@
           	</ul>
       	</div>
       </div>
-		<div class='container'>
+      <div class='container'>
+      	{% if messages %}
+		{% for message in messages %}
+		<div class="alert alert-{{ message.tags }}">
+    		{{ message }}
+    		<a class="close" data-dismiss='alert' href="#" aria-hidden="true">&times;</a>
+		</div>
+		{% endfor %}
+		{% endif %}
 			<!-- Основное тело страницы-->
 			{% block content %}{% endblock %}
 		</div>

@@ -3,9 +3,11 @@ from django.contrib import auth
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 def login(request):
-	error=''
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/accounts/details/')
 	if request.POST:
 		username = request.POST['username']
 		password = request.POST['password']
@@ -13,12 +15,13 @@ def login(request):
 		if user is not None:
 			if user.is_active:
 				auth.login(request, user)
+				messages.success(request, 'Добро пожаловать')
 				return HttpResponseRedirect('/checks/')
 			else:
-				error='Ваш аккаунт неактивен'
+				messages.error(request, 'Пользователь неактивен')
 		else:
-			error='Пользователя с такими данными не существует'
-	return render_to_response('login.html', RequestContext(request,{'error': error}))	
+			messages.error(request, 'Пользователя с такими данными не существует')
+	return render_to_response('login.html', RequestContext(request))	
 
 def logout(request):
 	auth.logout(request)
@@ -33,8 +36,8 @@ def account_details(request):
 			current_user.last_name = request.POST['lastname']
 			current_user.email = request.POST['email']
 			current_user.save()
-			message = 'Данные успешно изменены'
-			return render_to_response('account.html', RequestContext(request,{'user':current_user,'message': message}))
+			messages.success(request, 'Данные успешно изменены')
+			return render_to_response('account.html', RequestContext(request,{'user':current_user}))
 		else:
 			return render_to_response('account.html', RequestContext(request,{'user':current_user}))
 	return HttpResponseRedirect('/accounts/login/')
