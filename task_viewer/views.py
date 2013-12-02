@@ -127,26 +127,6 @@ def view_results(request, check, date):
 	context['check'] = check
 	return render_to_response('results.html', context)
 
-def make_results(request, check):
-	if request.method == 'POST':
-		date_form = DateForm(request.POST)		
-		if date_form.is_valid:
-  			new_date = Date()
-  			new_date.date = timezone.now()
-  			new_date.check_id = check
-  			new_date.save()
-  			linked_tasks = Task.objects.filter(check_id = check)
-  			for task in linked_tasks:
-  				new_result = Result()
-  				new_result.task = task
-  				new_result.date = new_date
-  				new_result.status = False
-  				new_result.save()
-  			return HttpResponseRedirect("/checks/%s/%s/results/" % (check,new_date.id))
-	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
-	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
-	return render_to_response('dates.html', RequestContext(request,{'dates': dates, 'check': check,}))
-
 def change_result(request,check, date, result):
 	result = Result.objects.get(id = result)
 	if result.status == True:
@@ -165,14 +145,15 @@ def change_new_result(request,check, result):
 		result.status = False
 	else:
 		result.status = True
-	#date = result.date
-	#new_date.date = timezone.now()
-	#new_date.save()
+	date = result.date
+	date.date = timezone.now()
+	date.save()
 	result.save()
 	return HttpResponseRedirect("/checks/%s/dates/new/" % check)
 
 def new_date(request, check):
-	if request.user.is_authenticated() and request.user.has_perm('dates.can_add','results.can_add'):
+	current_user = request.user
+	if current_user.has_perm('dates.can_add','results.can_add'):
 		if request.POST:
 			new_date = Date()
   			new_date.date = timezone.now()
