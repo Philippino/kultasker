@@ -8,6 +8,7 @@ from django.db.models import Max, Min
 from django.utils import timezone
 from datetime import timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib import messages
 import random
 
 def create_check(request): 
@@ -17,6 +18,7 @@ def create_check(request):
 		new_chk = Check()									#Создается экземпляр класса Check
 		new_chk.name = chk['name']  						#В экземпляр записывается аргумент name
 		new_chk.save()							#Экземпляр сохраняется в базе данных
+		messages.success(request,'Шаблон обхода успешно')
 		return HttpResponseRedirect('/checks/%s/tasks' % new_chk.id)
 
 def checks_context():
@@ -33,18 +35,15 @@ def checks_context():
 	return context
 
 def view_checks(request): #Вызов таблицы шаблонов обходов
-	error = ''
 	if request.POST:
-		if request.user.is_authenticated() and request.user.has_perm('checks.can_add'):	
+		if request.user.has_perm('checks.can_add'):	
 			create_check(request)
 		else:
-			error = 'Вы не можете добавлять новые шаблоны обхода'
-	if request.user.is_authenticated and request.user.is_active == False:
+			messages.warning(request,'Вы не можете добавлять новые шаблоны обхода')
+	if request.user.is_authenticated == False:
 		return HttpResponseRedirect('/accounts/login/')
 	else:
 		context = checks_context()
-	if error:
-		context['error'] = error
 	return render_to_response('checks.html',  RequestContext(request,context))
 
 def dates_context(request,check):
@@ -64,16 +63,10 @@ def dates_context(request,check):
 def view_dates(request, check):
 	error = ''
 	current_user = request.user
-	if current_user.has_perm('dates.can_add','results.can_add'):
-		pass
-	else:
-		error='Вы не можете добавлять обходы'
 	if current_user.is_active == False:
 		return HttpResponseRedirect('/accounts/login/')
 	else:
 		context = dates_context(request,check)
-	if error:
-		context['error'] = error
 	return render_to_response('dates.html', RequestContext(request,context))
 
 def tasks_context(request,check): 	
@@ -139,6 +132,8 @@ def change_result(request,check, date, result):
 		new_date.date = timezone.now()
 		new_date.save()
 		result.save()
+	else:
+		messages.warning(request, 'У вас нет прав менять результаты обхода')
 	return HttpResponseRedirect("/checks/%s/%s/results/" % (check,date))
 
 def change_new_result(request,check, result):
@@ -153,7 +148,7 @@ def change_new_result(request,check, result):
 	result.save()
 	return HttpResponseRedirect("/checks/%s/dates/new/" % check)
 
-def new_date(request, check):
+def new_date(request, check):	
 	current_user = request.user
 	if current_user.has_perm('dates.can_add','results.can_add'):
 		if request.POST:
@@ -173,7 +168,8 @@ def new_date(request, check):
 		check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
 		new_date = Date.objects.filter(check = check).order_by('-id')[0]
 		results = Result.objects.filter(date = new_date)
-		return render_to_response('new_date.html', RequestContext(request,{'results': results, 'check': check}))	
+		return render_to_response('new_date.html', RequestContext(request,{'results': results, 'check': check}))
+	messages.warning(request,'Вы не можете добавлять новые шаблоны обхода')	
 	return HttpResponseRedirect('/checks/%s/dates/' % check)
 
 def save_date(request, check):
