@@ -102,7 +102,7 @@ def results_context(request, date):
 	now = timezone.now()
 	block_date = date.date + timedelta(days = 1)
 	freezed = False
-	if block_date > now:
+	if block_date > now and request.user.has_perm('results.can_change') == True:
 		freezed = True
 	else:
 		freezed = False
@@ -131,8 +131,6 @@ def change_result(request,check, date, result):
 		new_date.date = timezone.now()
 		new_date.save()
 		result.save()
-	else:
-		messages.warning(request, 'У вас нет прав менять результаты обхода')
 	return HttpResponseRedirect("/checks/%s/%s/results/" % (check,date))
 
 def change_new_result(request,check, result):
