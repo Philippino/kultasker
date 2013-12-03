@@ -68,7 +68,7 @@
           <a href='#' onclick="ondelete{{ date.id }}({{ date.id }})"><span class="glyphicon glyphicon-trash"></span></a>
           <script>
           function ondelete{{ date.id }}(date_id){
-            $('#proceed_delete').attr('href','/checks/{{ date.check_id }}/{{ date.id }}/delete/');
+            $('#proceed_delete').attr('href','/checks/{{ date.check_id }}/dates/{{ date.id }}/delete/');
             $('.alert').show();
           }
           </script>
