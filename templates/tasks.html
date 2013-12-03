@@ -12,6 +12,13 @@
   	<li><a href='/checks/{{ check.id }}/dates/'>{{ check }}</a></li>
   	<li class='active'>Задания</li>
 </ol>
+<div class="alert alert-warning" style="display: none" id='alert'>
+  <a class="close" onclick="$('.alert').hide();">×</a>
+  <p><strong>Внимание!</strong> Вы действительно хотите удалить задание?</p>
+  <div class="alert-actions">
+    <a class="btn btn-warning" id='proceed_delete'>Да</a> <a class="btn btn-default" onclick="$('.alert').hide();">Нет</a>
+  </div>
+</div>
 <h3>{{ check }}</h3>
 <!-- добавить задание-->
 <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><strong>Добавить задание</strong></button></p>
@@ -19,11 +26,20 @@
 	<table class = 'table table-hover'>
 		<tr>
 			<th>Задание</th>
+			<th></th>
 		</tr>
 		<!-- даты обходов -->
 		{% for task in tasks %}
 			<tr>
 				<td>{{ task.task }}</td>
+				<td><a href='#' onclick="ondelete{{ task.id }}({{ task.id }})"><span class="glyphicon glyphicon-trash"></span></a>
+          <script>
+          function ondelete{{ task.id }}(task_id){
+            $('#proceed_delete').attr('href','/checks/{{ task.check_id }}/tasks/{{ task.id }}/delete/');
+            $('.alert').show();
+          }
+          </script>
+				</td>
 			</tr>		
 		{% endfor %}
 	</table>

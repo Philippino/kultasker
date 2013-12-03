@@ -93,7 +93,7 @@ def view_tasks(request, check):
 	if request.method == 'POST':
 		new_task(request, check)
 	else:
-		context = tasks_context(request, check)
+	context = tasks_context(request, check)
 	context['task_form'] = TaskForm()
 	return render_to_response('tasks.html', RequestContext(request,context))
 
@@ -194,6 +194,11 @@ def cancel_date(request, check):
 	cancel_date = Date.objects.filter(check = check).order_by('-id').select_related()[0]
 	cancel_date.delete()
 	return HttpResponseRedirect("/checks/%s/dates/" % check)
+
+def del_task(request,check, task):
+	del_task = Task.objects.filter(id = task).select_related()
+	del_task.delete()
+	return HttpResponseRedirect("/checks/%s/tasks/" % check)
 
 def generate(request, check):
 	linked_tasks = Task.objects.filter(check_id = check)
