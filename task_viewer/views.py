@@ -116,8 +116,7 @@ def view_results(request, check, date):
 	else:
 		context = results_context(request, date)
 	context['check'] = check
-	context['user'] = current_user
-	return render_to_response('results.html', context)
+	return render_to_response('results.html', RequestContext(request,context))
 
 def change_result(request,check, date, result):
 	current_user = request.user

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load date_extras %}
 
-{% block title %} Даты обходов {% endblock %}
+{% block title %}{{ date.date|custom_format }}{% endblock %}
 
 {% block content %}
 <body>
@@ -9,15 +9,12 @@
   	<li><a href='/checks/'>Обходы</a></li>
   	<li><a href='/checks/{{ date.check_id }}/dates/'>{{ date.check }}</a></li>
   	<li class = 'active'>{{ date.date|custom_format }}</li>
-  
 </ol>
 	{% if freezed == False %}
 	<p><span class="label label-warning">Результаты заморожены, cо времени обхода прошло более 24 часов </span></p>
 	{% else %}
 	<p><span class="label label-warning">Результаты будут заморожены {{ block_date }} </span></p>
 	{% endif %}
-<form name = 'Form1' method = 'GET' target ='_top'>
-	{% csrf_token %}
 	<table class = 'table table-hover'>
 		<tr>
 			<th>Задание</th>
@@ -30,17 +27,16 @@
 				<td>
 					{% if freezed %}
 					<a href='/checks/{{ date.check_id }}/{{ date.id }}/results/{{result.id}}/change/'>
-					{% endif %}
 					{% if result.status == True %}
 					<span class="glyphicon glyphicon-ok" ></span>
 					{% else %}
 					<span class="glyphicon glyphicon-remove" ></span>
 					{% endif %}
 					</a>
+					{% endif %}
 				</td>
 			</tr>		
 		{% endfor %}
 	</table>	
-</form>
 </body>
 {% endblock %}
