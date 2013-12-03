@@ -92,7 +92,6 @@ def view_tasks(request, check):
 		pass
 	if request.method == 'POST':
 		new_task(request, check)
-	else:
 	context = tasks_context(request, check)
 	context['task_form'] = TaskForm()
 	return render_to_response('tasks.html', RequestContext(request,context))
@@ -110,7 +109,6 @@ def results_context(request, date):
 	context ={'date': date, 'results': results, 'freezed': freezed, 'block_date': block_date}
 	return context
 
-
 def view_results(request, check, date):
 	current_user = request.user
 	if current_user.is_active == False:
@@ -118,6 +116,7 @@ def view_results(request, check, date):
 	else:
 		context = results_context(request, date)
 	context['check'] = check
+	context['user'] = current_user
 	return render_to_response('results.html', context)
 
 def change_result(request,check, date, result):

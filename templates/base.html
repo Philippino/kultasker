@@ -17,7 +17,7 @@
         	<ul class="nav navbar-nav navbar-right">
             	<li><a><div id="timenow"></div></a></li>
             	<li><a><div id="datenow"></div></a></li>
-            	{% if user.is_active %}
+            	{% if user.is_authenticated %}
             		<li><a data-toggle='dropdown'>
             		{% if user.first_name and user.last_name %}
             			{{ user.first_name}} {{ user.last_name }}
