@@ -130,7 +130,7 @@ def change_result(request,check, date, result):
 		new_date.date = timezone.now()
 		new_date.save()
 		result.save()
-	return HttpResponseRedirect("/checks/%s/%s/results/" % (check,date))
+	return HttpResponseRedirect("/checks/%s/dates/%s/results/" % (check,date))
 
 def change_new_result(request,check, result):
 	result = Result.objects.get(id = result)

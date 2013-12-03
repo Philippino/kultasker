@@ -26,7 +26,7 @@
 				<td>{{ result.task }}</td>
 				<td>
 					{% if freezed %}
-					<a href='/checks/{{ date.check_id }}/{{ date.id }}/results/{{result.id}}/change/'>
+					<a href='/checks/{{ date.check_id }}/dates/{{ date.id }}/results/{{result.id}}/change/'>
 					{% if result.status == True %}
 					<span class="glyphicon glyphicon-ok" ></span>
 					{% else %}

@@ -3,9 +3,6 @@
 
 {% block title %} Обходы {% endblock %}
 
-{% block chapter %}
-{% endblock %}
-
 {% block content %}
 <body>
 <!-- хлебные крошки -->
@@ -30,7 +27,7 @@
 			<!-- кнопка действий -->
 			<td>{% if check.last_date %}
 					<!-- вывод даты последнего обхода -->
-					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/{{ check.date_id }}/results/'><!--{{ check.last_date|date:"H:i d-M-Y" }}-->{{ check.last_date|format }}</a>
+					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates/{{ check.date_id }}/results/'><!--{{ check.last_date|date:"H:i d-M-Y" }}-->{{ check.last_date|format }}</a>
 					{% if check.status == 1 %}
 						<span class="glyphicon glyphicon-ok"></span>
 					{% else %}
