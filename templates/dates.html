@@ -12,12 +12,6 @@
   	<li><a href='/checks/'>Обходы</a></li>
   	<li class='active'>{{ check }}</li>
 </ol>
-{% if error %}
-<div class="alert alert-warning">
-    {{ error }}
-    <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-</div>
-{% endif %}
 <div class="alert alert-warning" style="display: none" id='alert'>
   <a class="close" onclick="$('.alert').hide();">×</a>
   <p><strong>Внимание!</strong> Вы действительно хотите удалить обход?</p>
