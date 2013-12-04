@@ -15,7 +15,8 @@
 		<title>{% block title %}{% endblock %}</title>
 	</head>
 	<body onload="startTime()">
-		<div class="navbar navbar-default">
+		<!-- Панель навигации -->
+		<div class="navbar navbar-default" role='navigation'>
         	<div class="navbar-header">
           <a class="navbar-brand" href="/">kulTasker</a>
         </div>
@@ -40,8 +41,8 @@
             	{% endif %}
           	</ul>
       	</div>
-      </div>
       <div class='container'>
+      	<!-- Вывод сообщений -->
       	{% if messages %}
 		{% for message in messages %}
 		<div class="alert alert-{{ message.tags }}">
@@ -63,6 +64,7 @@
 		<!-- Подключение к Bootstrap Javascript -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript" src='//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.js'></script>
+		<!-- скрипты вывода времени -->
 		<script language='javascript'>
 			function startTime(){
 				var today = new Date();
