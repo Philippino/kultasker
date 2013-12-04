@@ -2,9 +2,6 @@
 
 {% block title %} Даты обходов {% endblock %}
 
-{% block chapter %}
-{% endblock%}
-
 {% block content %}
 <body>
 <ol class="breadcrumb">
@@ -20,8 +17,28 @@
   </div>
 </div>
 <h3>{{ check }}</h3>
+{% if 'task_viewer.add_task' in request.user.get_all_permissions %}
 <!-- добавить задание-->
 <p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><strong>Добавить задание</strong></button></p>
+<!-- Новое задание -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+              <form id="Task_form" action="" method="post">{% csrf_token %}
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 class="form-signin-heading">Введите название задания</h3>
+            <input type="text" class="form-control" name='task' required autofocus>
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn btn-primary" value='Сохранить'>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+              </form>
+            </div>
+        </div>
+      </div>
+  </div>  
+{% endif %}
 	<!-- таблица дат обходов -->
 	<table class = 'table table-hover'>
 		<tr>
@@ -32,6 +49,7 @@
 		{% for task in tasks %}
 			<tr>
 				<td>{{ task.task }}</td>
+        {% if 'task_viewer.delete_task' in request.user.get_all_permissions %}
 				<td><a href='#' onclick="ondelete{{ task.id }}({{ task.id }})"><span class="glyphicon glyphicon-trash"></span></a>
           <script>
           function ondelete{{ task.id }}(task_id){
@@ -40,26 +58,9 @@
           }
           </script>
 				</td>
+        {% endif %}
 			</tr>		
 		{% endfor %}
 	</table>
-	<!-- Новое задание -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
- 		<div class="modal-dialog">
-    		<div class="modal-content">
-      			<div class="modal-body">
-      				<form id="Task_form" action="" method="post">{% csrf_token %}
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h3 class="form-signin-heading">Введите название задания</h3>
-						<input type="text" class="form-control" name='task' required autofocus>
-      			</div>
-      			<div class="modal-footer">
-      				<input type="submit" class="btn btn-primary" value='Сохранить'>
-        			<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-        			</form>
-      			</div>
-    		</div>
-  		</div>
-	</div>	
 </body>
 {% endblock %}
