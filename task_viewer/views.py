@@ -76,12 +76,15 @@ def tasks_context(request,check):
 	return context
 
 def new_task(request, check):
+	if request.user.has_perm('tasks.can_add'):
 	task_form = TaskForm(request.POST)		
 	if task_form.is_valid:
   		new_task = Task()
   		new_task.task = request.POST['task']
   		new_task.check_id = check
   		new_task.save()
+  	else:
+  		messages.warning(request,'Вы не можете добавлять новые задания')	
   		return HttpResponseRedirect("/checks/%s/tasks/" % check)
 
 def view_tasks(request, check):
