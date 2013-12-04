@@ -10,7 +10,27 @@
   <li class='active'>Обходы</li>
 </ol>
 	<!-- кнопка добавить обход-->
+	{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
 	<p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><strong>Новый шаблон обхода</strong></button></p>
+	<!-- Новый шаблон обхода -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-body">
+      				<form id="Check_form" action="" method="post">{% csrf_token %}
+      					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      					<h2 class="form-signin-heading">Введите название шаблона</h2>
+						<input type="text" class="form-control" name='name' required autofocus>
+      			</div>
+      			<div class="modal-footer">
+      				<input type="submit" class="btn btn-primary" value='Сохранить'>
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        			</form>
+      			</div>
+    		</div>
+  		</div>
+	</div>
+	{% endif %}
 	<!--таблица шаблонов обходов-->
 	<table class = 'table table-bordered'>
 		<tr>
@@ -39,23 +59,5 @@
 		</tr>		
 		{% endfor %}
 	</table>
-	<!-- Новый шаблон обхода -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
- 		<div class="modal-dialog">
-    		<div class="modal-content">
-      			<div class="modal-body">
-      				<form id="Check_form" action="" method="post">{% csrf_token %}
-      					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      					<h2 class="form-signin-heading">Введите название шаблона</h2>
-						<input type="text" class="form-control" name='name' required autofocus>
-      			</div>
-      			<div class="modal-footer">
-      				<input type="submit" class="btn btn-primary" value='Сохранить'>
-        			<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-        			</form>
-      			</div>
-    		</div>
-  		</div>
-	</div>
 </body>
 {% endblock %}
