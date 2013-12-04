@@ -2,7 +2,7 @@
 from django.contrib import auth
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
 
 def login(request):
@@ -15,13 +15,18 @@ def login(request):
 		if user is not None:
 			if user.is_active:
 				auth.login(request, user)
-				messages.success(request, 'Добро пожаловать')
-				return HttpResponseRedirect('/checks/')
+				response = HttpResponseRedirect('/checks/')
+				if 'remember_me' in request.POST:
+					response.set_cookie('username', username)
+				else:
+					response.set_cookie('username', '')
+				return response
 			else:
 				messages.warning(request, 'Пользователь неактивен')
 		else:
 			messages.warning(request, 'Пользователя с такими данными не существует')
-	return render_to_response('login.html', RequestContext(request))	
+	context = {'username': request.COOKIES['username']}
+	return render_to_response('login.html', RequestContext(request, context))	
 
 def logout(request):
 	auth.logout(request)

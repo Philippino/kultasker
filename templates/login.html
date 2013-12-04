@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
+
 {% block title %} Войти {% endblock %}
+
 {% block content %}
 <form action='' method='POST'>{% csrf_token %}
 <div class="form-horizontal" role='form'>
 	<div class= 'form-group'>
     	<label for="username" class='col-sm-4 control-label'>Имя пользователя:</label>
     	<div class='col-sm-4'>
-    		<input type='text' class="form-control" name='username' id="username" required autofocus>
+    		<input type='text' class="form-control" name='username' id="username" value='{{ username }}' required autofocus>
     	</div>
 	</div>
 	<div class='form-group'>
@@ -17,7 +19,7 @@
 	</div>
 	<div class="form-group">
     	<div class="col-sm-offset-4 col-sm-8">
-			<input type="checkbox" value="remember-me">Запомнить</label>
+			<input type="checkbox" name = 'remember_me' value='true'> Запомнить меня?</input>
 		</div>
 	</div>
 	<div class='form-group'>
