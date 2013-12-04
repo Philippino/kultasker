@@ -40,7 +40,7 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 			create_check(request)
 		else:
 			messages.warning(request,'Вы не можете добавлять новые шаблоны обхода')
-	if request.user.is_authenticated == False:
+	if request.user.is_active == False:
 		return HttpResponseRedirect('/accounts/login/')
 	else:
 		context = checks_context()
@@ -61,7 +61,6 @@ def dates_context(request,check):
 	return context
 
 def view_dates(request, check):
-	error = ''
 	current_user = request.user
 	if current_user.is_active == False:
 		return HttpResponseRedirect('/accounts/login/')
@@ -77,15 +76,15 @@ def tasks_context(request,check):
 
 def new_task(request, check):
 	if request.user.has_perm('tasks.can_add'):
-	task_form = TaskForm(request.POST)		
-	if task_form.is_valid:
-  		new_task = Task()
-  		new_task.task = request.POST['task']
-  		new_task.check_id = check
-  		new_task.save()
+		task_form = TaskForm(request.POST)		
+		if task_form.is_valid:
+  			new_task = Task()
+  			new_task.task = request.POST['task']
+  			new_task.check_id = check
+  			new_task.save()
   	else:
   		messages.warning(request,'Вы не можете добавлять новые задания')	
-  		return HttpResponseRedirect("/checks/%s/tasks/" % check)
+  	return HttpResponseRedirect("/checks/%s/tasks/" % check)
 
 def view_tasks(request, check):
 	current_user = request.user
@@ -210,7 +209,7 @@ def generate(request, check):
 			new_result = Result()
 			new_result.task = task
 			new_result.date = new_date
-			new_result.status = random.choice(range(0,2))
+			new_result.status = random.choice((True, False))
 			new_result.save()
 	return HttpResponseRedirect("/checks/%s/dates/" % check)
 
