@@ -25,7 +25,10 @@ def login(request):
 				messages.warning(request, 'Пользователь неактивен')
 		else:
 			messages.warning(request, 'Пользователя с такими данными не существует')
+	try:
 	context = {'username': request.COOKIES['username']}
+	except:
+		context = {}
 	return render_to_response('login.html', RequestContext(request, context))	
 
 def logout(request):
@@ -49,7 +52,7 @@ def account_details(request):
 
 def index(request):
 	current_user = request.user
-	if current_user.is_authenticated():
+	if current_user.is_active:
 		return HttpResponseRedirect('/checks/')
 	else:
 		return HttpResponseRedirect('/accounts/login')
