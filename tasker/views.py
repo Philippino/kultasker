@@ -2,7 +2,7 @@
 from django.contrib import auth
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 
 def login(request):
@@ -26,7 +26,7 @@ def login(request):
 		else:
 			messages.warning(request, 'Пользователя с такими данными не существует')
 	try:
-	context = {'username': request.COOKIES['username']}
+		context = {'username': request.COOKIES['username']}
 	except:
 		context = {}
 	return render_to_response('login.html', RequestContext(request, context))	
@@ -49,6 +49,22 @@ def account_details(request):
 		else:
 			return render_to_response('account.html', RequestContext(request,{'user':current_user}))
 	return HttpResponseRedirect('/accounts/login/')
+
+def password_change(request):
+	current_user = request.user
+	if current_user.is_active:
+		if request.POST:
+			if current_user.check_password(request.POST['old_password']):
+				if request.POST['new_password'] == request.POST['new_password2']:
+					current_user.set_password(request.POST['new_password'])
+					current_user.save()
+					messages.success(request, 'Пароль успешно изменен')
+				else:
+					messages.warning(request, 'Введенные пароли не совпадают')
+			else:
+				messages.warning(request, 'Старый пароль введен неверно')
+	response = HttpResponseRedirect('/accounts/details/')
+	return response
 
 def index(request):
 	current_user = request.user

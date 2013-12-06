@@ -3,7 +3,7 @@
 
 {% block content %}
 <div>
-<form actiom='' method='POST' role='form'>{% csrf_token %}
+<form actiom='' method='POST' id='change_de'role='form'>{% csrf_token %}
 	<h2>Детали пользователя</h2>
 	<table class="table table-bordered">
 	<tr>
@@ -15,6 +15,17 @@
     			<input type='text' class="form-control" name='username' id="username" value ='{{ user.username }}'>
     		</div>
     	</td>
+	</tr>
+	<tr>
+		<td>
+			<div>
+				<div class='col-md-2'>
+				<label for="username">Пароль:</label>
+			</div>
+			<div class='col-md-4'>
+    			<p><button class="btn btn-default" data-toggle="modal" data-target="#myModal"><strong>Сменить пароль</strong></button></p>
+			</div>
+		</td>
 	</tr>
 </table>
 <table class = 'table table-bordered'>
@@ -56,10 +67,32 @@
 {% endif %}
 {% if user.is_superuser %}
 	<div class='well'>
-		Пользователь является суперпользователем
+		Пользователь обладает полными правами на изменение данных
 	</div>
 {% endif %}
 <button type='submit' class= 'btn btn-primary'>Сохранить</button>
 </form>
+<!-- Новый шаблон обхода -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 		<div class="modal-dialog">
+    		<div class="modal-content">
+      			<div class="modal-body">
+      				<form id="password_form" action="password/change/" method="post">{% csrf_token %}
+      					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      					<h2 class="form-signin-heading">Смена пароля</h2>
+      					<strong>
+							Старый пароль:<input type="password" class="form-control" name='old_password' required autofocus>
+							Новый пароль<input type="password" class="form-control" name='new_password' required>
+							Новый пароль(заново)<input type="password" class="form-control" name='new_password2' required>
+						</strong>
+      			</div>
+      			<div class="modal-footer">
+      				<input type="submit" class="btn btn-primary" value='Сохранить'>
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+        		</form>
+      			</div>
+    		</div>
+  		</div>
+	</div>
 </div>
 {% endblock %}

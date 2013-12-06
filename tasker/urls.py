@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^accounts/login/$', login),
     url(r'^accounts/logout/$', logout),
     url(r'^accounts/details/$', account_details),
+    url(r'^accounts/details/password/change/$', password_change),
     # Examples:
     # url(r'^$', 'tasker.views.home', name='home'),
     # url(r'^tasker/', include('tasker.foo.urls')),
