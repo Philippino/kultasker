@@ -42,3 +42,6 @@ urlpatterns += patterns('task_viewer',
     url(r'^checks/(?P<check>\d+)/dates/cancel/$', 'views.cancel_date'), #удаление даты обхода
     url(r'^checks/(?P<check>\d+)/generate/$', 'views.generate'), #тестовая генерация
 	)
+urlpatterns += patterns('kulcalendar',
+    url(r'^checks/(?P<check>\d+)/calendar/(?P<year>\d+)/(?P<month>\d+)/$', 'views.view_as_calendar'),
+    )
