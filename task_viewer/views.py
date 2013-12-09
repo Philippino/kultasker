@@ -40,10 +40,10 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 			create_check(request)
 		else:
 			messages.warning(request,'Вы не можете добавлять новые шаблоны обхода')
-	if request.user.is_active == False:
-		return HttpResponseRedirect('/accounts/login/')
-	else:
+	if request.user.is_active:
 		context = checks_context()
+	else:
+		return HttpResponseRedirect('/accounts/login/')
 	return render_to_response('checks.html',  RequestContext(request,context))
 
 def dates_context(request,check):
