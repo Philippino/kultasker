@@ -1,7 +1,7 @@
 # Django settings for tasker project.
 
-DEBUG = False
-TEMPLATE_DEBUG = False
+DEBUG = True
+TEMPLATE_DEBUG = True
 
 ADMINS = ('Anton Philippov', 'PhilippinoPhil@gmail.com'
     # ('Your Name', 'your_email@example.com'),
@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'task_viewer',
     'bootstrap_toolkit',
+    'kulcalendar',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

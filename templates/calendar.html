@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %} Календарь {% endblock %}
+{% block content %}
+<body>
+<ol class="breadcrumb">
+  	<li><a href='/checks/'>Обходы</a></li>
+  	<li class='active'>{{ check }}</li>
+</ol>
+<!-- кнопка нового обхода по выбранному шаблону -->
+<form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
+{% if 'task_viewer.add_date' in request.user.get_all_permissions %}
+<strong><input class="btn btn-primary" type = 'submit' value='Обойти'></strong>
+{% endif %}
+<a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a>
+</form>
+<br>
+<div class='panel panel-default'>
+	<div class = 'panel-body'>
+<form name = 'Form1' method = 'GET' target ='_top'>
+	{% csrf_token %}
+	<h2>{{ mname }} {{ year }}</h2>
+	<table class = 'table'>
+	<tbody>
+		<tr>
+			<th>Пнд</th>
+			<th>Втр</th>
+			<th>Срд</th>
+			<th>Чтв</th>
+			<th>Птн</th>
+			<th>Сбт</th>
+			<th>Вск</th>
+	</tr>
+		{% for week in month_days %}
+    <tr>
+    	{% for day, entries, current in week %}
+            <td class ={% if day == 0 %}"empty"{% endif %}
+            {% if day != 0 and not current %}"day"{% endif %}
+            {% if day != 0 and current %}"active"{% endif %}>
+            {% if day != 0 %}
+                {{ day }}
+                {% for entry in entries %}
+                <a class='link' href='/checks/{{ check.id }}/dates/{{ entry.id }}/results/'>
+                	{% if entry.status == True %}
+                		<span class="glyphicon glyphicon-ok" ></span>
+					{% else %}
+						<span class="glyphicon glyphicon-remove" ></span>
+                	{% endif %}
+                </a>
+                {% endfor %}
+                
+            {% endif %}
+            </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+	</table>
+</form>
+</div></div>
+</body>
+{% endblock %}
