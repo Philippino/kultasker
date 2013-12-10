@@ -9,15 +9,9 @@
 		background-repeat:no-repeat;
 		display: compact
 	}
-	.green{ 
-		color: green;
-	}
-	.red{
-		color: red;
-	}
-	.blue{
-		color: blue;
-	}
+	.green{ color: green;}
+	.red{color: red;}
+	.blue{color: blue;}
 	</style>
 		<!-- Подключение к CSS Bootstrap-->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
@@ -27,6 +21,7 @@
 	<body onload="startTime()" style>
 		<!-- Панель навигации -->
 		<nav class="navbar navbar-default" role='navigation'>
+		<div class='container'>
 			<div class='navbar-header'>
           	<a class="navbar-brand" href="/">kulTasker</a>
         	<button type='button' class='navbar-toggle' data-toggle='collapse' data-target="#top-navbar-collapse">
@@ -63,27 +58,32 @@
             		{% endif %}
           		</ul> 
       		</div>
+      	</div>
       	</nav>
-    <div class='container'>
       	<!-- Вывод сообщений -->
       	{% if messages %}
+      	<div class='container'>
 		{% for message in messages %}
 		<div class="alert alert-{{ message.tags }}">
     		{{ message }}
     		<a class="close" data-dismiss='alert' href="#" aria-hidden="true">&times;</a>
 		</div>
 		{% endfor %}
-		{% endif %}
-			<!-- Основное тело страницы-->
-			{% block content %}{% endblock %}
 		</div>
-		<div class='container'>
-			<!-- Подложка страницы-->
-			{% block footer %}
+		{% endif %}
+	<div class='container'>
+		<!-- Основное тело страницы-->
+		{% block content %}{% endblock %}
+	</div>
+		</div>
+
+		<!-- Подложка страницы-->
+		{% block footer %}
+			<div class='container'>
 			<hr>
 			<p>ГТРК "Санкт-Петербург" 2013</p>
-			{% endblock %}
-		</div>
+			</div>	
+		{% endblock %}
 		<!-- Подключение к Bootstrap Javascript -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript" src='//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.js'></script>
