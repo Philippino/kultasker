@@ -220,7 +220,7 @@ def randomDate():
 	date = datetime.datetime(year, month, day)
 	return date
 
-def del_check(check):
+def del_check(request,check):
 	del_check = Check.objects.filter(id = check).select_related()
 	del_check.delete()
 	return HttpResponseRedirect("/checks/")
