@@ -3,8 +3,18 @@
 
 {% block title %} Даты обходов {% endblock %}
 
-{% block chapter %}
-{% endblock%}
+{% block optional_nav %}
+{% if 'task_viewer.add_date' in request.user.get_all_permissions %}
+<li>
+	<a href='#' onclick='new_date()'>Обойти</a>
+	<script>
+	function new_date(){
+		document.getElementById('new_check_form').submit();
+	}
+	</script>
+</li>
+{% endif %}
+{% endblock %}
 
 {% block content %}
 <body>
@@ -21,9 +31,6 @@
 </div>
 <!-- кнопка нового обхода по выбранному шаблону -->
 <form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
-{% if 'task_viewer.add_date' in request.user.get_all_permissions %}
-<strong><input class="btn btn-primary" type = 'submit' value='Обойти'></strong>
-{% endif %}
 <a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a>
 </form>
 <form name = 'Form1' method = 'GET' target ='_top'>
@@ -65,7 +72,7 @@
 						{% else %}
 							<span class="glyphicon glyphicon-remove"></span>
 					{% endif %}
-				</td>
+				</td>				
 				<td>
 					{% if 'task_viewer.delete_date' in request.user.get_all_permissions %}
           <a href='#' onclick="ondelete{{ date.id }}({{ date.id }})"><span class="glyphicon glyphicon-trash"></span></a>

@@ -5,7 +5,7 @@
 {% block optional_nav %}
 {% if 'task_viewer.add_check' in request.user.get_all_permissions %}
 <li>
-	<a class='link' data-toggle='modal' data-target='#create-check'><strong>Новый шаблон</strong></a>
+	<a href='#' data-toggle='modal' data-target='#create-check'>Новый шаблон</a>
 </li>
 {% endif %}
 {% endblock %}

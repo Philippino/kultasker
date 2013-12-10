@@ -7,14 +7,24 @@
 		background: url('{{ STATIC_URL }}img/back.jpg');
 		background-size: 1920px 1080px;
 		background-repeat:no-repeat;
-		display: compact;}
+		display: compact
+	}
+	.green{ 
+		color: green;
+	}
+	.red{
+		color: red;
+	}
+	.blue{
+		color: blue;
+	}
 	</style>
 		<!-- Подключение к CSS Bootstrap-->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
 		<!-- Заглавие страницы-->
 		<title>{% block title %}{% endblock %}</title>
 	</head>
-	<body onload="startTime()">
+	<body onload="startTime()" style>
 		<!-- Панель навигации -->
 		<nav class="navbar navbar-default" role='navigation'>
 			<div class='navbar-header'>
@@ -27,14 +37,17 @@
       		</button>
       		</div>
       		<div class="collapse navbar-collapse" id="top-navbar-collapse">
-      			{% block optional_nav %}
-      			{% endblock %}
+      			<ul class='nav navbar-nav'>
+      				{% block optional_nav %}
+      				{% endblock %}
+      			</ul>
         		<ul class="nav navbar-nav navbar-right">
+        			
         			<!--<li class = 'hidden-xs-sm'><a id="timenow"></a></li>
            			<li class = 'hidden-xs-sm'><a id="datenow"></a></li>
            			-->
             		{% if user.is_authenticated %}
-            			<li><a data-toggle='dropdown'>
+            			<li><a href='#'data-toggle='dropdown'>
             				{% if user.first_name and user.last_name %}
             					{{ user.first_name}} {{ user.last_name }}
             				{% else %}
@@ -101,5 +114,7 @@
 				return i;
 			}
 		</script>
+		{% block bottom-navbar %}
+		{% endblock %}
 	</body>
 </html>
