@@ -10,6 +10,13 @@
   	<li><a href='/checks/{{ date.check_id }}/dates/'>{{ date.check }}</a></li>
   	<li class = 'active'>{{ date.date|custom_format }}</li>
 </ol>
+<div class="alert alert-warning" style="display: none" id='alert'>
+  <a class="close" onclick="$('.alert').hide();">×</a>
+  <p><strong>Внимание!</strong> Вы действительно хотите удалить обход?</p>
+  <div class="alert-actions">
+    <a class="btn btn-warning" id='proceed_delete'>Да</a> <a class="btn btn-default" onclick="$('.alert').hide();">Нет</a>
+  </div>
+</div>
 	<table class = 'table table-hover'>
 		<tr>
 			<th>Задание</th>
@@ -32,6 +39,15 @@
 				</td>
 			</tr>		
 		{% endfor %}
-	</table>	
+	</table>
+	<div align='right'>
+	<a type='button' class='btn btn-default' href='#' onclick="ondelete{{ date.id }}({{ date.id }})">Удалить обход <span class="glyphicon glyphicon-trash"></span></a>
+          <script>
+          function ondelete{{ date.id }}(date_id){
+            $('#proceed_delete').attr('href','/checks/{{ date.check_id }}/dates/{{ date.id }}/delete/');
+            $('.alert').show();
+          }
+          </script>
+    </div>
 </body>
 {% endblock %}
