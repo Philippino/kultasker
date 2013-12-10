@@ -2,7 +2,13 @@
 {% load date_extras %}
 
 {% block title %} Обходы {% endblock %}
-
+{% block optional_nav %}
+{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
+<li>
+	<a class='link' data-toggle='modal' data-target='#create-check'><strong>Новый шаблон</strong></a>
+</li>
+{% endif %}
+{% endblock %}
 {% block content %}
 <body>
 <!-- хлебные крошки -->
@@ -11,9 +17,8 @@
 </ol>
 	<!-- кнопка добавить обход-->
 	{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
-	<p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><strong>Новый шаблон обхода</strong></button></p>
 	<!-- Новый шаблон обхода -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="create-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  		<div class="modal-dialog">
     		<div class="modal-content">
       			<div class="modal-body">
@@ -36,6 +41,7 @@
 		<tr>
 			<th>Обход</th>
 			<th>Последний обход</th>
+			<th></th>
 		</tr>
 		<!-- Вывод элементов таблицы check-->
 		{% for check in checks %}
@@ -48,6 +54,8 @@
 			<td>{% if check.last_date %}
 					<!-- вывод даты последнего обхода -->
 					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates/{{ check.date_id }}/results/'><!--{{ check.last_date|date:"H:i d-M-Y" }}-->{{ check.last_date|format }}</a>
+			</td>
+			<td>
 					{% if check.status == 1 %}
 						<span class="glyphicon glyphicon-ok"></span>
 					{% else %}
