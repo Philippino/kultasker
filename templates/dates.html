@@ -3,9 +3,21 @@
 
 {% block title %} Даты обходов {% endblock %}
 
-{% block chapter %}
-{% endblock%}
-
+{% block optional_nav %}
+{% if 'task_viewer.add_date' in request.user.get_all_permissions %}
+<li>
+	<a href='#' onclick='new_date()'>Обойти</a>
+	<script>
+	function new_date(){
+		document.getElementById('new_check_form').submit();
+	}
+	</script>
+</li>
+{% endif %}
+<li>
+<a href = '/checks/{{ check.id }}/tasks/'>Список заданий</a>
+</li>
+{% endblock %}
 {% block content %}
 <body>
 <ol class="breadcrumb">
@@ -14,22 +26,17 @@
 </ol>
 <div class="alert alert-warning" style="display: none" id='alert'>
   <a class="close" onclick="$('.alert').hide();">×</a>
-  <p><strong>Внимание!</strong> Вы действительно хотите удалить обход?</p>
+  <p><strong>Внимание!</strong> Вы действительно хотите удалить этот шаблон? Все сопряженные обходы и задания будут удалены.</p>
   <div class="alert-actions">
     <a class="btn btn-warning" id='proceed_delete'>Да</a> <a class="btn btn-default" onclick="$('.alert').hide();">Нет</a>
   </div>
 </div>
 <!-- кнопка нового обхода по выбранному шаблону -->
 <form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
-{% if 'task_viewer.add_date' in request.user.get_all_permissions %}
-<strong><input class="btn btn-primary" type = 'submit' value='Обойти'></strong>
-{% endif %}
-<a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a>
 </form>
-<form name = 'Form1' method = 'GET' target ='_top'>
-	{% csrf_token %}
+<form name = 'Form1' method = 'GET' target ='_top'>{% csrf_token %}
 {% if dates.has_other_pages %}
-<ul class="pagination">
+<ol class="pagination">
   	{% if dates.has_previous %}
     	<li><a href="?page={{ dates.previous_page_number }}">&laquo;</a></li>
   	{% endif %}
@@ -41,7 +48,9 @@
   	{% if dates.has_next %}
   		<li><a href="?page={{ dates.next_page_number }}">&raquo;</a></li>
   	{% endif %}
-</ul>
+  	<li>
+  	
+</ol>
 {% else %}
 	<br>
 {% endif %}
@@ -49,7 +58,6 @@
 		<tr>
 			<th>Дата</th>
 			<th>Статус</th>
-			<th></th>
 		</tr>
 		<!-- даты обходов -->
 		{% for date in dates %}
@@ -65,22 +73,20 @@
 						{% else %}
 							<span class="glyphicon glyphicon-remove"></span>
 					{% endif %}
-				</td>
-				<td>
-					{% if 'task_viewer.delete_date' in request.user.get_all_permissions %}
-          <a href='#' onclick="ondelete{{ date.id }}({{ date.id }})"><span class="glyphicon glyphicon-trash"></span></a>
-          <script>
-          function ondelete{{ date.id }}(date_id){
-            $('#proceed_delete').attr('href','/checks/{{ date.check_id }}/dates/{{ date.id }}/delete/');
-            $('.alert').show();
-          }
-          </script>
-				</td>
-			{% endif %}
+				</td>			
 			</tr>		
 		{% endfor %}
 	</table>
 </form>
+<div align='right'>
+	<a type='button' class='btn btn-default' href='#' onclick="ondelete()">Удалить шаблон обхода<span class="glyphicon glyphicon-trash"></span></a>
+          <script>
+          function ondelete{{ date.id }}(){
+            $('#proceed_delete').attr('href','/checks/{{ check.id }}/delete/');
+            $('.alert').show();
+          }
+          </script>
+</div>
 </body>
 
 {% endblock %}
