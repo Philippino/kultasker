@@ -14,8 +14,10 @@
 	</script>
 </li>
 {% endif %}
+<li>
+<a href = '/checks/{{ check.id }}/tasks/'>Список заданий</a>
+</li>
 {% endblock %}
-
 {% block content %}
 <body>
 <ol class="breadcrumb">
@@ -24,19 +26,17 @@
 </ol>
 <div class="alert alert-warning" style="display: none" id='alert'>
   <a class="close" onclick="$('.alert').hide();">×</a>
-  <p><strong>Внимание!</strong> Вы действительно хотите удалить обход?</p>
+  <p><strong>Внимание!</strong> Вы действительно хотите удалить этот шаблон? Все сопряженные обходы и задания будут удалены.</p>
   <div class="alert-actions">
     <a class="btn btn-warning" id='proceed_delete'>Да</a> <a class="btn btn-default" onclick="$('.alert').hide();">Нет</a>
   </div>
 </div>
 <!-- кнопка нового обхода по выбранному шаблону -->
 <form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
-<a class="btn btn-default" href = '/checks/{{ check.id }}/tasks/'>Список заданий</a>
 </form>
-<form name = 'Form1' method = 'GET' target ='_top'>
-	{% csrf_token %}
+<form name = 'Form1' method = 'GET' target ='_top'>{% csrf_token %}
 {% if dates.has_other_pages %}
-<ul class="pagination">
+<ol class="pagination">
   	{% if dates.has_previous %}
     	<li><a href="?page={{ dates.previous_page_number }}">&laquo;</a></li>
   	{% endif %}
@@ -48,7 +48,9 @@
   	{% if dates.has_next %}
   		<li><a href="?page={{ dates.next_page_number }}">&raquo;</a></li>
   	{% endif %}
-</ul>
+  	<li>
+  	
+</ol>
 {% else %}
 	<br>
 {% endif %}
@@ -56,7 +58,6 @@
 		<tr>
 			<th>Дата</th>
 			<th>Статус</th>
-			<th></th>
 		</tr>
 		<!-- даты обходов -->
 		{% for date in dates %}
@@ -72,7 +73,7 @@
 						{% else %}
 							<span class="glyphicon glyphicon-remove"></span>
 					{% endif %}
-				</td>				
+				</td>			
 			</tr>		
 		{% endfor %}
 	</table>
