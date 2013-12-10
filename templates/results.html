@@ -40,6 +40,7 @@
 			</tr>		
 		{% endfor %}
 	</table>
+	{% if 'task_viewer.delete_date' in request.user.get_all_permissions %}
 	<div align='right'>
 	<a type='button' class='btn btn-default' href='#' onclick="ondelete{{ date.id }}({{ date.id }})">Удалить обход <span class="glyphicon glyphicon-trash"></span></a>
           <script>
@@ -49,5 +50,6 @@
           }
           </script>
     </div>
+    {% endif %}
 </body>
 {% endblock %}

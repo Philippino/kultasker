@@ -78,6 +78,7 @@
 		{% endfor %}
 	</table>
 </form>
+{% if 'task_viewer.delete_check' in request.user.get_all_permissions %}
 <div align='right'>
 	<a type='button' class='btn btn-default' href='#' onclick="ondelete()">Удалить шаблон обхода<span class="glyphicon glyphicon-trash"></span></a>
           <script>
@@ -87,6 +88,7 @@
           }
           </script>
 </div>
+{% endif %}
 </body>
 
 {% endblock %}
