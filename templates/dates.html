@@ -73,21 +73,19 @@
 							<span class="glyphicon glyphicon-remove"></span>
 					{% endif %}
 				</td>				
-				<td>
-					{% if 'task_viewer.delete_date' in request.user.get_all_permissions %}
-          <a href='#' onclick="ondelete{{ date.id }}({{ date.id }})"><span class="glyphicon glyphicon-trash"></span></a>
-          <script>
-          function ondelete{{ date.id }}(date_id){
-            $('#proceed_delete').attr('href','/checks/{{ date.check_id }}/dates/{{ date.id }}/delete/');
-            $('.alert').show();
-          }
-          </script>
-				</td>
-			{% endif %}
 			</tr>		
 		{% endfor %}
 	</table>
 </form>
+<div align='right'>
+	<a type='button' class='btn btn-default' href='#' onclick="ondelete()">Удалить шаблон обхода<span class="glyphicon glyphicon-trash"></span></a>
+          <script>
+          function ondelete{{ date.id }}(){
+            $('#proceed_delete').attr('href','/checks/{{ check.id }}/delete/');
+            $('.alert').show();
+          }
+          </script>
+</div>
 </body>
 
 {% endblock %}
