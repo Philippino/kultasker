@@ -4,19 +4,19 @@
 	<head>
 	<style>
 	body{
+		min-width: 420pt;
 		background: url('{{ STATIC_URL }}img/back.jpg');
 		background-size: 1920px 1080px;
 		background-repeat:no-repeat;
 		display: compact
 	}
-	.green{ color: green;}
 	.red{color: red;}
-	.blue{color: blue;}
 	</style>
 		<!-- Подключение к CSS Bootstrap-->
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
 		<!-- Заглавие страницы-->
 		<title>{% block title %}{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body onload="startTime()" style>
 		<!-- Панель навигации -->

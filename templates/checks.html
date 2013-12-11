@@ -44,7 +44,7 @@
 		<tr>
 			<th>Обход</th>
 			<th>Последний обход</th>
-			<th class ='hidden-xs'>Статус</th>
+			<th>Статус</th>
 		</tr>
 		<!-- Вывод элементов таблицы check-->
 		{% for check in checks %}
@@ -61,7 +61,7 @@
 					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates/{{ check.date_id }}/results/'><!--{{ check.last_date|date:"H:i d-M-Y" }}-->{{ check.last_date|format }}</a>
 			{% endif %}
 			</td>
-			<td class = 'hidden-xs'>
+			<td>
 				{% if check.last_date %}
 					{% if check.status == 1 %}
 						<span class="glyphicon glyphicon-ok-sign"></span>

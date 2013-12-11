@@ -88,7 +88,7 @@
 <a  type='button' class='btn btn-default' href = '/checks/{{ check.id }}/tasks/'>Редактировать шаблон</a>
 {% endif %}
 {% if 'task_viewer.delete_check' in request.user.get_all_permissions %}
-<a type='button' class='btn btn-default' href='#' onclick="ondelete()">Удалить шаблон</a>
+<a type='button' class='btn btn-default' href='#' onclick="ondelete()">Удалить шаблон <span class="glyphicon glyphicon-trash"></span></a>
           <script>
           function ondelete{{ date.id }}(){
             $('#proceed_delete').attr('href','/checks/{{ check.id }}/delete/');
