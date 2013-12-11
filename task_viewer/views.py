@@ -18,8 +18,8 @@ def create_check(request):
 		new_chk = Check()									#Создается экземпляр класса Check
 		new_chk.name = chk['name']  						#В экземпляр записывается аргумент name
 		new_chk.save()							#Экземпляр сохраняется в базе данных
-		messages.success(request,'Шаблон обхода успешно')
-		return HttpResponseRedirect('/checks/%s/tasks' % new_chk.id)
+		messages.success(request,'Шаблон обхода успешно создан')
+	return new_chk.id
 
 def checks_context():
 	checks = Check.objects.all().select_related('date').annotate(last_date = Max('date__date')).order_by('id') #Загрузка всех шаблонов обходов
@@ -37,7 +37,8 @@ def checks_context():
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	if request.POST:
 		if request.user.has_perm('checks.can_add'):	
-			create_check(request)
+			new_check_id = create_check(request)
+			return HttpResponseRedirect('/checks/%s/tasks/' % new_check_id)
 		else:
 			messages.warning(request,'Вы не можете добавлять новые шаблоны обхода')
 	if request.user.is_active:
