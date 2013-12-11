@@ -13,7 +13,7 @@
 <body>
 <!-- хлебные крошки -->
 <ol class="breadcrumb">
-  <li class='active'>Обходы</li>
+  <li class='active'><span class='glyphicon glyphicon-home'></span></li>
 </ol>
 	<!-- кнопка добавить обход-->
 	{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
@@ -57,9 +57,9 @@
 			</td>
 			<td class = 'hidden-xs'>
 					{% if check.status == 1 %}
-						<span class="glyphicon glyphicon-ok"></span>
+						<span class="glyphicon glyphicon-ok-sign"></span>
 					{% else %}
-						<span class="glyphicon glyphicon-remove"></span>
+						<span class="glyphicon glyphicon-minus-sign red"></span>
 					{% endif %}		
 				{% else %}
 				{% endif %}

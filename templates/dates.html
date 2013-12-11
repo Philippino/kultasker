@@ -16,7 +16,7 @@
 </head>
 <body>
 <ol class="breadcrumb">
-  	<li><a href='/checks/'>Обходы</a></li>
+  	<li><a href='/checks/' class='btn btn-link'><span class='glyphicon glyphicon-home'></span></a></li>
   	<li class='active'>{{ check }}</li>
 </ol>
 <div class="alert alert-warning" style="display: none" id='alert'>
@@ -56,7 +56,7 @@
 					{% if date.status == True %}
 							<span class="glyphicon glyphicon-ok-sign"></span>
 						{% else %}
-							<span class="glyphicon glyphicon-minus-sign"></span>
+							<span class="glyphicon glyphicon-minus-sign red"></span>
 					{% endif %}
 				</td>			
 			</tr>		
