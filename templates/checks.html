@@ -51,17 +51,20 @@
 				<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates'>{{ check.name }}</a>
 			</td> 
 			<!-- кнопка действий -->
-			<td>{% if check.last_date %}
+			<td>
+			{% if check.last_date %}
+
 					<!-- вывод даты последнего обхода -->
 					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates/{{ check.date_id }}/results/'><!--{{ check.last_date|date:"H:i d-M-Y" }}-->{{ check.last_date|format }}</a>
+			{% endif %}
 			</td>
 			<td class = 'hidden-xs'>
+				{% if check.last_date%}
 					{% if check.status == 1 %}
 						<span class="glyphicon glyphicon-ok-sign"></span>
 					{% else %}
 						<span class="glyphicon glyphicon-minus-sign red"></span>
 					{% endif %}		
-				{% else %}
 				{% endif %}
 			</td>
 		</tr>		
