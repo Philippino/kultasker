@@ -3,11 +3,6 @@
 
 {% block title %} Обходы {% endblock %}
 {% block optional_nav %}
-{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
-<li>
-	<a href='#' data-toggle='modal' data-target='#create-check'>Новый шаблон</a>
-</li>
-{% endif %}
 {% endblock %}
 {% block content %}
 <body>
@@ -36,6 +31,14 @@
   		</div>
 	</div>
 	{% endif %}
+	{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
+		<div align='right'>
+			<a href='#' type='button' class='btn btn-default' data-toggle='modal' data-target='#create-check'>
+				Новый шаблон
+			</a>
+		</div>
+		<br>
+	{% endif %}
 	<!--таблица шаблонов обходов-->
 	<table class = 'table table-hover'>
 		<tr>
@@ -59,12 +62,12 @@
 			{% endif %}
 			</td>
 			<td class = 'hidden-xs'>
-				{% if check.last_date%}
+				{% if check.last_date %}
 					{% if check.status == 1 %}
 						<span class="glyphicon glyphicon-ok-sign"></span>
 					{% else %}
 						<span class="glyphicon glyphicon-minus-sign red"></span>
-					{% endif %}		
+					{% endif %}
 				{% endif %}
 			</td>
 		</tr>		
