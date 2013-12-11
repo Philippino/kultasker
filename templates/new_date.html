@@ -27,9 +27,9 @@
 					<a href='/checks/{{ check.id }}/dates/new/{{ result.id }}/change/'>
 					<input type= 'hidden' name= '{{ result.task }}' value = {{ result.status }}></input>
 					{% if result.status == True %}
-					<span class="glyphicon glyphicon-ok" ></span>
+					<span class="glyphicon glyphicon-ok-sign" ></span>
 					{% else %}
-					<span class="glyphicon glyphicon-remove" ></span>
+					<span class="glyphicon glyphicon-minus-sign" ></span>
 					{% endif %}
 					</a>
 				</td>

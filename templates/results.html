@@ -6,7 +6,7 @@
 {% block content %}
 <body>
 <ol class="breadcrumb">
-  	<li><a href='/checks/'>Обходы</a></li>
+  	<li><a href='/checks/' class='btn btn-link'><span class='glyphicon glyphicon-home'></span></a></li>
   	<li><a href='/checks/{{ date.check_id }}/dates/'>{{ date.check }}</a></li>
   	<li class = 'active'>{{ date.date|custom_format }}</li>
 </ol>
