@@ -44,8 +44,7 @@ STATICFILES_DIRS = ('../tasker/static/',)
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'dajaxice.finders.DajaxiceFinder',)
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',)
 
 SECRET_KEY = 'w%kv_vhs+=1iv!6a2_5k9e2@p16w7kukt1+@#50x$v9j&ddc0z'
 
@@ -83,11 +82,9 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    'dajaxice',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'task_viewer',
-    'bootstrap_toolkit',
     'kulcalendar',
     'django.contrib.admin',
     # 'django.contrib.admindocs',

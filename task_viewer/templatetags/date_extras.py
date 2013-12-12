@@ -1,6 +1,6 @@
 # coding: utf-8
 from django import template
-from datetime import timedelta, datetime
+from datetime import timedelta
 from django.utils import timezone
 
 register = template.Library()
