@@ -3,18 +3,9 @@
 {% load static %}
 <html>
 	<head>
-	<style>
-	body{
-		min-width: 420pt;
-		background: url("{% static 'img/back.jpg' %}");
-		background-size: 1920px 1080px;
-		background-repeat:no-repeat;
-		display: compact
-	}
-	.red{color: red;}
-	</style>
+		<link rel="stylesheet" href="{% static 'css/css.css' %}">
 		<!-- Подключение к CSS Bootstrap-->
-		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
 		<!-- Заглавие страницы-->
 		<title>{% block title %}{% endblock %}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
