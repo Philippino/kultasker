@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{% load static %}
 <html>
 	<head>
 	<style>
 	body{
 		min-width: 420pt;
-		background: url('{{ STATIC_URL }}img/back.jpg');
+		background: url("{% static 'img/back.jpg' %}");
 		background-size: 1920px 1080px;
 		background-repeat:no-repeat;
 		display: compact
@@ -13,7 +14,7 @@
 	.red{color: red;}
 	</style>
 		<!-- Подключение к CSS Bootstrap-->
-		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 		<!-- Заглавие страницы-->
 		<title>{% block title %}{% endblock %}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -37,10 +38,6 @@
       				{% endblock %}
       			</ul>
         		<ul class="nav navbar-nav navbar-right">
-        			
-        			<!--<li class = 'hidden-xs-sm'><a id="timenow"></a></li>
-           			<li class = 'hidden-xs-sm'><a id="datenow"></a></li>
-           			-->
             		{% if user.is_authenticated %}
             			<li><a href='#'data-toggle='dropdown'>
             				{% if user.first_name and user.last_name %}
@@ -87,34 +84,5 @@
 		<!-- Подключение к Bootstrap Javascript -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script type="text/javascript" src='//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.js'></script>
-		<!-- скрипты вывода времени -->
-		<script language='javascript'>
-			function startTime(){
-				var today = new Date();
-				var d = today.getDate();
-				var mn = setMonth(today.getMonth());
-				var y = today.getFullYear();
-				var h = today.getHours();
-				var m = today.getMinutes();
-				var s = today.getSeconds();
-				m=checkTime(m);
-				s=checkTime(s);
-				document.getElementById('timenow').innerHTML = h+":"+m+":"+s;
-				document.getElementById('datenow').innerHTML = d+' '+mn+' '+y;
-				t = setTimeout(function(){startTime()},1000);
-			}
-
-			function setMonth(i){
-				var monthes = new Array('Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря');
-				return monthes[i];
-			}
-
-			function checkTime(i){
-				if (i<10){i="0" + i;}
-				return i;
-			}
-		</script>
-		{% block bottom-navbar %}
-		{% endblock %}
 	</body>
 </html>
