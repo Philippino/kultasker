@@ -1,16 +1,20 @@
 import os
 
-DEBUG = False
-TEMPLATE_DEBUG = False
+DEBUG = True
+TEMPLATE_DEBUG = True
 
 ADMINS = ('Anton Philippov', 'PhilippinoPhil@gmail.com')
 MANAGERS = ADMINS
 
-PROJECT_NAME = 'kulTasker'
-DATABASE_NAME = 'tasker'
-DATABASE_USER = 'root'
-DATABASE_PASSWORD = 'sorrento'
-DATABASE_ENGINE = 'django.db.backends.mysql'
+try:
+    from db_settings import *
+except ImportError:
+    DATABASE_NAME = 'tasker'
+    DATABASE_USER = 'root'
+    DATABASE_PASSWORD = 'sorrento'
+    DATABASE_ENGINE = 'django.db.backends.mysql'
+    HOST = 'localhost'
+    PORT_NUMBER = '3306' 
 
 DATABASES = {
     'default': {
@@ -18,8 +22,8 @@ DATABASES = {
         'NAME': DATABASE_NAME,                 
         'USER': DATABASE_USER,
         'PASSWORD': DATABASE_PASSWORD,
-        'HOST': 'localhost',                     
-        'PORT': '3306',                    
+        'HOST': HOST,                     
+        'PORT': PORT_NUMBER,                    
     }}
 
 ALLOWED_HOSTS = ['*',]
