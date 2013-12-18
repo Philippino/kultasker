@@ -1,6 +1,6 @@
 body{
 		min-width: 420pt;
-		background: url("../img/back.jpg");
+		background: url('../img/back.jpg');
 		background-size: 1920px 1080px;
 		background-repeat:no-repeat;
 		display: compact

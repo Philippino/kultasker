@@ -43,7 +43,8 @@ MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ('../tasker/static/',)
+STATICFILES_DIRS = ('static/',
+)
 
 
 STATICFILES_FINDERS = (
@@ -79,7 +80,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'tasker.urls'
 WSGI_APPLICATION = 'tasker.wsgi.application'
 
-TEMPLATE_DIRS = ('../tasker/templates/',)
+TEMPLATE_DIRS = ('templates/',)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
