@@ -20,7 +20,7 @@ def login(request):
 				if 'remember_me' in request.POST:
 					response.set_cookie('username', username)
 				else:
-					response.set_cookie('username', '')
+					response.delete_cookie('username')
 				return response
 			else:
 				messages.warning(request, 'Пользователь неактивен')
