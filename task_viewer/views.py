@@ -97,12 +97,8 @@ def results_context(request, date):
 	results = Result.objects.filter(date_id = date)
 	now = timezone.now()
 	block_date = date.date + timedelta(days = 1)
-	freezed = False
-	if block_date > now and request.user.has_perm('results.can_change') == True:
-		freezed = True
-	else:
-		freezed = False
-	context ={'date': date, 'results': results, 'freezed': freezed, 'block_date': block_date}
+	freezed = block_date > now and request.user.has_perm('results.can_change') 
+	context = {'date': date, 'results': results, 'freezed': freezed, 'block_date': block_date}
 	return context
 
 @login_required(login_url='/accounts/login/')
@@ -116,10 +112,7 @@ def change_result(request,check, date, result):
 	current_user = request.user
 	if current_user.has_perm('results.can_change'):
 		result = Result.objects.get(id = result)
-		if result.status == True:
-			result.status = False
-		else:
-			result.status = True
+		result.status = not result.status
 		new_date = Date.objects.get(id = date)
 		new_date.date = timezone.now()
 		new_date.save()
@@ -129,10 +122,7 @@ def change_result(request,check, date, result):
 @login_required(login_url='/accounts/login/')
 def change_new_result(request,check, result):
 	result = Result.objects.get(id = result)
-	if result.status == True:
-		result.status = False
-	else:
-		result.status = True
+	result.status = not result.status
 	date = result.date
 	date.date = timezone.now()
 	date.save()
