@@ -39,6 +39,7 @@ def logout(request):
 @login_required(login_url='/accounts/login/')
 def account_details(request):
 	if request.POST:
+		current_user = request.user
 		current_user.username = request.POST['username']
 		current_user.first_name = request.POST['firstname']
 		current_user.last_name = request.POST['lastname']
@@ -52,6 +53,7 @@ def account_details(request):
 @login_required(login_url='/accounts/login/')
 def password_change(request):
 	if request.POST:
+		current_user = request.user
 		if current_user.check_password(request.POST['old_password']):
 			if request.POST['new_password'] == request.POST['new_password2']:
 				current_user.set_password(request.POST['new_password'])
