@@ -7,13 +7,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 def login(request):
-	if request.user.is_authenticated():
+	if request.user.is_active:
 		return HttpResponseRedirect('/accounts/details/')
 	if request.POST:
 		username = request.POST['username']
 		password = request.POST['password']
 		user = auth.authenticate(username = username, password = password)
-		if user is not None:
+		try:
 			if user.is_active:
 				auth.login(request, user)
 				response = HttpResponseRedirect('/checks/')
@@ -24,11 +24,11 @@ def login(request):
 				return response
 			else:
 				messages.warning(request, 'Пользователь неактивен')
-		else:
+		except:
 			messages.warning(request, 'Пользователя с такими данными не существует')
-	try:
+	if 'username' in request.COOKIES:
 		context = {'username': request.COOKIES['username']}
-	except:
+	else:
 		context = {}
 	return render_to_response('login.html', RequestContext(request, context))	
 
@@ -38,7 +38,7 @@ def logout(request):
 
 @login_required(login_url='/accounts/login/')
 def account_details(request):
-		current_user = request.user
+	current_user = request.user
 	if request.POST:
 		current_user.username = request.POST['username']
 		current_user.first_name = request.POST['firstname']
@@ -46,7 +46,7 @@ def account_details(request):
 		current_user.email = request.POST['email']
 		current_user.save()
 		messages.success(request, 'Данные успешно изменены')
-		return render_to_response('account.html', RequestContext(request,{'user':current_user}))
+	return render_to_response('account.html', RequestContext(request,{'user':current_user}))	
 
 @login_required(login_url='/accounts/login/')
 def password_change(request):
