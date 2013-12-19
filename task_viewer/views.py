@@ -9,6 +9,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 import random
 
 def create_check(request): 
@@ -34,6 +35,7 @@ def checks_context():
 	context = {'checks': checks,'check_form': chk_form,}
 	return context
 
+@login_required(login_url='/accounts/login/')
 def view_checks(request): #Вызов таблицы шаблонов обходов
 	if request.POST:
 		if request.user.has_perm('checks.can_add'):	
@@ -41,10 +43,7 @@ def view_checks(request): #Вызов таблицы шаблонов обход
 			return HttpResponseRedirect('/checks/%s/tasks/' % new_check_id)
 		else:
 			messages.warning(request,'Вы не можете добавлять новые шаблоны обхода')
-	if request.user.is_active:
-		context = checks_context()
-	else:
-		return HttpResponseRedirect('/accounts/login/')
+	context = checks_context()
 	return render_to_response('checks.html',  RequestContext(request,context))
 
 def dates_context(request,check):
@@ -61,12 +60,9 @@ def dates_context(request,check):
 	context = {'dates': dates, 'check': check,}
 	return context
 
+@login_required(login_url='/accounts/login/')
 def view_dates(request, check):
-	current_user = request.user
-	if current_user.is_active == False:
-		return HttpResponseRedirect('/accounts/login/')
-	else:
-		context = dates_context(request,check)
+	context = dates_context(request,check)
 	return render_to_response('dates.html', RequestContext(request,context))
 
 def tasks_context(request,check): 	
@@ -75,6 +71,7 @@ def tasks_context(request,check):
 	context = {'check': check, 'tasks': tasks}
 	return context
 
+@login_required(login_url='/accounts/login/')
 def new_task(request, check):
 	if request.user.has_perm('tasks.can_add'):
 		task_form = TaskForm(request.POST)		
@@ -87,12 +84,8 @@ def new_task(request, check):
   		messages.warning(request,'Вы не можете добавлять новые задания')	
   	return HttpResponseRedirect("/checks/%s/tasks/" % check)
 
+@login_required(login_url='/accounts/login/')
 def view_tasks(request, check):
-	current_user = request.user
-	if current_user.is_active == False:
-		return HttpResponseRedirect('/accounts/login/')
-	else:
-		pass
 	if request.method == 'POST':
 		new_task(request, check)
 	context = tasks_context(request, check)
@@ -112,15 +105,13 @@ def results_context(request, date):
 	context ={'date': date, 'results': results, 'freezed': freezed, 'block_date': block_date}
 	return context
 
+@login_required(login_url='/accounts/login/')
 def view_results(request, check, date):
-	current_user = request.user
-	if current_user.is_active == False:
-		return HttpResponseRedirect('/accounts/login/')	
-	else:
-		context = results_context(request, date)
+	context = results_context(request, date)
 	context['check'] = check
 	return render_to_response('results.html', RequestContext(request,context))
 
+@login_required(login_url='/accounts/login/')
 def change_result(request,check, date, result):
 	current_user = request.user
 	if current_user.has_perm('results.can_change'):
@@ -135,6 +126,7 @@ def change_result(request,check, date, result):
 		result.save()
 	return HttpResponseRedirect("/checks/%s/dates/%s/results/" % (check,date))
 
+@login_required(login_url='/accounts/login/')
 def change_new_result(request,check, result):
 	result = Result.objects.get(id = result)
 	if result.status == True:
@@ -147,6 +139,7 @@ def change_new_result(request,check, result):
 	result.save()
 	return HttpResponseRedirect("/checks/%s/dates/new/" % check)
 
+@login_required(login_url='/accounts/login/')
 def new_date(request, check):	
 	current_user = request.user
 	if current_user.has_perm('dates.can_add','results.can_add'):
@@ -171,6 +164,7 @@ def new_date(request, check):
 	messages.warning(request,'Вы не можете добавлять новые шаблоны обхода')	
 	return HttpResponseRedirect('/checks/%s/dates/' % check)
 
+@login_required(login_url='/accounts/login/')
 def save_date(request, check):
 	if request.method == 'POST':
   		new_date = Date.objects.filter(check = check).order_by('-id')[0]
@@ -184,21 +178,25 @@ def save_date(request, check):
 	check = Check.objects.get(id = check) #нахождение нужного шаблона обхода
 	return render_to_response('new_date.html', RequestContext(request,{'results': linked_tasks, 'check': check}))
 
+@login_required(login_url='/accounts/login/')
 def del_date(request,check, date):
 	del_date = Date.objects.filter(id = date).select_related()
 	del_date.delete()
 	return HttpResponseRedirect("/checks/%s/dates/" % check)
 
+@login_required(login_url='/accounts/login/')
 def cancel_date(request, check):
 	cancel_date = Date.objects.filter(check = check).order_by('-id').select_related()[0]
 	cancel_date.delete()
 	return HttpResponseRedirect("/checks/%s/dates/" % check)
 
+@login_required(login_url='/accounts/login/')
 def del_task(request,check, task):
 	del_task = Task.objects.filter(id = task).select_related()
 	del_task.delete()
 	return HttpResponseRedirect("/checks/%s/tasks/" % check)
 
+@login_required(login_url='/accounts/login/')
 def generate(request, check):
 	linked_tasks = Task.objects.filter(check_id = check)
 	for i in range(50):
@@ -221,6 +219,7 @@ def randomDate():
 	date = datetime.datetime(year, month, day)
 	return date
 
+@login_required(login_url='/accounts/login/')
 def del_check(request,check):
 	del_check = Check.objects.filter(id = check).select_related()
 	del_check.delete()
