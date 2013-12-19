@@ -38,16 +38,14 @@ def logout(request):
 
 @login_required(login_url='/accounts/login/')
 def account_details(request):
-	if request.POST:
 		current_user = request.user
+	if request.POST:
 		current_user.username = request.POST['username']
 		current_user.first_name = request.POST['firstname']
 		current_user.last_name = request.POST['lastname']
 		current_user.email = request.POST['email']
 		current_user.save()
 		messages.success(request, 'Данные успешно изменены')
-		return render_to_response('account.html', RequestContext(request,{'user':current_user}))
-	else:
 		return render_to_response('account.html', RequestContext(request,{'user':current_user}))
 
 @login_required(login_url='/accounts/login/')
