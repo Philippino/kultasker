@@ -38,31 +38,29 @@
 {% endif %}
 </form>
 <br>
-<form name = 'Form1' method = 'GET' target ='_top'>{% csrf_token %}
-	<table class = 'table table-hover'>
+<table class = 'table table-hover'>
+	<tr>
+		<th>Дата</th>
+		<th>Статус</th>
+	</tr>
+	<!-- даты обходов -->
+	{% for date in dates %}
 		<tr>
-			<th>Дата</th>
-			<th>Статус</th>
-		</tr>
-		<!-- даты обходов -->
-		{% for date in dates %}
-			<tr>
-				<td>
-					<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ date.check_id }}/dates/{{ date.id }}/results/'">
-						{{ date.date|format }}
-					</button>
-					</td>
-				<td>
-					{% if date.status == True %}
-							<span class="glyphicon glyphicon-ok-sign"></span>
-						{% else %}
-							<span class="glyphicon glyphicon-minus-sign red"></span>
-					{% endif %}
-				</td>			
-			</tr>		
-		{% endfor %}
-	</table>
-</form>
+			<td>
+				<button type="button" class="btn btn-link" onclick="location.href='/checks/{{ date.check_id }}/dates/{{ date.id }}/results/'">
+					{{ date.date|format }}
+				</button>
+			</td>
+			<td>
+				{% if date.status == True %}
+					<span class="glyphicon glyphicon-ok-sign"></span>
+				{% else %}
+					<span class="glyphicon glyphicon-minus-sign red"></span>
+				{% endif %}
+			</td>			
+		</tr>		
+	{% endfor %}
+</table>
 <div class='row'>
 <div class='col-lg-8 col-md-7 col-sm-6 col-xs-4'>
 {% if dates.has_other_pages %}
