@@ -95,6 +95,13 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     )
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
+
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 LOGGING = {
