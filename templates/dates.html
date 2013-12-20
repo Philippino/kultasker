@@ -29,12 +29,7 @@
 <!-- кнопка нового обхода по выбранному шаблону -->
 <form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
 	{% if 'task_viewer.add_date' in request.user.get_all_permissions %}
-	<a href='#' class='btn btn-primary' type='button' onclick='new_date()'>Обойти</a>
-	<script>
-	function new_date(){
-		document.getElementById('new_check_form').submit();
-	}
-	</script>
+	<button class='btn btn-primary' type='submit'>Обойти</button>
 {% endif %}
 </form>
 <br>
