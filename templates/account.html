@@ -1,58 +1,72 @@
 {% extends 'base.html '%}
-{% block title %} Детали пользователя {% endblock %}
+
+{% block title %}
+	{% if user.first_name and user.last_name %}
+        {{ user.first_name}} {{ user.last_name }}
+    {% else %}
+        {{ user.username }}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <div>
 <form actiom='' method='POST' id='change_de'role='form'>{% csrf_token %}
-	<h2>Детали пользователя</h2>
+	<h2>My profile</h2>
+	<!-- account details -->
 	<table class="table table-bordered">
+	<!-- username form -->
 	<tr>
 		<td>
 			<div class='col-md-2'>
-				<label for="username">Имя пользователя:</label>
+				<label for="username">Username:</label>
 			</div>
 			<div class='col-md-4'>
     			<input type='text' class="form-control" name='username' id="username" value ='{{ user.username }}'>
     		</div>
     	</td>
 	</tr>
+	<!-- password form -->
 	<tr>
 		<td>
 			<div>
 				<div class='col-md-2'>
-				<label for="username">Пароль:</label>
+				<label for="username">Password:</label>
 			</div>
 			<div class='col-md-4'>
-    			<p><button class="btn btn-default" data-toggle="modal" data-target="#myModal"><strong>Сменить пароль</strong></button></p>
+    			<p><button class="btn btn-default" data-toggle="modal" data-target="#myModal"><strong>Change password</strong></button></p>
 			</div>
 		</td>
 	</tr>
 </table>
+<!-- personal info -->
 <table class = 'table table-bordered'>
+	<!-- surname form -->
 	<tr>
 		<td>
 		<div class='col-md-2'>
-			<label for="firsname">Имя:</label>
+			<label for="firsname">First name:</label>
 		</div>
 		<div class='col-md-4'>
     		<input type='text' class="form-control" name='firstname' id="firstname" value ='{{ user.first_name }}'>
 		</div>
 	</td>
 	</tr>
+	<!-- surname form-->
 	<tr>
 		<td>
 		<div class='col-md-2'>
-			<label for='lastname'>Фамилия:</label>
+			<label for='lastname'>Last name:</label>
 		</div>
 		<div class='col-md-4'>
 			<input type='text' class="form-control" name='lastname' id='lastname' value ='{{ user.last_name }}'>
 		</div>
 		</td>
 	</tr>
+	<!-- email form-->
 	<tr>
 		<td>
 		<div class='col-md-2'>
-			<label for='email'>Адрес электронной почты:</label>
+			<label for='email'>Email address:</label>
 		</div>
 		<div class='col-md-4'>
 			<input type='email' class="form-control" name='email' id='email' value ='{{ user.email }}'>
@@ -60,35 +74,36 @@
 		</td>
 	</tr>
 </table>
+<!-- badges -->
 {% if user.is_staff %}
 	<div class='well'>
-		Пользователь является членом персонала
+		Staff user
 	</div>
 {% endif %}
 {% if user.is_superuser %}
 	<div class='well'>
-		Пользователь обладает полными правами на изменение данных
+		Superuser (no restrctions)
 	</div>
 {% endif %}
-<button type='submit' class= 'btn btn-primary'>Сохранить</button>
+<button type='submit' class= 'btn btn-primary'>Save changes</button>
 </form>
-<!-- Новый шаблон обхода -->
+<!-- password change form -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  		<div class="modal-dialog">
     		<div class="modal-content">
       			<div class="modal-body">
       				<form id="password_form" action="password/change/" method="post">{% csrf_token %}
       					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      					<h2 class="form-signin-heading">Смена пароля</h2>
+      					<h2 class="form-signin-heading">Password change</h2>
       					<strong>
-							Старый пароль:<input type="password" class="form-control" name='old_password' required autofocus>
-							Новый пароль<input type="password" class="form-control" name='new_password' required>
-							Новый пароль(заново)<input type="password" class="form-control" name='new_password2' required>
+							Old password <input type="password" class="form-control" name='old_password' required autofocus>
+							New password <input type="password" class="form-control" name='new_password' required>
+							Confirm new password <input type="password" class="form-control" name='new_password2' required>
 						</strong>
       			</div>
       			<div class="modal-footer">
-      				<input type="submit" class="btn btn-primary" value='Сохранить'>
-        			<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+      				<input type="submit" class="btn btn-primary" value='Save'>
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         		</form>
       			</div>
     		</div>
