@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% load date_extras %}
 
-{% block title %} Новый обход {% endblock %}
+{% block title %} Taskboard - New check {% endblock %}
 
 {% block content %}
 <body>
 <ol class="breadcrumb">
-  	<li><a href='/checks/'>Обходы</a></li>
+  	<li><a href='/checks/'><span class='glyphicon glyphicon-home'></span></a></li>
   	<li><a href='/checks/{{ check.id }}/dates/'>{{ check }}</a></li>
-  	<li class = 'active'>Новый обход</li>
+  	<li class = 'active'>New check</li>
   
 </ol>
 <form name = 'Form1' method = 'POST' target ='_top' action='/checks/{{check.id}}/dates/new/save/'>
 	{% csrf_token %}
-	<p><button class='btn btn-primary' type='submit'>Сохранить</button> <a class = 'btn btn-default' href='/checks/{{check.id}}/dates/cancel/'>Отмена</a></p>
+	<p><button class='btn btn-primary' type='submit'>Save</button> <a class = 'btn btn-default' href='/checks/{{check.id}}/dates/cancel/'>Cancel</a></p>
 	<table class = 'table table-hover'>
 		<tr>
-			<td>Задание</td>
-			<td>Статус</td>
+			<td>Task</td>
+			<td>Status</td>
 		</tr>
-		<!-- результат обходов -->
+		<!-- check result -->
 		{% for result in results %}
 			<tr>
 				<td>{{ result.task }}</td>
