@@ -1,74 +1,70 @@
 {% extends 'base.html' %}
 {% load date_extras %}
 
-{% block title %} Обходы {% endblock %}
+{% block title %} Templates {% endblock %}
 {% block optional_nav %}
 {% endblock %}
 {% block content %}
 <body>
-<!-- хлебные крошки -->
+<!-- breadcrumbs -->
 <ol class="breadcrumb">
   <li class='active'><span class='glyphicon glyphicon-home'></span></li>
 </ol>
-	<!-- кнопка добавить обход-->
+	<!-- new check form -->
 	{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
-	<!-- Новый шаблон обхода -->
 	<div class="modal fade" id="create-check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
  		<div class="modal-dialog">
     		<div class="modal-content">
       			<div class="modal-body">
       				<form id="Check_form" action="" method="post">{% csrf_token %}
       					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      					<h3 class="form-signin-heading">Введите название шаблона</h3>
+      					<h3 class="form-signin-heading">Template name</h3>
 						<input type="text" class="form-control" name='name' required autofocus>
       			</div>
       			<div class="modal-footer">
-      				<input type="submit" class="btn btn-primary" value='Сохранить'>
-        			<button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+      				<input type="submit" class="btn btn-primary" value='Save'>
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         			</form>
       			</div>
     		</div>
   		</div>
 	</div>
 	{% endif %}
+	<!-- add_check button-->
 	{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
 		<div align='right'>
 			<a href='#' type='button' class='btn btn-default' data-toggle='modal' data-target='#create-check'>
-				Новый шаблон
+				New check tempalate
 			</a>
 		</div>
 		<br>
 	{% endif %}
-	<!--таблица шаблонов обходов-->
+	<!-- templates table -->
 	<table class = 'table table-hover'>
 		<tr>
-			<th>Обход</th>
-			<th>Последний обход</th>
-			<th>Статус</th>
+			<th>Template</th>
+			<th>Last check</th>
 		</tr>
-		<!-- Вывод элементов таблицы check-->
+		<!-- templates -->
 		{% for check in checks %}
 		<tr>
 			<td>
-				<!-- название шаблона обхода--><!-- ссылка на даты, ссылающиеся на обход-->
+				<!-- check template name -->
 				<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates'>{{ check.name }}</a>
-			</td> 
-			<!-- кнопка действий -->
+			</td>
+			<!-- last check date and status --> 
 			<td>
 			{% if check.last_date %}
-
-					<!-- вывод даты последнего обхода -->
+					<!-- last check date -->
 					<a type="button" class="btn btn-link" href='/checks/{{ check.id }}/dates/{{ check.date_id }}/results/'><!--{{ check.last_date|date:"H:i d-M-Y" }}-->{{ check.last_date|format }}</a>
 			{% endif %}
-			</td>
-			<td>
-				{% if check.last_date %}
-					{% if check.status == 1 %}
-						<span class="glyphicon glyphicon-ok-sign"></span>
-					{% else %}
-						<span class="glyphicon glyphicon-minus-sign red"></span>
-					{% endif %}
+			{% if check.last_date %}
+				{% if check.status == 1 %}
+					<span class="glyphicon glyphicon-ok-sign"></span>
+				{% else %}
+					<span class="glyphicon glyphicon-minus-sign red"></span>
 				{% endif %}
+			{% endif %}
 			</td>
 		</tr>		
 		{% endfor %}
