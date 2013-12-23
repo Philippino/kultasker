@@ -4,15 +4,15 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="{% static 'css/css.css' %}">
-		<!-- Подключение к CSS Bootstrap-->
+		<!-- connect CSS Bootstrap-->
 		<!-- <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"> -->
     <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css'>
-		<!-- Заглавие страницы-->
+		<!-- title block-->
 		<title>{% block title %}{% endblock %}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 	<body onload="startTime()" style>
-		<!-- Панель навигации -->
+		<!-- navigation panel -->
 		<nav class="navbar navbar-default" role='navigation'>
 		<div class='container'>
 			<div class='navbar-header'>
@@ -38,44 +38,45 @@
             					{{ user.username }}
             				{% endif %}
             				<ul class="dropdown-menu" role="menu">
-    							<li><a href="/accounts/details/">Личные данные</a></li>
-    							<li><a href="/accounts/logout/">Выйти</a></li>
+    							<li><a href="/accounts/details/">Profile</a></li>
+    							<li><a href="/accounts/logout/">Sign Out</a></li>
   							</ul>
   						</a></li>
             		{% else %}
-            			<li><a href='/accounts/login/'>Войти</a></li>
+            			<li><a href='/accounts/login/'>Sign In</a></li>
             		{% endif %}
           		</ul> 
       		</div>
       	</div>
       	</nav>
-      	<!-- Вывод сообщений -->
+      	<!-- messages -->
       	{% if messages %}
       	<div class='container'>
-		{% for message in messages %}
-		<div class="alert alert-{{ message.tags }}">
-    		{{ message }}
-    		<a class="close" data-dismiss='alert' href="#" aria-hidden="true">&times;</a>
-		</div>
-		{% endfor %}
-		</div>
-		{% endif %}
+		      {% for message in messages %}
+		        <div class="alert alert-{{ message.tags }}">
+    		      {{ message }}
+    		      <a class="close" data-dismiss='alert' href="#" aria-hidden="true">&times;</a>
+		        </div>
+		      {% endfor %}
+		    </div>
+		  {% endif %}
 	<div class='container'>
-		<!-- Основное тело страницы-->
+		<!-- main body -->
 		{% block content %}{% endblock %}
 	</div>
 		</div>
 
-		<!-- Подложка страницы-->
+		<!-- footer -->
 		{% block footer %}
 			<div class='container'>
 			<hr>
 			<p>ГТРК "Санкт-Петербург" 2013</p>
 			</div>	
 		{% endblock %}
-		<!-- Подключение к Bootstrap Javascript и Jquery -->
+		<!-- connect JQuery -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <!-- <link href="{% static 'bootstrap/js/bootstrap.min.js' %}" rel="stylesheet"> -->
+    <!-- <script type='text/javascript' src="{% static 'bootstrap/js/bootstrap.min.js' %}"> -->
+    <!-- connect JQuery -->
 		<script type="text/javascript" src='//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js'></script>
 	</body>
 </html>
