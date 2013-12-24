@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 {% load date_extras %}
+{% load i18n %}
 
-{% block title %} Templates {% endblock %}
-{% block optional_nav %}
-{% endblock %}
+{% block title %}{% trans 'Templates' %}{% endblock %}
 {% block content %}
 <body>
 <!-- breadcrumbs -->
@@ -18,12 +17,12 @@
       			<div class="modal-body">
       				<form id="Check_form" action="" method="post">{% csrf_token %}
       					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      					<h3 class="form-signin-heading">Template name</h3>
+      					<h3 class="form-signin-heading">{% trans 'Template name' %}</h3>
 						<input type="text" class="form-control" name='name' required autofocus>
       			</div>
       			<div class="modal-footer">
-      				<input type="submit" class="btn btn-primary" value='Save'>
-        			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      				<input type="submit" class="btn btn-primary" value="{% trans 'Save' %}">
+        			<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}</button>
         			</form>
       			</div>
     		</div>
@@ -34,7 +33,7 @@
 	{% if 'task_viewer.add_check' in request.user.get_all_permissions %}
 		<div align='right'>
 			<a href='#' type='button' class='btn btn-default' data-toggle='modal' data-target='#create-check'>
-				New check tempalate
+				{% trans 'New check tempalate' %}
 			</a>
 		</div>
 		<br>
@@ -42,8 +41,8 @@
 	<!-- templates table -->
 	<table class = 'table table-hover'>
 		<tr>
-			<th>Template</th>
-			<th>Last check</th>
+			<th>{% trans 'Template' %}</th>
+			<th>{% trans 'Last check' %}</th>
 		</tr>
 		<!-- templates -->
 		{% for check in checks %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load date_extras %}
 
-{% block title %} Taskboard - {{ check }} {% endblock %}
+{% block title %} {% trans 'Taskboard' %} - {{ check }} {% endblock %}
 
 {% block optional_nav %}
 {% endblock %}
@@ -21,22 +21,22 @@
 </ol>
 <div class="alert alert-warning" style="display: none" id='alert'>
   <a class="close" onclick="$('.alert').hide();">×</a>
-  <p><strong>Attention!</strong> Are you sure you want to delete check? All linked tasks and results will be deleted.</p>
+  <p><strong>{% trans 'Attention!' %}</strong> {% trans 'Are you sure you want to delete check? All linked tasks and results will be deleted.' %}</p>
   <div class="alert-actions">
-    <a class="btn btn-warning" id='proceed_delete'>Confirm</a> <a class="btn btn-default" onclick="$('.alert').hide();"> Cancel</a>
+    <a class="btn btn-warning" id='proceed_delete'>{% trans 'Confirm' %}</a><a class="btn btn-default" onclick="$('.alert').hide();">{% trans 'Cancel' %}</a>
   </div>
 </div>
 <!-- new_check button -->
 <form id='new_check_form' action='/checks/{{check.id}}/dates/new/' method='POST'>{% csrf_token %}
 	{% if 'task_viewer.add_date' in request.user.get_all_permissions %}
-	<button class='btn btn-primary' type='submit'>New check</button>
+	<button class='btn btn-primary' type='submit'>{% trans 'New check' %}</button>
 {% endif %}
 </form>
 <br>
 <table class = 'table table-hover'>
 	<tr>
-		<th>Date</th>
-		<th>Status</th>
+		<th>{% trans 'Date' %}</th>
+		<th>{% trans 'Status' %}</th>
 	</tr>
 	<!-- check dates -->
 	{% for date in dates %}
@@ -80,11 +80,11 @@
 <div align='right' class='btn-group col-lg-4 col-md-5 col-sm-6 col-xs-8'>
 {% if 'task_viewer.change_task' in request.user.get_all_permissions %}
 <!-- edit template button -->
-<a  type='button' class='btn btn-default' href = '/checks/{{ check.id }}/tasks/'>Edit template</a>
+<a  type='button' class='btn btn-default' href = '/checks/{{ check.id }}/tasks/'>{% trans 'Edit template' %}</a>
 {% endif %}
 {% if 'task_viewer.delete_check' in request.user.get_all_permissions %}
 <!-- delete template button -->
-<a type='button' class='btn btn-default' href='#' onclick="ondelete()">Delete template <span class="glyphicon glyphicon-trash"></span></a>
+<a type='button' class='btn btn-default' href='#' onclick="ondelete()">{% trans 'Delete template' %} <span class="glyphicon glyphicon-trash"></span></a>
 		<!-- warning message script -->
           <script>
           function ondelete{{ date.id }}(){

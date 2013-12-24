@@ -1,4 +1,5 @@
 {% extends 'base.html '%}
+{% load i18n %}
 
 {% block title %}
 	{% if user.first_name and user.last_name %}
@@ -11,14 +12,14 @@
 {% block content %}
 <div>
 <form actiom='' method='POST' id='change_de'role='form'>{% csrf_token %}
-	<h2>My profile</h2>
+	<h2>{% trans 'My profile' %}</h2>
 	<!-- account details -->
 	<table class="table table-bordered">
 	<!-- username form -->
 	<tr>
 		<td>
 			<div class='col-md-2'>
-				<label for="username">Username:</label>
+				<label for="username">{% trans 'Username:' %}</label>
 			</div>
 			<div class='col-md-4'>
     			<input type='text' class="form-control" name='username' id="username" value ='{{ user.username }}'>
@@ -30,10 +31,10 @@
 		<td>
 			<div>
 				<div class='col-md-2'>
-				<label for="username">Password:</label>
+				<label for="username">{% trans 'Password:' %}</label>
 			</div>
 			<div class='col-md-4'>
-    			<p><button class="btn btn-default" data-toggle="modal" data-target="#myModal"><strong>Change password</strong></button></p>
+    			<p><button class="btn btn-default" data-toggle="modal" data-target="#myModal"><strong>{% trans 'Change password' %}</strong></button></p>
 			</div>
 		</td>
 	</tr>
@@ -44,7 +45,7 @@
 	<tr>
 		<td>
 		<div class='col-md-2'>
-			<label for="firsname">First name:</label>
+			<label for="firsname">{% trans 'First name:' %}</label>
 		</div>
 		<div class='col-md-4'>
     		<input type='text' class="form-control" name='firstname' id="firstname" value ='{{ user.first_name }}'>
@@ -55,7 +56,7 @@
 	<tr>
 		<td>
 		<div class='col-md-2'>
-			<label for='lastname'>Last name:</label>
+			<label for='lastname'>{% trans 'Last name:' %}</label>
 		</div>
 		<div class='col-md-4'>
 			<input type='text' class="form-control" name='lastname' id='lastname' value ='{{ user.last_name }}'>
@@ -66,7 +67,7 @@
 	<tr>
 		<td>
 		<div class='col-md-2'>
-			<label for='email'>Email address:</label>
+			<label for='email'>{% trans 'Email address:' %}</label>
 		</div>
 		<div class='col-md-4'>
 			<input type='email' class="form-control" name='email' id='email' value ='{{ user.email }}'>
@@ -77,15 +78,15 @@
 <!-- badges -->
 {% if user.is_staff %}
 	<div class='well'>
-		Staff user
+		{% trans 'Staff user' %}
 	</div>
 {% endif %}
 {% if user.is_superuser %}
 	<div class='well'>
-		Superuser (no restrctions)
+		{% trans 'Superuser (no restrctions)' %}
 	</div>
 {% endif %}
-<button type='submit' class= 'btn btn-primary'>Save changes</button>
+<button type='submit' class= 'btn btn-primary'>{% trans 'Save changes' %}</button>
 </form>
 <!-- password change form -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -94,16 +95,16 @@
       			<div class="modal-body">
       				<form id="password_form" action="password/change/" method="post">{% csrf_token %}
       					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      					<h2 class="form-signin-heading">Password change</h2>
+      					<h2 class="form-signin-heading">{% trans 'Password change' %}</h2>
       					<strong>
-							Old password <input type="password" class="form-control" name='old_password' required autofocus>
-							New password <input type="password" class="form-control" name='new_password' required>
-							Confirm new password <input type="password" class="form-control" name='new_password2' required>
+							{% trans 'Old password' %} <input type="password" class="form-control" name='old_password' required autofocus>
+							{% trans 'New password' %} <input type="password" class="form-control" name='new_password' required>
+							{% trans 'Confirm new password' %} <input type="password" class="form-control" name='new_password2' required>
 						</strong>
       			</div>
       			<div class="modal-footer">
-      				<input type="submit" class="btn btn-primary" value='Save'>
-        			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      				<input type="submit" class="btn btn-primary" value="{% trans 'Save' %}">
+        			<button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}</button>
         		</form>
       			</div>
     		</div>

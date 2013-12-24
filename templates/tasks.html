@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 
-{% block title %} Taskboard - {{ check }} {% endblock %}
+{% block title %}{% trans 'Taskboard' %} - {{ check }} {% endblock %}
 
 {% block content %}
 <body>
 <ol class="breadcrumb">
   	<li><a href='/checks/'class='btn btn-link'><span class='glyphicon glyphicon-home'></span></a></li>
   	<li><a href='/checks/{{ check.id }}/dates/'>{{ check }}</a></li>
-  	<li class='active'>Tasks</li>
+  	<li class='active'>{% trans 'Tasks' %}</li>
 </ol>
 <div class="alert alert-warning" style="display: none" id='alert'>
   <a class="close" onclick="$('.alert').hide();">×</a>
-  <p><strong>Attention!</strong> Are you sure you want to delete task?</p>
+  <p><strong>{% trans 'Attention!' %}</strong>{% trans 'Are you sure you want to delete task?' %}</p>
   <div class="alert-actions">
-    <a class="btn btn-warning" id='proceed_delete'>Confirm</a> <a class="btn btn-default" onclick="$('.alert').hide();">Cancel</a>
+    <a class="btn btn-warning" id='proceed_delete'>{% trans 'Confirm' %}</a> <a class="btn btn-default" onclick="$('.alert').hide();">{% trans 'Cancel' %}</a>
   </div>
 </div>
 <h3>{{ check }}</h3>
 {% if 'task_viewer.add_task' in request.user.get_all_permissions %}
 <!-- Add task button -->
-<p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><strong>Add task</strong></button></p>
+<p><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"><strong>{% trans 'Add task' %}</strong></button></p>
 <!-- New task form -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -27,12 +27,12 @@
             <div class="modal-body">
               <form id="Task_form" action="" method="post">{% csrf_token %}
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3 class="form-signin-heading">Task name</h3>
+            <h3 class="form-signin-heading">{% trans 'Task name' %}</h3>
             <input type="text" class="form-control" name='task' required autofocus>
             </div>
             <div class="modal-footer">
               <input type="submit" class="btn btn-primary" value='Save'>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancel' %}</button>
               </form>
             </div>
         </div>
@@ -42,7 +42,7 @@
 	<!-- tasks table -->
 	<table class = 'table table-hover'>
 		<tr>
-			<th>Task</th>
+			<th>{% trans 'Task' %}</th>
 			<th></th>
 		</tr>
 		<!-- tasks -->

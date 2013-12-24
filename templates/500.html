@@ -1,12 +1,13 @@
+{% load i18n %}
 <!DOCTYPE html PUBLIC “-//W3C//DTD HTML 4.01//EN”
 “http://www.w3.org/TR/html4/strict.dtd”>
 <html lang=”en”>
 <head>
-<title>Page is not availiable</title>
+<title>{% trans 'Page is not availiable' %}</title>
 </head>
 <body>
-<h1>Page is not availiable</h1>
-<p>Sorry, page is not availiable. The server encountered an internal error or misconfiguration and was unable to complete your request.</p>
-<p>More information about this error may be availiable in the server error log.</p>
+<h1>{% trans 'Page is not availiable' %}</h1>
+<p>{% trans 'Sorry, page is not availiable. The server encountered an internal error or misconfiguration and was unable to complete your request.' %}</p>
+<p>{% trans 'More information about this error may be availiable in the server error log.'' %}</p>
 </body>
 </html>
