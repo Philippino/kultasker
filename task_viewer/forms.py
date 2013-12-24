@@ -1,14 +1,14 @@
-# coding: utf-8
 from django import forms
 from task_viewer.models import Check
-import datetime
+from django.utils.translation import ugettext as _
+
 class CheckForm(forms.Form):
-	name = forms.CharField(max_length = 100, label = 'Название шаблона обхода')
+	name = forms.CharField(max_length = 100, label = _('Template name'))
 
 class TaskForm(forms.Form):
-	check = forms.ModelChoiceField(label = 'Обход', queryset = Check.objects.all())
-	task = forms.CharField(max_length = 100, label = 'Задание обхода')
+	check = forms.ModelChoiceField(label = _('Template'), queryset = Check.objects.all())
+	task = forms.CharField(max_length = 100, label = _('Template task'))
 
 class DateForm(forms.Form):
-	date = forms.DateTimeField(label = 'Время обхода', widget = forms.DateTimeInput)
-	check = forms.ModelChoiceField(label = 'Обход', queryset = Check.objects.all())
+	date = forms.DateTimeField(label = _('Check date'), widget = forms.DateTimeInput)
+	check = forms.ModelChoiceField(label = _('Template'), queryset = Check.objects.all())
