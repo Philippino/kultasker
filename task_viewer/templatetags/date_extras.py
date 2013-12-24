@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 register = template.Library()
 
 def get_month(given_index):
-	months = list(_(['January', 'February', 'March', 'April' , 'May' , 'June' , 'July' , 'August', 'September', 'October', 'November',  'December']))
+	months = list([_('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('August'), _('September'), _('October'), _('November'),  _('December')])
 	return months[given_index]
 
 @register.filter(expects_localtime=True)
