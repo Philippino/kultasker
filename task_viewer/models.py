@@ -24,8 +24,3 @@ class Result(models.Model):
 	date = models.ForeignKey(Date)
 	task = models.ForeignKey(Task)
 	status = models.IntegerField(default = 0)
-
-	#def __unicode__(self):
-	#	return  str(self.status)
-		
-# Create your models here.
