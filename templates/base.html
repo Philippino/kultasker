@@ -72,6 +72,15 @@
 			<div class='container'>
 			<hr>
 			<p>ГТРК "Санкт-Петербург" 2013</p>
+      <p><form action='/i18n/setlang/' method='post'>{% csrf_token %}
+        <select name='language'>
+        {% for lang in LANGUAGES %}
+          <option value='{{ lang.0 }}'>{{ lang.1 }}</option>
+        {% endfor %}
+        </select>
+        <input type='submit' value='Go'/>
+        </form></p> 
+        {{ request.LANGUAGE_CODE }}
 			</div>	
 		{% endblock %}
 		<!-- connect JQuery -->

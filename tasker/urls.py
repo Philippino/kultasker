@@ -8,6 +8,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$',index),
+    url(r'^i18n/', include('django.conf.urls.i18n')), #change language
     url(r'^accounts/login/$', login), #show login page, perform a login
     url(r'^accounts/logout/$', logout), #perform a logout
     url(r'^accounts/details/$', account_details), #show user profile
