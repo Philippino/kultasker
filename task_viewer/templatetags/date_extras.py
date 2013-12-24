@@ -25,7 +25,7 @@ def format(given_date):
 		return _('Two weeks ago')
 	elif delta.days >= 7:
 		return _('Last week')
-	elif delta.days > 1 and delta.days < 6:
+	elif delta.days > 1 and delta.days < 7:
 		return _("%s days ago") % delta.days
 	elif today.day == given_date.day and today.year == given_date.year and given_date.month == today.month:
 		return _("Today")
