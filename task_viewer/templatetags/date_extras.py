@@ -1,11 +1,12 @@
 # coding: utf-8
 from django import template
 from django.utils import timezone
+from django.utils.translation import ugettext as _
 
 register = template.Library()
 
 def get_month(given_index):
-	months = list(['January', 'February', 'March', 'April' , 'May' , 'June' , 'July' , 'August', 'September', 'October', 'November',  'December'])
+	months = list(_(['January', 'February', 'March', 'April' , 'May' , 'June' , 'July' , 'August', 'September', 'October', 'November',  'December']))
 	return months[given_index]
 
 @register.filter(expects_localtime=True)
@@ -17,21 +18,21 @@ def format(given_date):
 	elif delta.days > 40:
 		return str(given_date.day) +' '+ get_month(given_date.month-1)
 	elif delta.days >= 30:
-		return 'Last month'
+		return _('Last month')
 	elif delta.days >= 21:
-		return 'Three weeks ago'
+		return _('Three weeks ago')
 	elif delta.days >= 14:
-		return 'Two weeks ago'
+		return _('Two weeks ago')
 	elif delta.days >= 7:
-		return 'Last week'
+		return _('Last week')
 	elif delta.days > 1 and delta.days < 6:
-		return "%s days ago" % delta.days
+		return _("%s days ago") % delta.days
 	elif today.day == given_date.day and today.year == given_date.year and given_date.month == today.month:
-		return "Today"
+		return _("Today")
 	elif today.day - 1 == given_date.day and today.year == given_date.year and given_date.month == today.month:
-		return "Yesterday"
+		return _("Yesterday")
 	elif today.day - 2 == given_date.day and today.year == given_date.year and given_date.month == today.month:
-		return "Day before yesterday"
+		return _("Day before yesterday")
 
 @register.filter(expects_localtime=True)		
 def custom_format(given_date):
