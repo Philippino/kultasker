@@ -20,113 +20,113 @@ msgstr ""
 
 #: .\forms.py:6
 msgid "Template name"
-msgstr ""
+msgstr "Название шаблона"
 
 #: .\forms.py:9 .\forms.py:14
 msgid "Template"
-msgstr ""
+msgstr "Шаблон"
 
 #: .\forms.py:10
 msgid "Template task"
-msgstr ""
+msgstr "Задание шаблона"
 
 #: .\forms.py:13
 msgid "Check date"
-msgstr ""
+msgstr "Дата обхода"
 
 #: .\views.py:22
 msgid "Template is successfully created"
-msgstr ""
+msgstr "Шаблон успешно создан"
 
 #: .\views.py:45
 msgid "You are not permitted to create templates"
-msgstr ""
+msgstr "Вы не можете создавать шаблоны обходов"
 
 #: .\views.py:84
 msgid "You don't have permisson to add tasks"
-msgstr ""
+msgstr "Вы не можете редактировать обходы"
 
 #: .\views.py:154
 msgid "You are not permitted to create checks"
-msgstr ""
+msgstr "Вы не можете создавать обходы"
 
 #: .\templatetags\date_extras.py:9
 msgid "January"
-msgstr ""
+msgstr "Января"
 
 #: .\templatetags\date_extras.py:9
 msgid "February"
-msgstr ""
+msgstr "Февраля"
 
 #: .\templatetags\date_extras.py:9
 msgid "March"
-msgstr ""
+msgstr "Марта"
 
 #: .\templatetags\date_extras.py:9
 msgid "April"
-msgstr ""
+msgstr "Апреля"
 
 #: .\templatetags\date_extras.py:9
 msgid "May"
-msgstr ""
+msgstr "Мая"
 
 #: .\templatetags\date_extras.py:9
 msgid "June"
-msgstr ""
+msgstr "Июня"
 
 #: .\templatetags\date_extras.py:9
 msgid "July"
-msgstr ""
+msgstr "Июня"
 
 #: .\templatetags\date_extras.py:9
 msgid "August"
-msgstr ""
+msgstr "Августа"
 
 #: .\templatetags\date_extras.py:9
 msgid "September"
-msgstr ""
+msgstr "Сентября"
 
 #: .\templatetags\date_extras.py:9
 msgid "October"
-msgstr ""
+msgstr "Октября"
 
 #: .\templatetags\date_extras.py:9
 msgid "November"
-msgstr ""
+msgstr "Ноября"
 
 #: .\templatetags\date_extras.py:9
 msgid "December"
-msgstr ""
+msgstr "Декабря"
 
 #: .\templatetags\date_extras.py:21
 msgid "Last month"
-msgstr ""
+msgstr "Месяц назад"
 
 #: .\templatetags\date_extras.py:23
 msgid "Three weeks ago"
-msgstr ""
+msgstr "Три недели назад"
 
 #: .\templatetags\date_extras.py:25
 msgid "Two weeks ago"
-msgstr ""
+msgstr "Две недели назад"
 
 #: .\templatetags\date_extras.py:27
 msgid "Last week"
-msgstr ""
+msgstr "Неделю назад"
 
 #: .\templatetags\date_extras.py:29
 #, python-format
 msgid "%(days)s days ago"
-msgstr ""
+msgstr "%(days)s дней назад"
 
 #: .\templatetags\date_extras.py:31
 msgid "Today"
-msgstr ""
+msgstr "Сегодня"
 
 #: .\templatetags\date_extras.py:33
 msgid "Yesterday"
-msgstr ""
+msgstr "Вчера"
 
 #: .\templatetags\date_extras.py:35
 msgid "Day before yesterday"
-msgstr ""
+msgstr "Позавчера"
