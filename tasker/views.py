@@ -45,7 +45,7 @@ def account_details(request):
 		current_user.last_name = request.POST['lastname']
 		current_user.email = request.POST['email']
 		current_user.save()
-		messages.success(request, _('Profile updates successfully.'))
+		messages.success(request, _('Profile updated successfully.'))
 	return render_to_response('account.html', RequestContext(request,{'user':current_user}))	
 
 @login_required(login_url='/accounts/login/')
