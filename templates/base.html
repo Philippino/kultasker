@@ -71,17 +71,21 @@
 		{% block footer %}
 			<div class='container'>
 			<hr>
-			<p>ГТРК "Санкт-Петербург" 2013</p>
-      <p><form action='/i18n/setlang/' method='post'>{% csrf_token %}
-        <select name='language'>
-        {% for lang in LANGUAGES %}
-          <option value='{{ lang.0 }}'>{{ lang.1 }}</option>
-        {% endfor %}
-        </select>
-        <input type='submit' value='Go'/>
-        </form></p> 
-        {{ request.LANGUAGE_CODE }}
-			</div>	
+			<p>{% trans 'ГТРК "Санкт-Петербург" 2013' noop %}</p>
+    <p>
+    {% for lang in LANGUAGES %}
+      <form action='/i18n/setlang/' method='post' style="display: inline;">{% csrf_token %}
+        <input type='hidden' name='language' value='{{ lang.0 }}'>
+        {% if request.LANGUAGE_CODE == lang.0 %}
+        <strong>{{ lang.1 }}</strong>
+        {% else %}
+        <input type='submit' class='btn btn-link' value='{{ lang.1 }}'/>
+        {% endif %}
+      </form>
+    {% endfor %}
+    </p> 
+   
+    </div>	
 		{% endblock %}
 		<!-- connect JQuery -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>

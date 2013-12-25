@@ -1,3 +1,4 @@
+# coding: utf-8
 import os
 
 DEBUG = True
@@ -33,7 +34,7 @@ LANGUAGE_CODE = 'en-us'
 
 LANGUAGES = (
 ('en', 'English'),
-('ru', 'Russian'),
+('ru', 'Русский'),
 )
 
 SITE_ID = 1
