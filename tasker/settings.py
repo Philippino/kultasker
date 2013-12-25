@@ -46,6 +46,9 @@ USE_TZ = True
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 
+
+LOCALE_PATHS = (PROJECT_PATH, 'locale')
+
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ('static/',
