@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-25 16:50+0400\n"
+"POT-Creation-Date: 2013-12-26 12:17+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: .\task_viewer\forms.py:6 .\templates\checks.html.py:20
 msgid "Template name"
@@ -51,84 +51,87 @@ msgstr "Вы не можете редактировать шаблоны обх�
 msgid "You are not permitted to create checks"
 msgstr "Вы не можете совершать обходы"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "January"
 msgstr "Января"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "February"
 msgstr "Февраля"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "March"
 msgstr "Марта"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "April"
 msgstr "Апреля"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "May"
 msgstr "Мая"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "June"
 msgstr "Июня"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "July"
 msgstr "Июля"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "August"
 msgstr "Августа"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "September"
 msgstr "Сентября"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "October"
 msgstr "Октября"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "November"
 msgstr "Ноября"
 
-#: .\task_viewer\templatetags\date_extras.py:9
+#: .\task_viewer\templatetags\date_extras.py:10
 msgid "December"
 msgstr "Декабря"
 
-#: .\task_viewer\templatetags\date_extras.py:21
+#: .\task_viewer\templatetags\date_extras.py:22
 msgid "Last month"
 msgstr "Месяц назад"
 
-#: .\task_viewer\templatetags\date_extras.py:23
+#: .\task_viewer\templatetags\date_extras.py:24
 msgid "Three weeks ago"
-msgstr "Три неедели назад"
+msgstr "Три недели назад"
 
-#: .\task_viewer\templatetags\date_extras.py:25
+#: .\task_viewer\templatetags\date_extras.py:26
 msgid "Two weeks ago"
 msgstr "Две недели назад"
 
-#: .\task_viewer\templatetags\date_extras.py:27
+#: .\task_viewer\templatetags\date_extras.py:28
 msgid "Last week"
 msgstr "Неделю назад"
 
-#: .\task_viewer\templatetags\date_extras.py:29
+#: .\task_viewer\templatetags\date_extras.py:30
 #, python-format
-msgid "%(days)s days ago"
-msgstr "%(days)s дней назад"
+msgid "%(days)s day ago"
+msgid_plural "%(days)s days ago"
+msgstr[0] "%(days)s день назад"
+msgstr[1] "%(days)s дня назад"
+msgstr[2] "%(days)s дней назад"
 
-#: .\task_viewer\templatetags\date_extras.py:31
+#: .\task_viewer\templatetags\date_extras.py:32
 msgid "Today"
 msgstr "Сегодня"
 
-#: .\task_viewer\templatetags\date_extras.py:33
+#: .\task_viewer\templatetags\date_extras.py:34
 msgid "Yesterday"
 msgstr "Вчера"
 
-#: .\task_viewer\templatetags\date_extras.py:35
+#: .\task_viewer\templatetags\date_extras.py:36
 msgid "Day before yesterday"
 msgstr "Позавчера"
 
@@ -262,6 +265,10 @@ msgstr "Выйти"
 #: .\templates\base.html.py:47
 msgid "Sign In"
 msgstr "Войти"
+
+#: .\templates\base.html.py:74
+msgid "ГТРК \"Санкт-Петербург\" 2013"
+msgstr ""
 
 #: .\templates\checks.html.py:5
 msgid "Templates"
