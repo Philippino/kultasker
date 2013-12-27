@@ -58,7 +58,7 @@
 	{% endfor %}
 </table>
 <div class='row'>
-<div class='col-lg-8 col-md-7 col-sm-6 col-xs-4'>
+<div class='btn-group col-lg-8 col-md-7 col-sm-6'>
 {% if dates.has_other_pages %}
 <!-- pagination controls -->
 <ol class="pagination">
@@ -78,7 +78,7 @@
 	<br>
 {% endif %}
 </div>
-<div align='right' class='btn-group col-lg-4 col-md-5 col-sm-6 col-xs-8'>
+<div class='btn-group col-lg-4 col-md-5 col-sm-6'>
 {% if 'task_viewer.change_task' in request.user.get_all_permissions %}
 <!-- edit template button -->
 <a  type='button' class='btn btn-default' href = '/checks/{{ check.id }}/tasks/'>{% trans 'Edit template' %}</a>
@@ -86,6 +86,7 @@
 {% if 'task_viewer.delete_check' in request.user.get_all_permissions %}
 <!-- delete template button -->
 <a type='button' class='btn btn-default' href='#' onclick="ondelete()">{% trans 'Delete template' %} <span class="glyphicon glyphicon-trash"></span></a>
+</div>
 		<!-- warning message script -->
           <script>
           function ondelete{{ date.id }}(){
@@ -94,7 +95,7 @@
           }
           </script>
 {% endif %}
-</div>
+
 </div>
 </body>
 

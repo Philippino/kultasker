@@ -1,8 +1,7 @@
 body{
-		min-width: 420pt;
+		min-width: 300pt;
 		background: url('../img/back.jpg');
 		background-size: 1920px 1080px;
 		background-repeat:no-repeat;
-		display: compact
 	}
 .red{color: red;}

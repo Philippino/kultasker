@@ -43,7 +43,7 @@
 	</table>
 	{% if 'task_viewer.delete_date' in request.user.get_all_permissions %}
 	<div align='right'>
-	<a type='button' class='btn btn-default' href='#' onclick="ondelete{{ date.id }}({{ date.id }})">{% trans 'Delete check' %}<span class="glyphicon glyphicon-trash"></span></a>
+	<a type='button' class='btn btn-default' href='#' onclick="ondelete{{ date.id }}({{ date.id }})">{% trans 'Delete check' %} <span class="glyphicon glyphicon-trash"></span></a>
           <script>
           function ondelete{{ date.id }}(date_id){
             $('#proceed_delete').attr('href','/checks/{{ date.check_id }}/dates/{{ date.id }}/delete/');

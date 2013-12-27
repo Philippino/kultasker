@@ -311,7 +311,7 @@ msgstr "Статус"
 
 #: .\templates\dates.html.py:84
 msgid "Edit template"
-msgstr "Редактировать щаблон"
+msgstr "Редактировать шаблон"
 
 #: .\templates\dates.html.py:88
 msgid "Delete template"
