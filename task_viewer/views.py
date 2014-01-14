@@ -209,6 +209,8 @@ def del_task(request,check, task): #task delete view
 		messages.warning(request, _('You are not permitted to delete tasks.'))
 	return HttpResponseRedirect("/checks/%s/tasks/" % check)
 
+#unnecessary tasks
+"""
 @login_required(login_url='/accounts/login/')
 def generate(request, check): #generator of random dates
 	linked_tasks = Task.objects.filter(check_id = check)
@@ -231,6 +233,7 @@ def randomDate(): #returns random date in between 1970 and 2013
 	day = random.choice(range(1, 28))
 	date = datetime.datetime(year, month, day)
 	return date
+"""
 
 @login_required(login_url='/accounts/login/')
 def del_check(request,check): #delete template

@@ -29,7 +29,7 @@ urlpatterns += patterns('task_viewer',
     url(r'^checks/(?P<check>\d+)/tasks/(?P<task>\d+)/delete/$', 'views.del_task'), #delete template task
     url(r'^checks/(?P<check>\d+)/dates/new/save/$', 'views.save_date'), #save new check date
     url(r'^checks/(?P<check>\d+)/dates/cancel/$', 'views.cancel_date'), #cancel new check date
-    url(r'^checks/(?P<check>\d+)/generate/$', 'views.generate'), #generate 50 random dates for template
+    #url(r'^checks/(?P<check>\d+)/generate/$', 'views.generate'), #generate 50 random dates for template
     url(r'^checks/(?P<check>\d+)/delete/$', 'views.del_check'), #delete template
 	)
 
