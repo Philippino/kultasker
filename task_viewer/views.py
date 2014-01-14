@@ -170,8 +170,12 @@ def save_date(request, check): #save new check date
 
 @login_required(login_url='/accounts/login/')
 def del_date(request,check, date): #delete check date
-	del_date = Date.objects.filter(id = date).select_related()
-	del_date.delete()
+	current_user = request.user
+	if current_user.has_perm('dates.can_delete'):
+		del_date = Date.objects.filter(id = date).select_related()
+		del_date.delete()
+	else:
+		messages.warning(request, _('You are not permitted to delete dates.'))
 	return HttpResponseRedirect("/checks/%s/dates/" % check)
 
 @login_required(login_url='/accounts/login/')
@@ -182,8 +186,11 @@ def cancel_date(request, check): #cancel new check date
 
 @login_required(login_url='/accounts/login/')
 def del_task(request,check, task): #task delete view
-	del_task = Task.objects.filter(id = task).select_related()
-	del_task.delete()
+	if current_user.has_perm('tasks.can_delete'):
+		del_task = Task.objects.filter(id = task).select_related()
+		del_task.delete()
+	else:
+		messages.warning(request, _('You are not permitted to delete tasks.'))
 	return HttpResponseRedirect("/checks/%s/tasks/" % check)
 
 @login_required(login_url='/accounts/login/')
@@ -211,6 +218,9 @@ def randomDate(): #returns random date in between 1970 and 2013
 
 @login_required(login_url='/accounts/login/')
 def del_check(request,check): #delete template
-	del_check = Check.objects.filter(id = check).select_related()
-	del_check.delete()
+	if current_user.has_perm('checks.can_delete'):
+		del_check = Check.objects.filter(id = check).select_related()
+		del_check.delete()
+	else:
+		messages.warning(request, _('You are not permitted to delete templates.'))
 	return HttpResponseRedirect("/checks/")
