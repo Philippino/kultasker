@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-26 12:17+0400\n"
+"POT-Creation-Date: 2014-01-14 16:06+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,21 +35,33 @@ msgstr "Задание шаблона"
 msgid "Check date"
 msgstr "Дата обхода"
 
-#: .\task_viewer\views.py:22
+#: .\task_viewer\views.py:23
 msgid "Template is successfully created"
 msgstr "Шаблон успешно создан"
 
-#: .\task_viewer\views.py:45
+#: .\task_viewer\views.py:48
 msgid "You are not permitted to create templates."
 msgstr "Вы не можете создавать шаблоны обходов"
 
-#: .\task_viewer\views.py:84
+#: .\task_viewer\views.py:91
 msgid "You don't have permisson to add tasks"
 msgstr "Вы не можете редактировать шаблоны обходов"
 
-#: .\task_viewer\views.py:154
+#: .\task_viewer\views.py:166
 msgid "You are not permitted to create checks"
 msgstr "Вы не можете совершать обходы"
+
+#: .\task_viewer\views.py:192
+msgid "You are not permitted to delete dates."
+msgstr "Вы не можете удалять обходы."
+
+#: .\task_viewer\views.py:209
+msgid "You are not permitted to delete tasks."
+msgstr "Вы не можете удалять задания"
+
+#: .\task_viewer\views.py:245
+msgid "You are not permitted to delete templates."
+msgstr "Вы не можете удалять шаблоны обходов"
 
 #: .\task_viewer\templatetags\date_extras.py:10
 msgid "January"
@@ -135,27 +147,27 @@ msgstr "Вчера"
 msgid "Day before yesterday"
 msgstr "Позавчера"
 
-#: .\tasker\views.py:26
+#: .\tasker\views.py:27
 msgid "This account is not active. Contact administrator."
 msgstr "Ваш аккаунт неактивен."
 
-#: .\tasker\views.py:28
+#: .\tasker\views.py:29
 msgid "Account with these entries is not found. Try again or contact administrator."
 msgstr "Аккаунт с этими данными не найден. Проверьте свой ввод."
 
-#: .\tasker\views.py:48
+#: .\tasker\views.py:50
 msgid "Profile updated successfully."
 msgstr "Профиль обновлен успешно."
 
-#: .\tasker\views.py:59
+#: .\tasker\views.py:62
 msgid "Password changed successfully."
 msgstr "Пароль изменен успешно."
 
-#: .\tasker\views.py:61
+#: .\tasker\views.py:64
 msgid "Entried passwords don't match."
 msgstr "Введенные пароли пароли не успевают."
 
-#: .\tasker\views.py:63
+#: .\tasker\views.py:66
 msgid "Old password is entered incorrectly."
 msgstr "Старый пароль введен неверно."
 
@@ -167,15 +179,15 @@ msgstr "Страница не найдена"
 msgid "Sorry, page with this URL is not found."
 msgstr "Простите, по введенному адресу страницы не существует"
 
-#: .\templates\500.html.py:6 .\templates\500.html.py:9
+#: .\templates\500.html.py:5 .\templates\500.html.py:8
 msgid "Page is not availiable"
 msgstr "Страница недоступна"
 
-#: .\templates\500.html.py:10
+#: .\templates\500.html.py:9
 msgid "Sorry, page is not availiable. The server encountered an internal error or misconfiguration and was unable to complete your request."
 msgstr "Страница недоступна. Сервер переживает технические неполадки."
 
-#: .\templates\500.html.py:11
+#: .\templates\500.html.py:10
 msgid "More information about this error may be availiable in the server error log."
 msgstr "Больше информации вы можете получить, обратившись к журналу ошибок сервера."
 
@@ -247,26 +259,26 @@ msgstr "Сохранить"
 msgid "Cancel"
 msgstr "Отмена"
 
-#: .\templates\base.html.py:20 .\templates\checks.html.py:5
+#: .\templates\base.html.py:19 .\templates\checks.html.py:5
 #: .\templates\dates.html.py:5 .\templates\login.html.py:4
 #: .\templates\new_date.html.py:5 .\templates\results.html.py:5
 #: .\templates\tasks.html.py:4
 msgid "Taskboard"
 msgstr "Доска заданий"
 
-#: .\templates\base.html.py:42
+#: .\templates\base.html.py:37
 msgid "Profile"
 msgstr "Профиль"
 
-#: .\templates\base.html.py:43
+#: .\templates\base.html.py:38
 msgid "Sign Out"
 msgstr "Выйти"
 
-#: .\templates\base.html.py:47
+#: .\templates\base.html.py:42
 msgid "Sign In"
 msgstr "Войти"
 
-#: .\templates\base.html.py:74
+#: .\templates\base.html.py:69
 msgid "ГТРК \"Санкт-Петербург\" 2013"
 msgstr ""
 
@@ -288,7 +300,8 @@ msgid "Attention!"
 msgstr "Внимание!"
 
 #: .\templates\dates.html.py:25
-msgid "Are you sure you want to delete check? All linked tasks and results will be deleted."
+msgid "Are you sure you want to delete check? All linked tasks and results will be "
+"deleted."
 msgstr "Вы действительно хотите удалить шаблон? Все присоединенные задания и обходы будут также удалены."
 
 #: .\templates\dates.html.py:27 .\templates\results.html.py:18
