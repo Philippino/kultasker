@@ -202,7 +202,7 @@ def cancel_date(request, check): #cancel new check date
 @login_required(login_url='/accounts/login/')
 def del_task(request,check, task): #task delete view
 	"""Deletes tasks with linked results if user has permisson to delete tasks and results."""
-	if current_user.has_perm('tasks.can_delete'):
+	if request.user.has_perm('tasks.can_delete'):
 		del_task = Task.objects.filter(id = task).select_related()
 		del_task.delete()
 	else:
@@ -238,7 +238,7 @@ def randomDate(): #returns random date in between 1970 and 2013
 @login_required(login_url='/accounts/login/')
 def del_check(request,check): #delete template
 	"""Delete check template with linked dates, tasks results, if user has a permisson. Otherwise, raises warning."""
-	if current_user.has_perm('checks.can_delete'):
+	if request.user.has_perm('checks.can_delete'):
 		del_check = Check.objects.filter(id = check).select_related()
 		del_check.delete()
 	else:
