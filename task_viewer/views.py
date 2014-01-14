@@ -13,6 +13,7 @@ from django.utils.translation import ugettext as _
 import random
 
 def create_check(request): #create new template
+	"""Creates new check template with a request.POST name."""
 	chk = request.POST								
 	chk_form = CheckForm(chk)
 	if chk_form.is_valid(): 
@@ -23,6 +24,7 @@ def create_check(request): #create new template
 	return new_chk.id
 
 def checks_context(): #return context of templates with last check date
+	"""Returns check templates, last date and status for each."""
 	checks = Check.objects.all().select_related('date').annotate(last_date = Max('date__date')).order_by('id')
 	for check in checks:
 		try:
@@ -37,6 +39,7 @@ def checks_context(): #return context of templates with last check date
 
 @login_required(login_url='/accounts/login/')
 def view_checks(request): #show templates
+	""" Returns page with check templates. If request.POST, handles check template creation."""
 	if request.POST:
 		if request.user.has_perm('checks.can_add'):	
 			new_check_id = create_check(request)
@@ -47,6 +50,7 @@ def view_checks(request): #show templates
 	return render_to_response('checks.html',  RequestContext(request,context))
 
 def dates_context(request,check): #return context of template dates
+	""" Returns dates of given check template."""
 	check = Check.objects.get(id = check)
 	dates = Date.objects.filter(check_id = check).order_by('-date').select_related('check').annotate(status = Min('result__status'))
 	paginator = Paginator(dates, 10)
@@ -62,10 +66,12 @@ def dates_context(request,check): #return context of template dates
 
 @login_required(login_url='/accounts/login/')
 def view_dates(request, check):
+	"""Returns page with list of dates of given check template."""
 	context = dates_context(request,check)
 	return render_to_response('dates.html', RequestContext(request,context))
 
 def tasks_context(request,check): #return context of template tasks
+	"""Returns tasks of given check template."""
 	tasks = Task.objects.filter(check_id = check)
 	check = Check.objects.get(id = check)
 	context = {'check': check, 'tasks': tasks}
@@ -73,6 +79,7 @@ def tasks_context(request,check): #return context of template tasks
 
 @login_required(login_url='/accounts/login/')
 def new_task(request, check): #create new task
+	"""Creates new task if user has permisson. Otherwise, gives him a warning."""
 	if request.user.has_perm('tasks.can_add'):
 		task_form = TaskForm(request.POST)		
 		if task_form.is_valid:
@@ -86,6 +93,7 @@ def new_task(request, check): #create new task
 
 @login_required(login_url='/accounts/login/')
 def view_tasks(request, check): #show task of exact template
+	"""Returns page with task of given check template."""
 	if request.method == 'POST':
 		new_task(request, check)
 	context = tasks_context(request, check)
@@ -93,6 +101,7 @@ def view_tasks(request, check): #show task of exact template
 	return render_to_response('tasks.html', RequestContext(request,context))
 
 def results_context(request, date): #return context of check date results
+	"""Returns results of given check date."""
 	date = Date.objects.get(id = date)
 	results = Result.objects.filter(date_id = date)
 	now = timezone.now()
@@ -109,6 +118,7 @@ def view_results(request, check, date): #show results of exact date
 
 @login_required(login_url='/accounts/login/')
 def change_result(request,check, date, result): #change result status
+	"""Change status of result if user has a permisson. Otherwise, raises an warning."""
 	current_user = request.user
 	if current_user.has_perm('results.can_change'):
 		result = Result.objects.get(id = result)
@@ -121,6 +131,7 @@ def change_result(request,check, date, result): #change result status
 
 @login_required(login_url='/accounts/login/')
 def change_new_result(request,check, result): #changing result status in new check date
+	"""Change status of result on new date."""
 	result = Result.objects.get(id = result)
 	result.status = not result.status
 	date = result.date
@@ -131,6 +142,7 @@ def change_new_result(request,check, result): #changing result status in new che
 
 @login_required(login_url='/accounts/login/')
 def new_date(request, check): #create new check date
+	"""Returns page with new date, if user has a permisson. Otherwise, raises an warning."""	
 	current_user = request.user
 	if current_user.has_perm('dates.can_add','results.can_add'):
 		if request.POST:
@@ -156,6 +168,7 @@ def new_date(request, check): #create new check date
 
 @login_required(login_url='/accounts/login/')
 def save_date(request, check): #save new check date
+	"""Saves results of new date."""
 	if request.method == 'POST':
   		new_date = Date.objects.filter(check = check).order_by('-id')[0]
   		new_date.date = timezone.now()
@@ -170,6 +183,7 @@ def save_date(request, check): #save new check date
 
 @login_required(login_url='/accounts/login/')
 def del_date(request,check, date): #delete check date
+	"""Delete given date with linked results, if user has a permisson. Otherwise, raises an error."""
 	current_user = request.user
 	if current_user.has_perm('dates.can_delete'):
 		del_date = Date.objects.filter(id = date).select_related()
@@ -180,12 +194,14 @@ def del_date(request,check, date): #delete check date
 
 @login_required(login_url='/accounts/login/')
 def cancel_date(request, check): #cancel new check date
+	"""Cancels date creation."""
 	cancel_date = Date.objects.filter(check = check).order_by('-id').select_related()[0]
 	cancel_date.delete()
 	return HttpResponseRedirect("/checks/%s/dates/" % check)
 
 @login_required(login_url='/accounts/login/')
 def del_task(request,check, task): #task delete view
+	"""Deletes tasks with linked results if user has permisson to delete tasks and results."""
 	if current_user.has_perm('tasks.can_delete'):
 		del_task = Task.objects.filter(id = task).select_related()
 		del_task.delete()
@@ -218,6 +234,7 @@ def randomDate(): #returns random date in between 1970 and 2013
 
 @login_required(login_url='/accounts/login/')
 def del_check(request,check): #delete template
+	"""Delete check template with linked dates, tasks results, if user has a permisson. Otherwise, raises warning."""
 	if current_user.has_perm('checks.can_delete'):
 		del_check = Check.objects.filter(id = check).select_related()
 		del_check.delete()

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 
 def login(request):
+	"""Login, if user is authenticated and active."""
 	if request.user.is_active:
 		return HttpResponseRedirect('/accounts/details/')
 	if request.POST:
@@ -33,6 +34,7 @@ def login(request):
 	return render_to_response('login.html', RequestContext(request, context))	
 
 def logout(request):
+	"""Log out current user."""
 	auth.logout(request)
 	return HttpResponseRedirect('/accounts/login/')
 
@@ -50,6 +52,7 @@ def account_details(request):
 
 @login_required(login_url='/accounts/login/')
 def password_change(request):
+	"""Change current user password."""
 	if request.POST:
 		current_user = request.user
 		if current_user.check_password(request.POST['old_password']):
@@ -64,6 +67,7 @@ def password_change(request):
 	return HttpResponseRedirect('/accounts/details/')
 
 def index(request):
+	"""Returns to an index page."""
 	current_user = request.user
 	if current_user.is_active:
 		return HttpResponseRedirect('/checks/')
