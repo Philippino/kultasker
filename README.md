@@ -1,4 +1,4 @@
 kultasker
 =========
 
-kulTasker
+Simple checkout application for everyday tasks.
